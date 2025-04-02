@@ -11,6 +11,9 @@
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800">
 	<!-- Google Font Family Link End -->
 	<!-- Bootstrap Link Start-->
+    <link rel="shortcut icon" href="{{asset('back/images/favicon.ico')}}">
+
+
 	<link href="{{asset('front/css/bootstrap.css')}}" rel="stylesheet">
 	<link href="{{asset('front/css/bootstrap-theme.css')}}" rel="stylesheet">
 	<link href="{{asset('front/css/bootstrap-datepicker.css')}}" rel="stylesheet">
@@ -51,7 +54,7 @@
 	<!--Main Wrapper-->
 	<div class="wrapper">
         <!-- ========== header Start ========== -->
-        @include('front.buyer.body.header')
+        @include('front.body.header')
         <!-- header End -->
 
         <!-- ============================================================== -->
