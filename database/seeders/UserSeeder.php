@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Restaurant;
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -12,34 +14,29 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->insert([
-            //admin
-            [
-                'name' => 'Admin',
-                'username' => 'admin',
-                'email' => 'admin@admin.com',
-                'password' => bcrypt('admin'),
-                'role' => 'admin',
-                'status' => 'active',
-            ],
-            //doctor
-            [
-                'name' => 'Vender',
-                'username' => 'vender',
-                'email' => 'vender@vender.com',
-                'password' => bcrypt('vender'),
-                'role' => 'vender',
-                'status' => 'active',
-            ],
-            //patient
-            [
-                'name' => 'Client',
-                'username' => 'client',
-                'email' => 'client@client.com',
-                'password' => bcrypt('client'),
-                'role' => 'client',
-                'status' => 'active',
-            ],
+        // Admin User
+        User::create([
+            'name' => 'Admin User',
+            'email' => 'admin@admin.com',
+            'password' => Hash::make('admin'),
+            'role' => User::ROLE_ADMIN,
+        ]);
+
+        // Restaurant Owner
+        $restaurantOwner = User::create([
+            'name' => 'Restaurant Owner',
+            'email' => 'restaurant@restaurant.com',
+            'password' => Hash::make('restaurant'),
+            'role' => User::ROLE_RESTAURANT,
+        ]);
+        Restaurant::factory()->create(['user_id' => $restaurantOwner->id, 'is_verified' => false]);
+
+        // Normal Customer
+        User::create([
+            'name' => 'Customer User',
+            'email' => 'client@client.com',
+            'password' => Hash::make('client'),
+            'role' => User::ROLE_USER,
         ]);
     }
 }
