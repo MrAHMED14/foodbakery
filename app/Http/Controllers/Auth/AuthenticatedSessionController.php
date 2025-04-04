@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,11 +29,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if(Auth::user()->role == 'admin') {
+        if(Auth::user()->role == User::ROLE_ADMIN) {
             return redirect()->intended(route('admin.dashboard', absolute: false));
         }
 
-        if(Auth::user()->role == 'restaurateur') {
+        if(Auth::user()->role == User::ROLE_RESTAURANT) {
             return redirect()->intended(route('restaurant.dashboard', absolute: false));
         }
 
