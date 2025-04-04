@@ -5,6 +5,7 @@ use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RestaurantController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 //Front route
@@ -31,7 +32,7 @@ Route::group(['prefix' => '', 'as' => 'front.'], function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     //Restaurant route
-    Route::middleware(['role:vender'])->group(function () {
+    Route::middleware(['role:' . User::ROLE_RESTAURANT])->group(function () {
         Route::group(['prefix' => 'restaurant', 'as' => 'restaurant.'], function () {
             Route::get('/dashboard', [RestaurantController::class, 'restaurantDashboard'])->name('dashboard');
             Route::get('/restaurant', [RestaurantController::class, 'restaurant'])->name('restaurant');
@@ -51,7 +52,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     //Buyer route
-    Route::middleware(['role:client'])->group(function () {
+    Route::middleware(['role:' . User::ROLE_USER])->group(function () {
         Route::group(['prefix' => 'buyer', 'as' => 'buyer.'], function () {
             Route::get('/dashboard', [BuyerController::class, 'buyerDashboard'])->name('dashboard');
             Route::get('/bookings', [BuyerController::class, 'bookings'])->name('bookings');
@@ -64,7 +65,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     //Admin route
-    Route::middleware(['role:admin'])->group(function () {
+    Route::middleware(['role:' . User::ROLE_ADMIN])->group(function () {
         Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
         });
