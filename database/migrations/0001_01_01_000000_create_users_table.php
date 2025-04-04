@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->text('about_me')->nullable();
             $table->text('photo')->nullable();
-            $table->enum('role', ['admin', 'vender', 'client'])->default('client');
+            $table->enum('role', ['admin', 'restaurateur', 'client'])->default('client');
             $table->enum('status', ['active', 'inactive', 'blocked'])->default('inactive');
             $table->rememberToken();
             $table->timestamps();

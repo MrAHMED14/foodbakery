@@ -32,7 +32,7 @@ class AuthenticatedSessionController extends Controller
             return redirect()->intended(route('admin.dashboard', absolute: false));
         }
 
-        if(Auth::user()->role == 'vender') {
+        if(Auth::user()->role == 'restaurateur') {
             return redirect()->intended(route('restaurant.dashboard', absolute: false));
         }
 
