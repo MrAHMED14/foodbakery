@@ -45,6 +45,21 @@ class User extends Authenticatable
         return $this->hasOne(Restaurant::class)->withDefault();
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function isAdmin()
     {
         return $this->role === self::ROLE_ADMIN;
