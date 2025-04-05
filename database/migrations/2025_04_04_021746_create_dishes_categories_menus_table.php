@@ -30,7 +30,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('image_plat')->nullable();
+            $table->string('dish_image')->nullable();
             $table->decimal('price', 8, 2);
             $table->foreignId('menu_id')->constrained('menus');
             $table->foreignId('categorie_id')->nullable()->constrained('categories');

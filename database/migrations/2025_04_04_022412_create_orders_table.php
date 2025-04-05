@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->date('date_commande');
+            $table->date('order_date');
             $table->string('status');
             $table->decimal('total', 8, 2);
             $table->string('address');
             $table->string('city');
-            $table->string('region');
-            $table->string('type_commande');
+            $table->string('state');
+            $table->string('order_type');
             $table->string('payment_method');
             $table->string('payment_status');
             $table->date('payment_date');
@@ -29,7 +29,7 @@ return new class extends Migration
 
         Schema::create('order_lines', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('commande_id')->constrained('orders')->onDelete('cascade');
+            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
             $table->foreignId('plat_id')->constrained('dishes');
             $table->integer('quantity')->default(1);
             $table->timestamps();

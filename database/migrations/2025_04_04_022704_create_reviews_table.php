@@ -15,15 +15,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('restaurant_id')->constrained('restaurants')->onDelete('cascade');
-            $table->text('commentaire');
-            $table->integer('overall_rating');
+            $table->text('comment');
+            $table->integer('rating')->default(0);
             $table->timestamps();
         });
 
         Schema::create('review_responses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('note_id')->constrained('reviews')->onDelete('cascade');
-            $table->text('reponse');
+            $table->text('reply');
             $table->timestamps();
         });
     }

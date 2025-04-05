@@ -23,10 +23,10 @@ return new class extends Migration {
             $table->text('services')->nullable();
             $table->text('payment_options')->nullable();
             $table->boolean('is_verified')->default(false);
-            $table->boolean('accepts_reservations')->default(true);
-            $table->boolean('accepts_orders')->default(true);
+            $table->boolean('accepts_reservations')->default(false);
+            $table->boolean('accepts_orders')->default(false);
             $table->string('cover_photo')->nullable();
-            $table->string('restaurant_photo')->nullable();
+            $table->string('restaurant_logo')->nullable();
             $table->decimal('minimum_order', 8, 2)->default(0);
             $table->decimal('maximum_order', 8, 2)->default(0);
             $table->decimal('delivery_fee', 8, 2)->default(0);

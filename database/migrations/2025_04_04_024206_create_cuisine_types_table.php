@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cuisine_types', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
+            $table->string('name');
             $table->text('description')->nullable();
             $table->timestamps();
         });
@@ -46,7 +46,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cuisine_types');
         Schema::dropIfExists('restaurant_cuisine');
+        Schema::dropIfExists('cuisine_types');
     }
 };

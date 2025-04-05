@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('opening_hours', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('restaurant_id')->constrained()->onDelete('cascade');
+            $table->foreignId('restaurant_id')->constrained('restaurants')->onDelete('cascade');
             $table->enum('day', ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']);
             $table->time('opening_time')->nullable();
             $table->time('closing_time')->nullable();
