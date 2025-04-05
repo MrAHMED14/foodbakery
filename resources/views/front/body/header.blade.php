@@ -214,7 +214,7 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     @auth
-                        @if (Auth::user()->role == 'client')
+                        @if (Auth::user()->isUser())
                             {{-- Buyer --}}
                             <div class="login-option">
                                 <div class="user-dashboard-menu">
@@ -258,7 +258,7 @@
                                     </ul>
                                 </div>
                             </div>
-                        @elseif (Auth::user()->role == 'vender')
+                        @elseif (Auth::user()->isRestaurant())
                             {{-- Restaurent --}}
                             <div class="login-option">
                                 <div class="user-dashboard-menu">
@@ -312,7 +312,7 @@
                                     </ul>
                                 </div>
                             </div>
-                        @elseif (Auth::user()->role == 'admin')
+                        @elseif (Auth::user()->isAdmin())
                             {{-- ADMIN --}}
                             <div class="login-option">
                                 <div class="user-dashboard-menu">
