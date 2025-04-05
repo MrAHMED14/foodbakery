@@ -19,12 +19,14 @@ Route::group(['prefix' => '', 'as' => 'front.'], function () {
 
     Route::get('/single', [FrontController::class, 'single'])->name('single');
 
-    Route::get('/listing', [FrontController::class, 'listing'])->name('listings');
+    Route::get('/listing', [RestaurantController::class, 'index'])->name('listings');
+    Route::get('/register-restaurant', [RestaurantController::class, 'registerRestaurant'])->name('register_restaurant');
+    Route::post('/register-restaurant', [RestaurantController::class, 'store'])->name('restaurants.store');
+
     Route::get('/listing-details', [FrontController::class, 'listingDetails'])->name('listing_details');
     Route::get('/blog', [FrontController::class, 'blog'])->name('blog');
     Route::get('/blog-detail', [FrontController::class, 'blogDetail'])->name('blog_detail');
 
-    Route::get('/register-restaurant', [RestaurantController::class, 'registerRestaurant'])->name('register_restaurant');
     Route::get('/register-package', [RestaurantController::class, 'registerPackage'])->name('register_package');
     Route::get('/register-payment', [RestaurantController::class, 'registerPayment'])->name('register_payment');
     Route::get('/register-activation', [RestaurantController::class, 'registerActivation'])->name('register_activation');
