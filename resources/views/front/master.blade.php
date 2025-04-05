@@ -56,6 +56,28 @@
         @include('front.body.header')
         <!-- header End -->
 
+        @if (session('success'))
+            <div style="z-index: 100; color: green; background-color: #d4edda; padding: 10px; margin-bottom: 15px;">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div style="z-index: 100; color: red; background-color: #f8d7da; padding: 10px; margin-bottom: 15px;">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div style="z-index: 100; color: red; background-color: #f8d7da; padding: 10px; margin-bottom: 15px;">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <!-- ============================================================== -->
         <!-- Start main Content here -->
         <!-- ============================================================== -->
