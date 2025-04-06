@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Reservation;
 use App\Models\Restaurant;
 use Carbon\Carbon;
+use Exception;
 
 class ReservationService
 {
@@ -13,12 +14,26 @@ class ReservationService
         $restaurant = Restaurant::findOrFail($restaurantId);
 
         if ($restaurant->is_verified == 0) {
-            throw new \Exception('Restaurant is not verified.');
+            throw new Exception('Restaurant is not verified.');
         }
 
         $reservationDateTime = Carbon::parse($reservationDate);
         $startTime = $reservationDateTime->copy();
         $endTime = $startTime->copy()->addMinutes($sessionDuration);
+
+        $dayName = $reservationDateTime->format('l');
+        $openingHour = $restaurant->openingHours()->where('day', $dayName)->first();
+
+        if (!$openingHour || $openingHour->is_closed) {
+            throw new Exception("The restaurant is closed on {$dayName}.");
+        }
+
+        if (
+            $startTime->format('H:i:s') < $openingHour->opening_time ||
+            $endTime->format('H:i:s') > $openingHour->closing_time
+        ) {
+            throw new Exception("The restaurant is not open at this time.");
+        }
 
         $overlappingReservations = Reservation::where('restaurant_id', $restaurant->id)
             ->whereDate('reservation_date', $reservationDateTime->toDateString())
@@ -35,7 +50,7 @@ class ReservationService
             ->sum('nbr_table');
 
         if (($overlappingReservations + $nbrTables) > $restaurant->capacity) {
-            throw new \Exception('No available tables for this time slot.');
+            throw new Exception('No available tables for this time slot.');
         }
 
         // Create the reservation
