@@ -15,6 +15,7 @@
                         <nav id="site-navigation" class="main-navigation">
                             <ul>
                                 <li><a href="{{ route('front.listings') }}">Restaurants</a></li>
+                                <li><a href="{{ route('cart.view') }}">Cart</a></li>
                                 <li>
                                     <a href="#">Pages</a>
                                     <ul>
