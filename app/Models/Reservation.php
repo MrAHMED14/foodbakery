@@ -18,12 +18,17 @@ class Reservation extends Model
         'payment_method',
         'payment_status',
         'payment_date',
+        //TODO: ADD first_name, last_name
+        'start_time',
+        'end_time',
+        'session_duration',
     ];
 
     protected $casts = [
         'reservation_date' => 'datetime',
-        'table_number' => 'integer',
         'payment_date' => 'datetime',
+        'start_time' => 'datetime:H:i',
+        'end_time' => 'datetime:H:i',
     ];
 
     public function user()

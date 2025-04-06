@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,6 +12,10 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('restaurant_id')->constrained('restaurants')->onDelete('cascade');
             $table->dateTime('reservation_date');
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
+            $table->integer('session_duration')->default(90); // 90 minutes
+            //TODO: ADD first_name, last_name
             $table->integer('nbr_table')->default(1);
             $table->string('status')->default('pending');
             $table->string('payment_method')->nullable();

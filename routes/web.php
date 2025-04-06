@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RestaurantController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //Buyer route
     Route::middleware(['role:' . User::ROLE_USER])->group(function () {
+        //* for testing
+        Route::get('/reserve', [ReservationController::class, 'showForm'])->name('reservation.showForm');
+        Route::post('/reserve', [ReservationController::class, 'store'])->name('reservation.reserve');
+
         Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
         Route::get('/cart', [CartController::class, 'view'])->name('cart.view');
         Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
