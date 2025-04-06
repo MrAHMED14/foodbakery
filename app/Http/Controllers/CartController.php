@@ -20,9 +20,12 @@ class CartController extends Controller
             'dish_id' => 'required|exists:dishes,id',
         ]);
 
-        $this->cartService->addDish($request->dish_id);
-
-        return redirect()->back()->with('success', 'Dish added to cart.');
+        try {
+            $this->cartService->addDish($request->dish_id);
+            return redirect()->back()->with('success', 'Dish added to cart.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     public function view()

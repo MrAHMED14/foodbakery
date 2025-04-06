@@ -9,6 +9,11 @@ class CartService
     public function addDish($dishId, $quantity = 1)
     {
         $dish = Dish::findOrFail($dishId);
+
+        if ($dish->menu->restaurant->is_verified == 0) {
+            throw new \Exception('Restaurant is not verified.');
+        }
+
         $restaurantId = $dish->menu->restaurant_id;
 
         $cart = session()->get('cart', []);
