@@ -41,5 +41,7 @@ class DatabaseSeeder extends Seeder
                 ]);
             });
         });
+
+        $this->call(OpeningHourSeeder::class);
     }
 }
