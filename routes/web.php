@@ -66,7 +66,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/dashboard', [BuyerController::class, 'buyerDashboard'])->name('dashboard');
             Route::get('/bookings', [BuyerController::class, 'bookings'])->name('bookings');
             Route::get('/reviews', [BuyerController::class, 'reviews'])->name('reviews');
-            Route::get('/orders', [OrderController::class, 'userOrder'])->name('orders');
+            Route::get('/orders', [OrderController::class, 'userOrders'])->name('orders');
             Route::get('/shortlists', [BuyerController::class, 'shortlists'])->name('shortlists');
             Route::get('/statement', [BuyerController::class, 'statement'])->name('statement');
             Route::get('/account-setting', [BuyerController::class, 'account_setting'])->name('account_setting');

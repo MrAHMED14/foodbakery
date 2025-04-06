@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
 
-    public function userOrder()
+    public function userOrders()
     {
         $orders = Order::where('user_id', Auth::user()->id)->paginate(10);
         return view('front.buyer.orders', compact('orders'));
