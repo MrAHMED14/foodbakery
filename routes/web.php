@@ -24,7 +24,7 @@ Route::group(['prefix' => '', 'as' => 'front.'], function () {
     Route::get('/listing', [RestaurantController::class, 'index'])->name('listings');
     Route::get('/register-restaurant', [RestaurantController::class, 'registerRestaurant'])->name('register_restaurant');
     Route::post('/register-restaurant', [RestaurantController::class, 'store'])->name('restaurants.store');
-    Route::get('/restaurant/{restaurant}', [RestaurantController::class, 'show'])->name('listing_details');
+    Route::get('/listing-details/{restaurant}', [RestaurantController::class, 'show'])->name('listing_details');
 
     Route::get('/blog', [FrontController::class, 'blog'])->name('blog');
     Route::get('/blog-detail', [FrontController::class, 'blogDetail'])->name('blog_detail');
