@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('restaurant'),
             'role' => User::ROLE_RESTAURANT,
         ]);
-        Restaurant::factory()->create(['user_id' => $restaurantOwner->id, 'is_verified' => false]);
+        Restaurant::factory()->create(['user_id' => $restaurantOwner->id, 'is_verified' => true, 'capacity' => 1]);
 
         // Normal Customer
         User::create([
