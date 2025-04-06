@@ -43,7 +43,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/location', [RestaurantController::class, 'location'])->name('location');
             Route::get('/open-close', [RestaurantController::class, 'openClose'])->name('open_close');
             Route::get('/menu-builder', [RestaurantController::class, 'menuBuilder'])->name('menu_builder');
-            Route::get('/orders', [RestaurantController::class, 'orders'])->name('orders');
+            Route::get('/orders', [OrderController::class, 'restaurantOrders'])->name('orders');
             Route::get('/bookings', [RestaurantController::class, 'bookings'])->name('bookings');
             Route::get('/reviews', [RestaurantController::class, 'reviews'])->name('reviews');
             Route::get('/memberships', [RestaurantController::class, 'memberships'])->name('memberships');

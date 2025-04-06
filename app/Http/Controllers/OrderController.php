@@ -16,6 +16,18 @@ class OrderController extends Controller
         return view('front.buyer.orders', compact('orders'));
     }
 
+    public function restaurantOrders()
+    {
+        $orders = Auth::user()->restaurant->orders()->paginate(10);
+        return view('front.restaurant.orders', compact('orders'));
+    }
+
+    public function restaurantOrder()
+    {
+        $orders = Order::where('user_id', Auth::user()->id)->paginate(10);
+        return view('front.buyer.orders', compact('orders'));
+    }
+
     public function checkout(Request $request)
     {
         $cart = session('cart');
