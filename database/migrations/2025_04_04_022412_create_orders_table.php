@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('restaurant_id')->constrained()->onDelete('cascade');
             $table->date('order_date');
             $table->string('status');
             $table->decimal('total', 8, 2);
@@ -30,7 +31,7 @@ return new class extends Migration
         Schema::create('order_lines', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
-            $table->foreignId('plat_id')->constrained('dishes');
+            $table->foreignId('dish_id')->constrained('dishes')->onDelete('cascade');
             $table->integer('quantity')->default(1);
             $table->timestamps();
         });

@@ -15,6 +15,7 @@ class Dish extends Model
         'dish_image',
         'price',
         'menu_id',
+        'category_id',
     ];
 
     protected $casts = [

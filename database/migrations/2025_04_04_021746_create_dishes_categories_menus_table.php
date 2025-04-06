@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('dish_image')->nullable();
             $table->decimal('price', 8, 2);
             $table->foreignId('menu_id')->constrained('menus');
-            $table->foreignId('categorie_id')->nullable()->constrained('categories');
+            $table->foreignId('categorie_id')->nullable()->constrained('categories')->onDelete('set null');
             $table->timestamps();
         });
     }

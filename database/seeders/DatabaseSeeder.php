@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\CuisineType;
+use App\Models\Dish;
+use App\Models\Menu;
 use App\Models\Restaurant;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -28,6 +30,16 @@ class DatabaseSeeder extends Seeder
             $restaurant->cuisines()->attach($cuisineIds->toArray(), [
                 'is_specialty' => true,
             ]);
+
+            $menus = Menu::factory(rand(1, 3))->create([
+                'restaurant_id' => $restaurant->id,
+            ]);
+
+            $menus->each(function ($menu) {
+                Dish::factory(rand(5, 10))->create([
+                    'menu_id' => $menu->id,
+                ]);
+            });
         });
     }
 }

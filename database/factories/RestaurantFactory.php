@@ -24,7 +24,7 @@ class RestaurantFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'latitude' => $this->faker->latitude(),
             'longitude' => $this->faker->longitude(),
-            'description' => $this->faker->paragraph(),
+            'description' => $this->faker->paragraphs(3, true),
             'capacity' => $this->faker->numberBetween(10, 100),
             'is_verified' => $this->faker->boolean(70),
             'user_id' => User::factory(),
