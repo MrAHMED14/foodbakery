@@ -34,7 +34,7 @@
 
             <div>
                 <label>Phone</label>
-                <input type="text" name="restaurant_phone" required>
+                <input type="tel" name="restaurant_phone" required>
             </div>
 
             <div>
@@ -44,12 +44,12 @@
 
             <div>
                 <label>Latitude</label>
-                <input type="text" name="restaurant_latitude">
+                <input type="number" min="-90" max="90" name="restaurant_latitude">
             </div>
 
             <div>
                 <label>Longitude</label>
-                <input type="text" name="restaurant_longitude">
+                <input type="number" min="-90" max="90" name="restaurant_longitude">
             </div>
 
             <div>
