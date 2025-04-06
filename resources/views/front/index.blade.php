@@ -331,42 +331,42 @@
                         <ul>
                             <li class="has-border">
                                 <figure>
-                                    <a href="{{route('front.listing_details')}}"><img src="{{asset('front/extra-images/listing-logo18.png')}}" class="attachment-full size-full wp-post-image" alt=""></a>
+                                    <a href="#"><img src="{{asset('front/extra-images/listing-logo18.png')}}" class="attachment-full size-full wp-post-image" alt=""></a>
                                 </figure>
                             </li>
                             <li class="has-border">
                                 <figure>
-                                    <a href="{{route('front.listing_details')}}"><img src="{{asset('front/extra-images/fb-restaurant-02.jpg')}}" class="attachment-full size-full wp-post-image" alt=""></a>
+                                    <a href="#"><img src="{{asset('front/extra-images/fb-restaurant-02.jpg')}}" class="attachment-full size-full wp-post-image" alt=""></a>
                                 </figure>
                             </li>
                             <li class="has-border">
                                 <figure>
-                                    <a href="{{route('front.listing_details')}}"><img src="{{asset('front/extra-images/fb-restaurant-04.jpg')}}" class="attachment-full size-full wp-post-image" alt=""></a>
+                                    <a href="#"><img src="{{asset('front/extra-images/fb-restaurant-04.jpg')}}" class="attachment-full size-full wp-post-image" alt=""></a>
                                 </figure>
                             </li>
                             <li class="has-border">
                                 <figure>
-                                    <a href="{{route('front.listing_details')}}"><img src="{{asset('front/extra-images/fb-restaurant-06.jpg')}}" class="attachment-full size-full wp-post-image" alt=""></a>
+                                    <a href="#"><img src="{{asset('front/extra-images/fb-restaurant-06.jpg')}}" class="attachment-full size-full wp-post-image" alt=""></a>
                                 </figure>
                             </li>
                             <li class="has-border">
                                 <figure>
-                                    <a href="{{route('front.listing_details')}}"><img src="{{asset('front/extra-images/xlisting-logo03.png.pagespeed.ic_.aT-o9LinEJ.png')}}" class="attachment-full size-full wp-post-image" alt=""></a>
+                                    <a href="#"><img src="{{asset('front/extra-images/xlisting-logo03.png.pagespeed.ic_.aT-o9LinEJ.png')}}" class="attachment-full size-full wp-post-image" alt=""></a>
                                 </figure>
                             </li>
                             <li class="has-border">
                                 <figure>
-                                    <a href="{{route('front.listing_details')}}"><img src="{{asset('front/extra-images/listing-logo09.png')}}" class="attachment-full size-full wp-post-image" alt=""></a>
+                                    <a href="#"><img src="{{asset('front/extra-images/listing-logo09.png')}}" class="attachment-full size-full wp-post-image" alt=""></a>
                                 </figure>
                             </li>
                             <li class="has-border">
                                 <figure>
-                                    <a href="{{route('front.listing_details')}}"><img src="{{asset('front/extra-images/listing-logo18.png')}}" class="attachment-full size-full wp-post-image" alt=""></a>
+                                    <a href="#"><img src="{{asset('front/extra-images/listing-logo18.png')}}" class="attachment-full size-full wp-post-image" alt=""></a>
                                 </figure>
                             </li>
                             <li class="has-border">
                                 <figure>
-                                    <a href="{{route('front.listing_details')}}"><img src="{{asset('front/extra-images/fb-restaurant-09.png')}}" class="attachment-full size-full wp-post-image" alt=""></a>
+                                    <a href="#"><img src="{{asset('front/extra-images/fb-restaurant-09.png')}}" class="attachment-full size-full wp-post-image" alt=""></a>
                                 </figure>
                             </li>
                         </ul>
@@ -392,7 +392,7 @@
                             <li class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="list-post featured">
                                     <div class="img-holder">
-                                        <figure><a href="{{route('front.listing_details')}}"><img src="{{asset('front/extra-images/listing-logo18.png')}}" class="img-thumb wp-post-image" alt=""></a></figure>
+                                        <figure><a href="#"><img src="{{asset('front/extra-images/listing-logo18.png')}}" class="img-thumb wp-post-image" alt=""></a></figure>
                                         <span class="restaurant-status close">
                                             <em class="bookmarkRibbon"></em>Close
                                         </span>
@@ -406,7 +406,7 @@
                                         </div>
                                         <div class="post-title">
                                             <h5>
-                                                <a href="{{route('front.listing_details')}}">Restaurant Demo</a>
+                                                <a href="#">Restaurant Demo</a>
                                                 <span class="sponsored text-color">Sponsored</span>
                                             </h5>
                                         </div>
@@ -444,7 +444,7 @@
                             <li class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="list-post featured">
                                     <div class="img-holder">
-                                        <figure><a href="{{route('front.listing_details')}}"><img src="{{asset('front/extra-images/fb-restaurant-01.jpg')}}" class="img-thumb wp-post-image" alt=""></a></figure>
+                                        <figure><a href="#"><img src="{{asset('front/extra-images/fb-restaurant-01.jpg')}}" class="img-thumb wp-post-image" alt=""></a></figure>
                                         <span class="restaurant-status close">
                                             <em class="bookmarkRibbon"></em>Close
                                         </span>
@@ -458,7 +458,7 @@
                                         </div>
                                         <div class="post-title">
                                             <h5>
-                                                <a href="{{route('front.listing_details')}}">Jet’s Kitchen</a>
+                                                <a href="#">Jet’s Kitchen</a>
                                                 <span class="sponsored text-color">Sponsored</span>
                                             </h5>
                                         </div>
@@ -498,7 +498,7 @@
                             <li class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="list-post featured">
                                     <div class="img-holder">
-                                        <figure><a href="{{route('front.listing_details')}}"><img src="{{asset('front/extra-images/fb-restaurant-04.jpg')}}" class="img-thumb wp-post-image" alt=""></a></figure>
+                                        <figure><a href="#"><img src="{{asset('front/extra-images/fb-restaurant-04.jpg')}}" class="img-thumb wp-post-image" alt=""></a></figure>
                                         <span class="restaurant-status close">
                                             <em class="bookmarkRibbon"></em>Close
                                         </span>
@@ -512,7 +512,7 @@
                                         </div>
                                         <div class="post-title">
                                             <h5>
-                                                <a href="{{route('front.listing_details')}}">Golden Chick Fries</a>
+                                                <a href="#">Golden Chick Fries</a>
                                                 <span class="sponsored text-color">Sponsored</span>
                                             </h5>
                                         </div>
@@ -552,7 +552,7 @@
                             <li class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="list-post featured">
                                     <div class="img-holder">
-                                        <figure><a href="{{route('front.listing_details')}}"><img src="{{asset('front/extra-images/fb-restaurant-06.jpg')}}" class="img-thumb wp-post-image" alt=""></a></figure>
+                                        <figure><a href="#"><img src="{{asset('front/extra-images/fb-restaurant-06.jpg')}}" class="img-thumb wp-post-image" alt=""></a></figure>
                                         <span class="restaurant-status open"><em class="bookmarkRibbon"></em>Open</span>
                                     </div>
                                     <div class="text-holder">
@@ -564,7 +564,7 @@
                                         </div>
                                         <div class="post-title">
                                             <h5>
-                                                <a href="{{route('front.listing_details')}}">Dragon Express</a>
+                                                <a href="#">Dragon Express</a>
                                                 <span class="sponsored text-color">Sponsored</span>
                                             </h5>
                                         </div>
@@ -604,7 +604,7 @@
                             <li class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="list-post featured">
                                     <div class="img-holder">
-                                        <figure><a href="{{route('front.listing_details')}}"><img src="{{asset('front/extra-images/xlisting-logo03.png.pagespeed.ic_.aT-o9LinEJ.png')}}" class="img-thumb wp-post-image" alt=""></a></figure>
+                                        <figure><a href="#"><img src="{{asset('front/extra-images/xlisting-logo03.png.pagespeed.ic_.aT-o9LinEJ.png')}}" class="img-thumb wp-post-image" alt=""></a></figure>
                                         <span class="restaurant-status close">
                                             <em class="bookmarkRibbon"></em>Close
                                         </span>
@@ -618,7 +618,7 @@
                                         </div>
                                         <div class="post-title">
                                             <h5>
-                                                <a href="{{route('front.listing_details')}}">Nature Healthy Food</a>
+                                                <a href="#">Nature Healthy Food</a>
                                                 <span class="sponsored text-color">Sponsored</span>
                                             </h5>
                                         </div>
@@ -658,7 +658,7 @@
                             <li class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="list-post featured">
                                     <div class="img-holder">
-                                        <figure><a href="{{route('front.listing_details')}}"><img src="{{asset('front/extra-images/listing-logo09.png')}}" class="img-thumb wp-post-image" alt=""></a></figure>
+                                        <figure><a href="#"><img src="{{asset('front/extra-images/listing-logo09.png')}}" class="img-thumb wp-post-image" alt=""></a></figure>
                                         <span class="restaurant-status open">
                                             <em class="bookmarkRibbon"></em>open
                                         </span>
@@ -672,7 +672,7 @@
                                         </div>
                                         <div class="post-title">
                                             <h5>
-                                                <a href="{{route('front.listing_details')}}">Menu & Drinks</a>
+                                                <a href="#">Menu & Drinks</a>
                                                 <span class="sponsored text-color">Sponsored</span>
                                             </h5>
                                         </div>
