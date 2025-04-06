@@ -49,6 +49,11 @@ class Restaurant extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function openingHours()
     {
         return $this->hasMany(OpeningHour::class);

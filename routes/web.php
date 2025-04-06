@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BuyerController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RestaurantController;
 use App\Models\User;
@@ -22,8 +24,8 @@ Route::group(['prefix' => '', 'as' => 'front.'], function () {
     Route::get('/listing', [RestaurantController::class, 'index'])->name('listings');
     Route::get('/register-restaurant', [RestaurantController::class, 'registerRestaurant'])->name('register_restaurant');
     Route::post('/register-restaurant', [RestaurantController::class, 'store'])->name('restaurants.store');
+    Route::get('/restaurant/{restaurant}', [RestaurantController::class, 'show'])->name('listing_details');
 
-    Route::get('/listing-details', [FrontController::class, 'listingDetails'])->name('listing_details');
     Route::get('/blog', [FrontController::class, 'blog'])->name('blog');
     Route::get('/blog-detail', [FrontController::class, 'blogDetail'])->name('blog_detail');
 
@@ -55,11 +57,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //Buyer route
     Route::middleware(['role:' . User::ROLE_USER])->group(function () {
+        Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+        Route::get('/cart', [CartController::class, 'view'])->name('cart.view');
+        Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+        Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+
         Route::group(['prefix' => 'buyer', 'as' => 'buyer.'], function () {
             Route::get('/dashboard', [BuyerController::class, 'buyerDashboard'])->name('dashboard');
             Route::get('/bookings', [BuyerController::class, 'bookings'])->name('bookings');
             Route::get('/reviews', [BuyerController::class, 'reviews'])->name('reviews');
-            Route::get('/orders', [BuyerController::class, 'orders'])->name('orders');
+            Route::get('/orders', [OrderController::class, 'userOrder'])->name('orders');
             Route::get('/shortlists', [BuyerController::class, 'shortlists'])->name('shortlists');
             Route::get('/statement', [BuyerController::class, 'statement'])->name('statement');
             Route::get('/account-setting', [BuyerController::class, 'account_setting'])->name('account_setting');
