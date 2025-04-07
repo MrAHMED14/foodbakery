@@ -43,5 +43,6 @@ class DatabaseSeeder extends Seeder
         });
 
         $this->call(OpeningHourSeeder::class);
+        $this->call(ReviewSeeder::class);
     }
 }

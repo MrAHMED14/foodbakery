@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ReplyReview extends Model
+class ReviewResponse extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'note_id',
+        'review_id',
         'reply',
     ];
 

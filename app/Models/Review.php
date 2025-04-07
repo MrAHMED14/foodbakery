@@ -31,8 +31,8 @@ class Review extends Model
         return $this->belongsTo(Restaurant::class);
     }
 
-    public function reply()
+    public function response()
     {
-        return $this->hasOne(ReplyReview::class);
+        return $this->hasOne(ReviewResponse::class);
     }
 }

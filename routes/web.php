@@ -8,6 +8,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\ReviewController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,8 @@ Route::group(['prefix' => '', 'as' => 'front.'], function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     //Restaurant route
     Route::middleware(['role:' . User::ROLE_RESTAURANT])->group(function () {
+        Route::post('/reviews/{review}/reply', [ReviewController::class, 'reply'])->name('reviews.reply');
+
         Route::group(['prefix' => 'restaurant', 'as' => 'restaurant.'], function () {
             Route::get('/dashboard', [RestaurantController::class, 'restaurantDashboard'])->name('dashboard');
             Route::get('/restaurant', [RestaurantController::class, 'restaurant'])->name('restaurant');
@@ -58,6 +61,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //Buyer route
     Route::middleware(['role:' . User::ROLE_USER])->group(function () {
+        Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
         //* for testing
         Route::get('/reserve', [ReservationController::class, 'showForm'])->name('reservation.showForm');
         Route::post('/reserve', [ReservationController::class, 'store'])->name('reservation.reserve');

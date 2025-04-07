@@ -16,10 +16,18 @@
     </div>
     <div class="text-holder">
         <div class="list-rating">
-            <div class="rating-star">
-                <span class="rating-box" style="width: 100%;"></span>
+            <div style="display: flex; align-items: center; width: 100%; gap: 5px;">
+                @for ($i = 1; $i <= 5; $i++)
+                    @if ($i <= floor($restaurant->averageRating()))
+                        <span class="icon-star-full" style="color: #ff981a;"></span>
+                    @elseif ($i - $restaurant->averageRating() <= 0.5)
+                        <span class="icon-star-half-empty" style="color: #ff981a;"></span>
+                    @else
+                        <span class="icon-star-outlined" style="color: #ff981a;"></span>
+                    @endif
+                @endfor
+                <span class="reviews">( {{ $restaurant->reviewsCount() }} )</span>
             </div>
-            <span class="reviews">(1)</span>
         </div>
         <div class="post-title">
             <h5>

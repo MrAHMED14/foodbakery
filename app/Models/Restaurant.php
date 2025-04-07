@@ -94,6 +94,16 @@ class Restaurant extends Model
                     ->withTimestamps();
     }
 
+    public function averageRating()
+    {
+        return $this->reviews()->avg('rating') ?? 0;
+    }
+
+    public function reviewsCount()
+    {
+        return $this->reviews()->count();
+    }
+
     public function isOpenNow(): bool
     {
         $now = Carbon::now();

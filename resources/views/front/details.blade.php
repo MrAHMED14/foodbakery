@@ -69,12 +69,55 @@
                                     <form action="{{ route('cart.add') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="dish_id" value="{{ $dish->id }}">
-                                        <button type="submit" style=" display: inline-block; line-height: 21px; width: 22px; height: 22px; text-align: center; border: 1px solid; border-radius: 50%;"><i class="icon-plus4"></i></button>
+                                        <button type="submit"
+                                            style=" display: inline-block; line-height: 21px; width: 22px; height: 22px; text-align: center; border: 1px solid; border-radius: 50%;"><i
+                                                class="icon-plus4"></i></button>
                                     </form>
                                 </li>
                             @endforeach
                         </ul>
                     </ul>
+                @endforeach
+            </div>
+
+            {{-- Reviews --}}
+            <div style="margin-top: 20px;">
+                <strong>Make Reviews:</strong><br>
+                <form action="{{ route('reviews.store', $restaurant->id) }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="restaurant_id" value="{{ $restaurant->id }}" required>
+                    <label for="rating">Rating:</label>
+                    <select name="rating" id="rating" required>
+                        <option value="" disabled selected>Select a rating</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                    </select>
+                    <label for="comment">Comment:</label>
+                    <textarea name="comment" required placeholder="Write your review here..."></textarea>
+                    <button type="submit">submit</button>
+                </form>
+
+                <strong style="margin-top: 20px;">Reviews:</strong><br>
+                @foreach ($restaurant->reviews as $review)
+                    <div class="review">
+                        <p><strong>{{ $review->user->name }}</strong> rated {{ $review->rating }}/5</p>
+                        <p>{{ $review->comment }}</p>
+
+                        @if ($review->response)
+                            <div class="reply">
+                                <p><strong>Owner's Reply:</strong> {{ $review->response->reply }}</p>
+                            </div>
+                        @elseif (Auth::check() && Auth::user()->id === $restaurant->user_id)
+                            <form action="{{ route('reviews.reply', $review->id) }}" method="POST">
+                                @csrf
+                                <textarea name="reply" placeholder="Write your reply here..." required></textarea>
+                                <button type="submit">Reply</button>
+                            </form>
+                        @endif
+                    </div>
                 @endforeach
             </div>
         </div>
