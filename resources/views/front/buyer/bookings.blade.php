@@ -7,36 +7,8 @@
 @section('content')
 <!-- Main Section Start -->
 <div class="main-section">
-    <div class="page-section restaurant-detail-image-section" style=" background: url({{asset('front/extra-images/banner-img-2.jpg')}}) no-repeat scroll 0 0 / cover;">
-        <!-- Container Start -->
-        <div class="container">
-            <!-- Row Start -->
-            <div class="row">
-                <!-- Column Start -->
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="company-info-detail">
-                        <div class="company-info">
-                            <div class="img-holder">
-                                <figure>
-                                    <img src="{{asset('front/extra-images/team-medium-img1.jpg')}}" alt="">
-                                </figure>
-                            </div>
-                            <div class="text-holder">
-                                <span class="restaurant-title">Buyer Demo</span>
-                                <ul class="user-info-contact">
-                                    <li class="cell"><i class="icon-phone"></i><a href="tel:0123456789">012 3456 789</a></li>
-                                    <li class="email"><i class="icon-mail5"></i><a href="mailto:dum4@chimpgroup.com">dum4@chimpgroup.com</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Column End -->
-            </div>
-            <!-- Row End -->
-        </div>
-        <!-- Container End -->
-    </div>
+    @include('front.buyer.body.header')
+
     <div class="page-section account-header buyer-logged-in">
         <div class="container">
             <div class="row">

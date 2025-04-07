@@ -17,9 +17,9 @@
                     <a href="{{ route('buyer.orders') }}" class="btn-edit-profile"><i
                             class="icon-add_shopping_cart"></i>My Orders</a>
                 </li>
-                <li class="{{ request()->routeIs('buyer.shortlists') ? 'active' : '' }}">
+                {{-- <li class="{{ request()->routeIs('buyer.shortlists') ? 'active' : '' }}">
                     <a href="{{ route('buyer.shortlists') }}"><i class="icon-heart"></i>Shortlists</a>
-                </li>
+                </li> --}}
                 <li class="{{ request()->routeIs('buyer.statement') ? 'active' : '' }}">
                     <a href="{{ route('buyer.statement') }}"><i class="icon-file-text22"></i>Statement</a>
                 </li>
