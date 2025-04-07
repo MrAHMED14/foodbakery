@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
@@ -20,6 +21,8 @@ class Restaurant extends Model
         'latitude',
         'longitude',
         'description',
+        //TODO: Change to name of capacity to nbr_tables_resvervation
+        //TODO: Add Max person par table
         'capacity',
         'services',
         'payment_option',
@@ -89,6 +92,20 @@ class Restaurant extends Model
         return $this->belongsToMany(CuisineType::class, 'restaurant_cuisine')
                     ->withPivot('is_specialty')
                     ->withTimestamps();
+    }
+
+    public function isOpenNow(): bool
+    {
+        $now = Carbon::now();
+        $currentDay = $now->format('l');
+
+        return $this->openingHours
+            ->where('day', $currentDay)
+            ->where('is_closed', false)
+            ->contains(function ($openingHour) use ($now) {
+                return $now->format('H:i:s') >= $openingHour->opening_time
+                    && $now->format('H:i:s') <= $openingHour->closing_time;
+            });
     }
 
     public function toSearchableArray()

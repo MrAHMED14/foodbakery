@@ -11,8 +11,13 @@ class OpeningHourFactory extends Factory
 
     public function definition(): array
     {
-        $openingTime = $this->faker->time('H:i:s', strtotime('12:00'));
-        $closingTime = $this->faker->time('H:i:s', strtotime('23:00'));
+        $openingHour = rand(8, 10); // 8AM - 10AM
+        $openingMinute = rand(0, 59);
+        $openingTime = sprintf('%02d:%02d:00', $openingHour, $openingMinute);
+
+        $closingHour = rand(14, 23); // 2PM - 11PM
+        $closingMinute = rand(0, 59);
+        $closingTime = sprintf('%02d:%02d:00', $closingHour, $closingMinute);
 
         $isClosed = $this->faker->boolean(10);
 

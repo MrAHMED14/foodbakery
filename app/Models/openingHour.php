@@ -18,8 +18,8 @@ class openingHour extends Model
     ];
 
     protected $casts = [
-        'opening_time' => 'datetime',
-        'closing_time' => 'datetime',
+        'opening_time' => 'string',
+        'closing_time' => 'string',
         'is_closed' => 'boolean',
     ];
 

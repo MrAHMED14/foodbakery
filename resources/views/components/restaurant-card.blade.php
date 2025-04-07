@@ -8,7 +8,11 @@
                     alt="">
             </a>
         </figure>
-        <span class="restaurant-status close"><em class="bookmarkRibbon"></em>Close</span>
+        @if ($restaurant->isOpenNow())
+            <span class="restaurant-status open"><em class="bookmarkRibbon"></em>Open</span>
+        @else
+            <span class="restaurant-status close"><em class="bookmarkRibbon"></em>Close</span>
+        @endif
     </div>
     <div class="text-holder">
         <div class="list-rating">

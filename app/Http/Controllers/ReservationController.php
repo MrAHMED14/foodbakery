@@ -32,7 +32,7 @@ class ReservationController extends Controller
                 $request->nbr_table
             );
 
-            session()->flash('success', 'Restaurant registered successfully!');
+            session()->flash('success', 'Reservation created successfully!');
             return redirect()->route('front.listing_details', $request->restaurant_id);
         } catch (\Exception $e) {
             session()->flash('error', $e->getMessage());
