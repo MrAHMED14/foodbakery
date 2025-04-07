@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class openingHour extends Model
+class OpeningHour extends Model
 {
     use HasFactory;
 
