@@ -27,7 +27,9 @@
                                         <h5>Account Settings</h5>
                                     </div>
                                     <div class="row">
-                                        <form autocomplete="off">
+                                        <form method="POST" action="{{ route('account-setting.update') }}"
+                                            enctype="multipart/form-data" autocomplete="off">
+                                            @csrf
                                             <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
                                                 <div class="row">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -35,7 +37,12 @@
                                                             <label>Full Name *</label>
                                                             <input type="text" placeholder="Enter your full name"
                                                                 class="foodbakery-dev-req-field"
-                                                                value="{{ $user->name ?? '' }}" name="full_name">
+                                                                value="{{ $user->name ?? '' }}" name="name">
+
+                                                            @error('name')
+                                                                <div class="text-danger" style="font-size: 12px;">
+                                                                    {{ $message }}</div>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -51,7 +58,12 @@
                                                             <label>Phone Number *</label>
                                                             <input type="tel" class="foodbakery-dev-req-field"
                                                                 value="{{ $user->phone ?? '' }}"
-                                                                placeholder="Enter your phone number" name="phone_number">
+                                                                placeholder="Enter your phone number" name="phone">
+
+                                                            @error('phone')
+                                                                <div class="text-danger" style="font-size: 12px;">
+                                                                    {{ $message }}</div>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
@@ -68,8 +80,7 @@
                                                                     <a>
                                                                         <img id="preview-image"
                                                                             src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('front/extra-images/team-medium-img1.jpg') }}"
-                                                                            alt="User Image"
-                                                                            {{-- style="width: 150px; height: 150px; object-fit: cover;"--}}>
+                                                                            alt="User Image">
                                                                     </a>
                                                                 </figure>
                                                             </div>
@@ -87,8 +98,13 @@
                                                             <span><i class="icon-cross"></i></span>
                                                         </button>
 
-                                                        <input id="file" type="file" name="photo" class="hide"
-                                                            accept="image/*">
+                                                        <input id="file" type="file" name="profile_picture" class="hide"
+                                                        accept="image/*">
+
+                                                        @error('profile_picture')
+                                                            <div class="text-danger" style="font-size: 12px;">
+                                                                {{ $message }}</div>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -109,7 +125,7 @@
                                                 if (file) {
                                                     document.getElementById('preview-image').src = URL.createObjectURL(file);
                                                     document.getElementById('remove-photo-btn').style.display =
-                                                    'inline-block'; // Show the remove button
+                                                        'inline-block'; // Show the remove button
                                                 }
                                             });
 
@@ -120,10 +136,9 @@
                                             }
                                         </script>
 
+                                        <form method="POST" action="{{ route('account-setting.changePassword') }}" id="publisher_profile" autocomplete="off">
+                                            @csrf
 
-
-
-                                        <form id="publisher_profile" autocomplete="off">
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="element-title has-border">
                                                     <h5>Change Password</h5>
@@ -134,6 +149,11 @@
                                                     <label> Current Password *</label>
                                                     <input autocomplete="off" type="password" name="current_password"
                                                         class="foodbakery-dev-req-field">
+
+                                                    @error('current_password')
+                                                        <div class="text-danger" style="font-size: 12px;">
+                                                            {{ $message }}</div>
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -141,18 +161,28 @@
                                                     <label> New Password *</label>
                                                     <input type="password" name="new_password"
                                                         class="foodbakery-dev-req-field">
+
+                                                    @error('new_password')
+                                                        <div class="text-danger" style="font-size: 12px;">
+                                                            {{ $message }}</div>
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="field-holder">
                                                     <label> Confirm New Password *</label>
-                                                    <input type="password" name="confirm_password"
+                                                    <input type="password" name="new_password_confirmation"
                                                         class="foodbakery-dev-req-field">
+
+                                                    @error('new_password_confirmation')
+                                                        <div class="text-danger" style="font-size: 12px;">
+                                                            {{ $message }}</div>
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="field-holder">
-                                                    <button name="button" type="submit" class="btn-submit">Change
+                                                    <button type="submit" class="btn-submit">Change
                                                         Password</button>
                                                 </div>
                                             </div>

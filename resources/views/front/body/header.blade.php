@@ -223,8 +223,7 @@
                                         <li class="user-dashboard-menu-children">
                                             <a href="javascript:void(0);" class="">
                                                 <figure class="profile-image">
-                                                    <img src="{{ asset('front/extra-images/team-medium-img1.jpg') }}"
-                                                        alt="">
+                                                    <img src="{{ Auth::user()->photo ? asset('storage/' . Auth::user()->photo) : asset('front/extra-images/team-medium-img1.jpg') }}" alt="{{ Auth::user()->name }}">
                                                 </figure>
                                                 {{ Auth::user()->name }}
                                             </a>

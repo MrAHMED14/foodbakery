@@ -14,7 +14,7 @@
                     <div class="company-info">
                         <div class="img-holder">
                             <figure>
-                                <img src="{{ asset('front/extra-images/team-medium-img1.jpg') }}" alt="">
+                                <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('front/extra-images/team-medium-img1.jpg') }}" alt="{{ $user->name }}">
                             </figure>
                         </div>
                         <div class="text-holder">

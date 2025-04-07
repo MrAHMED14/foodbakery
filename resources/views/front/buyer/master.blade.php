@@ -57,6 +57,18 @@
         @include('front.body.header')
         <!-- header End -->
 
+        @if (session('success'))
+            <div style="z-index: 100; color: green; background-color: #d4edda; padding: 10px;">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div style="z-index: 100; color: red; background-color: #f8d7da; padding: 10px;">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <!-- ============================================================== -->
         <!-- Start main Content here -->
         <!-- ============================================================== -->
