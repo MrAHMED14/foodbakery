@@ -6,6 +6,7 @@ use App\Models\CuisineType;
 use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -35,7 +36,7 @@ class RestaurantController extends Controller
 
         // Filter by multiple cuisine
         if ($cuisineTypesInput) {
-            $restaurantsQuery = $restaurantsQuery->whereHas('cuisines', function($query) use ($cuisineTypesInput) {
+            $restaurantsQuery = $restaurantsQuery->whereHas('cuisines', function ($query) use ($cuisineTypesInput) {
                 $query->whereIn('cuisine_types.id', $cuisineTypesInput);
             });
         }
@@ -54,6 +55,7 @@ class RestaurantController extends Controller
     public function show(Restaurant $restaurant)
     {
         return view('front.details', compact('restaurant'));
+        // return view('front.details2', compact('restaurant'));
     }
 
     /*
@@ -103,8 +105,8 @@ class RestaurantController extends Controller
 
 
             // Handle file uploads with storage paths
-            $logoPath = $request->file('restaurant_logo') ? $request->file('restaurant_logo')->store('logos', 'public') : null;
-            $coverPhotoPath = $request->file('restaurant_cover_photo') ? $request->file('restaurant_cover_photo', 'public')->store('cover_photos') : null;
+            $logoPath = $request->file('restaurant_logo') ? $request->file('restaurant_logo')->store('restaurants/logos', 'public') : null;
+            $coverPhotoPath = $request->file('restaurant_cover_photo') ? $request->file('restaurant_cover_photo')->store('restaurants/covers', 'public') : null;
 
             // Create the restaurant
             $restaurant = Restaurant::create([
@@ -140,12 +142,73 @@ class RestaurantController extends Controller
 
             session()->flash('success', 'Restaurant registered successfully!');
             return redirect()->route('login');
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             session()->flash('error', 'Failed to register restaurant. Please try again.');
             return back();
         }
     }
+
+    public function update(Request $request)
+    {
+        $user = User::findOrFail(Auth::id());
+        $restaurant = $user->restaurant;
+
+        if (!$restaurant) {
+            return redirect()->back()->with('error', 'Restaurant not found.');
+        }
+
+        $request->validate([
+            'cover_photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'restaurant_logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'restaurant_name' => 'required|string|max:255',
+            'restaurant_phone' => 'nullable|string|max:20',
+            'manager_phone' => 'nullable|string|max:20',
+            'manager_name' => 'required|string|max:255',
+            'contact_email' => 'nullable|email',
+            'restaurant_description' => 'required|string',
+            'accepts_orders' => 'required|boolean',
+            'accepts_reservations' => 'required|boolean',
+            'minimum_order' => 'nullable|numeric|min:0',
+            'maximum_order' => 'nullable|numeric|min:0',
+            'delivery_fee' => 'nullable|numeric|min:0',
+            'cuisine_types' => 'nullable|array',
+            'cuisine_types.*' => 'exists:cuisine_types,id',
+        ]);
+
+        if ($request->hasFile('cover_photo')) {
+            $coverPath = $request->file('cover_photo')->store('restaurants/covers', 'public');
+            $restaurant->cover_photo = $coverPath;
+        }
+
+        if ($request->hasFile('restaurant_logo')) {
+            $logoPath = $request->file('restaurant_logo')->store('restaurants/logos', 'public');
+            $restaurant->restaurant_logo = $logoPath;
+        }
+
+        $restaurant->name = $request->restaurant_name;
+        $restaurant->phone = $request->restaurant_phone;
+        $restaurant->email = $request->contact_email;
+        $restaurant->description = $request->restaurant_description;
+        $restaurant->accepts_orders = $request->accepts_orders;
+        $restaurant->accepts_reservations = $request->accepts_reservations;
+        $restaurant->minimum_order = $request->minimum_order;
+        $restaurant->maximum_order = $request->maximum_order;
+        $restaurant->delivery_fee = $request->delivery_fee;
+
+        if (isset($request->cuisine_types)) {
+            $restaurant->cuisines()->sync($request->cuisine_types);
+        }
+
+        $restaurant->save();
+
+        $user->name = $request->manager_name;
+        $user->phone = $request->manager_phone;
+        $user->save();
+
+        return redirect()->back()->with('success', 'Restaurant information updated successfully.');
+    }
+
 
     /*
         !-----------------------------------------------------------------------!
@@ -180,7 +243,8 @@ class RestaurantController extends Controller
 
     public function restaurant()
     {
-        return view('front.restaurant.restaurant');
+        $cuisineTypes = CuisineType::all();
+        return view('front.restaurant.restaurant', compact('cuisineTypes'));
     }
 
     public function location()

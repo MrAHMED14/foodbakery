@@ -42,6 +42,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/reviews/{review}/reply', [ReviewController::class, 'reply'])->name('reviews.reply');
 
         Route::group(['prefix' => 'restaurant', 'as' => 'restaurant.'], function () {
+            Route::post('/profile/update', [RestaurantController::class, 'update'])->name('update');
+
+
             Route::get('/dashboard', [RestaurantController::class, 'restaurantDashboard'])->name('dashboard');
             Route::get('/restaurant', [RestaurantController::class, 'restaurant'])->name('restaurant');
             Route::get('/location', [RestaurantController::class, 'location'])->name('location');

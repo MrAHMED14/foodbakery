@@ -3,7 +3,7 @@
 @endphp
 
 <div class="page-section restaurant-detail-image-section"
-    style=" background: url({{ $user->restaurant->cover_photo ? asset('storage/' . $user->restaurant->cover_photo) : asset('front/extra-images/cover-photo01.jpg') }}) no-repeat scroll 0 0 / cover;">
+style="background: url('{{ $user->restaurant->cover_photo ? asset('storage/' . $user->restaurant->cover_photo) : asset('front/extra-images/cover-photo01.jpg') }}') center center / cover no-repeat;">
     <!-- Container Start -->
     <div class="container">
         <!-- Row Start -->
