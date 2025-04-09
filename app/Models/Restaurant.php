@@ -106,16 +106,37 @@ class Restaurant extends Model
 
     public function isOpenNow(): bool
     {
-        $now = Carbon::now();
+        $now = Carbon::now()->timezone('+01:00');
         $currentDay = $now->format('l');
 
-        return $this->openingHours
+        $todayOpeningHours = $this->openingHours()
             ->where('day', $currentDay)
-            ->where('is_closed', false)
-            ->contains(function ($openingHour) use ($now) {
-                return $now->format('H:i:s') >= $openingHour->opening_time
-                    && $now->format('H:i:s') <= $openingHour->closing_time;
-            });
+            ->first();
+
+        if (!$todayOpeningHours) {
+            return false;
+        }
+
+        if ($todayOpeningHours->is_closed) {
+            return false;
+        }
+
+        if ($todayOpeningHours->opening_time === null || $todayOpeningHours->closing_time === null) {
+            return false;
+        }
+
+        $parsedOpeningTime = Carbon::parse($todayOpeningHours->opening_time);
+        $parsedClosingTime = Carbon::parse($todayOpeningHours->closing_time);
+
+        $openingTime = $parsedOpeningTime->format('H:i:s');
+        $closingTime = $parsedClosingTime->format('H:i:s');
+        $currentTime = Carbon::parse($now->format('H:i:s'));
+
+        if ($currentTime->between($openingTime, $closingTime)) {
+            return true;
+        }
+
+        return false;
     }
 
     public function toSearchableArray()
