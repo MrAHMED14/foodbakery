@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CuisineType;
 use App\Models\Restaurant;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -235,6 +236,47 @@ class RestaurantController extends Controller
         ]);
 
         return back()->with('success', 'Location updated successfully.');
+    }
+
+    public function updateOpeningHours(Request $request)
+    {
+        $user = User::findOrFail(Auth::id());
+        $restaurant = $user->restaurant;
+
+        if (!$restaurant) {
+            return redirect()->back()->with('error', 'Restaurant not found.');
+        }
+
+        $request->validate([
+            'opening_times' => 'required|array',
+            'closing_times' => 'required|array',
+            'is_closed' => 'nullable|array',
+        ]);
+
+        foreach (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day) {
+            $openingTime = $request->opening_times[$day] ?? null;
+            $closingTime = $request->closing_times[$day] ?? null;
+            $isClosed = isset($request->is_closed[$day]);
+
+            if (!$isClosed) {
+                if (!$openingTime || !$closingTime) {
+                    return back()->with('error', 'Please provide both opening and closing times for ' . $day);
+                }
+
+                if (Carbon::parse($openingTime)->gte(Carbon::parse($closingTime))) {
+                    return back()->with('error', 'Opening time must be before closing time on ' . $day);
+                }
+            }
+
+            $openingHour = $restaurant->openingHours()->firstOrNew(['day' => $day]);
+            $openingHour->opening_time = $openingTime;
+            $openingHour->closing_time = $closingTime;
+            $openingHour->is_closed = $isClosed;
+            $openingHour->restaurant_id = $restaurant->id;
+            $openingHour->save();
+        }
+
+        return back()->with('success', 'Opening hours updated successfully.');
     }
 
     /*
