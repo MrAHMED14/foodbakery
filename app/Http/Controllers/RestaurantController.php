@@ -209,6 +209,33 @@ class RestaurantController extends Controller
         return redirect()->back()->with('success', 'Restaurant information updated successfully.');
     }
 
+    public function updateLocation(Request $request)
+    {
+        $user = User::findOrFail(Auth::id());
+        $restaurant = $user->restaurant;
+
+        if (!$restaurant) {
+            return redirect()->back()->with('error', 'Restaurant not found.');
+        }
+
+        $request->validate([
+            'address' => 'required|string|max:255',
+            'state' => 'required|string|max:100',
+            'city' => 'required|string|max:100',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
+        ]);
+
+        $restaurant->update([
+            'address' => $request->address,
+            'state' => $request->state,
+            'city' => $request->city,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+        ]);
+
+        return back()->with('success', 'Location updated successfully.');
+    }
 
     /*
         !-----------------------------------------------------------------------!
