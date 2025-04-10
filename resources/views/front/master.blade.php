@@ -47,6 +47,7 @@
 	<script src="{{asset('front/js/jquery-3.6.0.min.js')}}"></script>
 	<script src="{{asset('front/js/modernizr.js')}}"></script>
 	<script src="{{asset('front/js/bootstrap.js')}}"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
