@@ -79,7 +79,7 @@ class CartService
         }
 
         $cart[$restaurantId] = array_filter($cart[$restaurantId], function ($cartDish) use ($dishId) {
-            return $cartDish['dish_id'] !== $dishId;
+            return (int) $cartDish['dish_id'] !== (int) $dishId;
         });
 
         if (empty($cart[$restaurantId])) {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CuisineType;
 use App\Models\Restaurant;
 use App\Models\User;
+use App\Services\CartService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,12 @@ use Illuminate\Support\Facades\Hash;
 
 class RestaurantController extends Controller
 {
+    protected $cartService;
+
+    public function __construct(CartService $cartService)
+    {
+        $this->cartService = $cartService;
+    }
     /*
         * "Display all the restaurants"
     */
@@ -55,8 +62,9 @@ class RestaurantController extends Controller
     */
     public function show(Restaurant $restaurant)
     {
-        return view('front.details', compact('restaurant'));
-        // return view('front.details2', compact('restaurant'));
+        $cart = $this->cartService->getCart();
+        $totalPrice = $this->cartService->getTotalPrice();
+        return view('front.details', compact('restaurant', 'cart', 'totalPrice'));
     }
 
     /*

@@ -40,4 +40,15 @@ class CartController extends Controller
         $this->cartService->clearCart();
         return redirect()->route('front.cart.view')->with('success', 'Cart cleared.');
     }
+
+    public function removeDish(Request $request, CartService $cartService)
+    {
+        $request->validate([
+            'restaurant_id' => 'required|integer',
+            'dish_id' => 'required|integer',
+        ]);
+        $cartService->removeDish($request->restaurant_id, $request->dish_id);
+
+        return redirect()->back()->with('success', 'Dish removed successfully.');
+    }
 }
