@@ -56,7 +56,25 @@
                                                     <h4>Opening Hours</h4>
                                                 </div>
                                             </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                @error('opening_times')
+                                                    <div class="text-danger">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                                @error('closing_times')
+                                                    <div class="text-danger">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                                @error('is_closed')
+                                                    <div class="text-danger">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
                                         </div>
+
 
                                         <table class="opening-hours-table">
                                             <thead>
