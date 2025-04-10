@@ -19,6 +19,7 @@ class ReservationService
 
         $reservationDateTime = Carbon::parse($reservationDate);
         $startTime = $reservationDateTime->copy();
+        //TODO: Make session duration dynamic (come from restaurant)
         $endTime = $startTime->copy()->addMinutes($sessionDuration);
 
         $dayName = $reservationDateTime->format('l');
@@ -35,6 +36,7 @@ class ReservationService
             throw new Exception("The restaurant is not open at this time.");
         }
 
+        //TODO: Check if resarvation was cancelled
         $overlappingReservations = Reservation::where('restaurant_id', $restaurant->id)
             ->whereDate('reservation_date', $reservationDateTime->toDateString())
             ->where(function ($query) use ($startTime, $endTime) {
@@ -53,7 +55,6 @@ class ReservationService
             throw new Exception('No available tables for this time slot.');
         }
 
-        // Create the reservation
         //TODO: ADD first_name, last_name
         return Reservation::create([
             'user_id'          => $user->id,
