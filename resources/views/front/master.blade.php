@@ -58,19 +58,21 @@
         <!-- header End -->
 
         @if (session('success'))
-            <div style="z-index: 100; color: green; background-color: #d4edda; padding: 10px;">
+            <div style="z-index: 100; color: #008A2E; background-color: #ECFDF3; padding: 16px;">
+                <i class="fa fa-check-circle" aria-hidden="true" style="padding-right: 5px;"></i>
                 {{ session('success') }}
             </div>
         @endif
 
         @if (session('error'))
-            <div style="z-index: 100; color: red; background-color: #f8d7da; padding: 10px;">
+            <div style="z-index: 100; color: #E60000; background-color: #fff0f0; padding: 16px;">
+                <i class="fa fa-exclamation-circle" aria-hidden="true" style="padding-right: 5px;"></i>
                 {{ session('error') }}
             </div>
         @endif
 
         @if ($errors->any())
-            <div style="z-index: 100; color: red; background-color: #f8d7da; padding: 10px;">
+            <div style="z-index: 100; color: #E60000; background-color: #fff0f0; padding: 16px;">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
