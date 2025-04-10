@@ -99,6 +99,11 @@ class Restaurant extends Model
         return $this->reviews()->avg('rating') ?? 0;
     }
 
+    public function roundedRating()
+    {
+        return round($this->averageRating(), 1);
+    }
+
     public function reviewsCount()
     {
         return $this->reviews()->count();

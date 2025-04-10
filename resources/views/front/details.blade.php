@@ -136,7 +136,7 @@
                                 <li class="active"><a data-toggle="tab" href="#home"><i
                                             class="icon- icon-room_service"></i>Menu</a></li>
                                 <li><a data-toggle="tab" href="#menu1"><i class="icon- icon-textsms"></i>Reviews
-                                        (1)</a></li>
+                                        ({{ $restaurant->reviewsCount() }})</a></li>
                                 <li><a data-toggle="tab" href="#menu2"><i class="icon- icon-food"></i>Book a Table
                                     </a></li>
                                 <li><a data-toggle="tab" href="#menu3"><i class="icon- icon-info3"></i>Restaurant
@@ -144,6 +144,7 @@
                                 </li>
                             </ul>
 
+                            {{-- Navigation tab's --}}
                             <div class="tab-content">
                                 {{-- Menu --}}
                                 <div id="home" class="tab-pane fade in active">
@@ -157,6 +158,14 @@
 
                                         {{-- Menu Items --}}
                                         <div id="menu-item-list-6272" class="menu-itam-list">
+                                            @if ($restaurant->menus->isEmpty())
+                                                <div class="element-title">
+                                                    <h3 style="padding-bottom: 20px">
+                                                        No menu items available for this restaurant.
+                                                    </h3>
+                                                </div>
+                                            @endif
+
                                             @foreach ($restaurant->menus as $menu)
                                                 <div class="element-title" id="menu-category-{{ $menu->id }}">
                                                     <h5 class="text-color">{{ $menu->name }}</h5>
@@ -220,13 +229,28 @@
                                                 <div class="overall-ratings-container">
                                                     <div class="overall-rating">
                                                         <h6>Customer Reviews For Food Bakery</h6>
-                                                        <ul class="reviews-box">
+                                                        <ul class="reviews-box"
+                                                            style="border: none; padding: 0; margin: 0;">
                                                             <li>
-                                                                <em>5.0 </em>
-                                                                <div class="rating-star">
-                                                                    <span class="rating-box" style="width: 100%;"></span>
+                                                                <div style="display: flex; align-items: center; gap: 5px;">
+                                                                    <em>{{ $restaurant->roundedRating() }}</em>
+                                                                    <div class="">
+                                                                        @for ($i = 1; $i <= 5; $i++)
+                                                                            @if ($i <= floor($restaurant->averageRating()))
+                                                                                <span class="icon-star-full"
+                                                                                    style="color: #ffc107; font-size: 15px;"></span>
+                                                                            @elseif ($i - $restaurant->averageRating() <= 0.5)
+                                                                                <span class="icon-star-half-empty"
+                                                                                    style="color: #ffc107; font-size: 15px;"></span>
+                                                                            @else
+                                                                                <span class="icon-star-outlined"
+                                                                                    style="color: #ffc107; font-size: 15px;"></span>
+                                                                            @endif
+                                                                        @endfor
+                                                                    </div>
                                                                 </div>
-                                                                <span class="reviews-count">(based on 1
+                                                                <span class="reviews-count">(based on
+                                                                    {{ $restaurant->reviewsCount() }}
                                                                     reviews)</span>
                                                             </li>
                                                             <li>
@@ -239,35 +263,10 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="ratings-summary-container">
-                                                    <div class="rating-summary">
-                                                        <h5>Rating summary</h5>
-                                                        <ul>
-                                                            <li>
-                                                                <span class="review-category">Service</span>
-                                                                <div class="rating-star">
-                                                                    <span class="rating-box" style="width:100%"></span>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="review-category">Quality</span>
-                                                                <div class="rating-star">
-                                                                    <span class="rating-box" style="width:100%"></span>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="review-category">Value</span>
-                                                                <div class="rating-star">
-                                                                    <span class="rating-box" style="width:100%"></span>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
                                             </div>
 
                                             {{-- Add Review --}}
-                                            @if (Auth::check() && Auth::user()->id !== $restaurant->user_id)
+                                            @if (Auth::check() && !Auth::user()->isRestaurant())
                                                 <div style="margin-bottom: 20px;">
                                                     <form action="{{ route('reviews.store') }}" method="POST">
                                                         @csrf
@@ -296,7 +295,8 @@
                                                         <div style="margin-bottom: 20px;">
                                                             <label style="font-weight: bold;">Your Review:</label>
                                                             <div class="field-holder field-textarea">
-                                                                <textarea name="comment" rows="5" placeholder="Write your review here..." class="input-field" required>{{ old('comment') }}</textarea>
+                                                                <textarea style="border-radius: 3px; background-color: #fbfcfd; color: #9fa1a9;" name="comment" rows="5"
+                                                                    placeholder="Write your review here..." class="input-field" required>{{ old('comment') }}</textarea>
                                                             </div>
 
                                                             @error('comment')
@@ -329,7 +329,6 @@
                                                     </script>
                                                 </div>
                                             @endif
-
 
                                             {{-- Reviews List --}}
                                             <div class="review-listing">
@@ -374,6 +373,23 @@
 
                                                 {{-- Reviews --}}
                                                 <ul class="review-restaurant">
+                                                    @if ($restaurant->reviews->isEmpty())
+                                                        <li class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="reviews-alert">
+                                                                <div class="media-holder">
+                                                                    <img src="https://foodbakery.chimpgroup.com/wp-content/plugins/wp-foodbakery/assets/frontend/images/icon-review.png"
+                                                                        alt="review not found">
+                                                                </div>
+                                                                <div class="text-holder">
+                                                                    <strong><span
+                                                                            style="color: black; font-size: 15px; display: inline; text-align: left;">No
+                                                                            reviews yet.</span><br /> Be the first to leave
+                                                                        a review!</strong>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    @endif
+
                                                     @foreach ($restaurant->reviews as $review)
                                                         <li class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                                             <div class="list-holder ">
@@ -433,7 +449,8 @@
                                                                         action="{{ route('reviews.reply', $review->id) }}"
                                                                         method="POST">
                                                                         @csrf
-                                                                        <textarea name="reply" rows="2" placeholder="Write your reply here..." required></textarea>
+                                                                        <textarea style="border-radius: 3px; background-color: #fbfcfd; color: #9fa1a9;" name="reply" rows="2"
+                                                                            placeholder="Write your reply here..." required></textarea>
                                                                         <button type="submit"
                                                                             class="btn-submit">Reply</button>
                                                                     </form>
@@ -450,7 +467,9 @@
                                 {{-- Book a Table --}}
                                 <div id="menu2" class="tab-pane fade">
                                     <div class="booking-info-sec">
-                                        <form name="booking-form" id="booking-form" class="booking-form" method="post">
+                                        <form action="{{ route('reservation.reserve') }}" method="POST">
+                                            @csrf
+
                                             <div class="row">
                                                 <div class="booking-info">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -462,12 +481,19 @@
                                                                     are waiting to be discovered. Check out the best
                                                                     restaurants and Book Using following Form.</p>
                                                             </div>
+
+                                                            <input type="hidden" name="restaurant_id"
+                                                                value="{{ $restaurant->id }}" hidden>
+
+                                                            {{-- First Name --}}
                                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                                 <div class="field-holder has-icon"><i
                                                                         class="icon icon-user"></i><input type="text"
                                                                         placeholder="First Name" class="input-field"
                                                                         id="first-name"></div>
                                                             </div>
+
+                                                            {{-- Last Name --}}
                                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                                 <div class="field-holder has-icon"><i
                                                                         class="icon icon-user"></i><input type="text"
@@ -475,136 +501,57 @@
                                                                         id="lastname-booking">
                                                                 </div>
                                                             </div>
+
+                                                            {{-- Reservation Date --}}
                                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                                <div class="field-holder has-icon"><i
-                                                                        class="icon icon-envelope2"></i><input
-                                                                        type="text" placeholder="Email"
-                                                                        class="input-field foodbakery-email-field"
-                                                                        id="email-booking">
+                                                                <div class="field-holder">
+                                                                    <div class="">
+                                                                        <input type="datetime-local"
+                                                                            name="reservation_date"
+                                                                            class="form-control booking-date" required>
+                                                                        @error('reservation_date')
+                                                                            <div class="text-danger" style="font-size: 12px;">
+                                                                                {{ $message }}</div>
+                                                                        @enderror
+                                                                    </div>
                                                                 </div>
                                                             </div>
+
+                                                            {{-- Number of Tables --}}
                                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                                 <div class="field-holder has-icon"><i
-                                                                        class="icon icon-users3"></i>
-                                                                    <select class="chosen-select" style="display: none;">
+                                                                        class="icon icon-table"></i>
+                                                                    <select class="chosen-select" style="display: none;"
+                                                                        name="nbr_table">
                                                                         <option selected="selected" value="">
-                                                                            Tables
+                                                                            Number of Tables
                                                                         </option>
-                                                                        <option value="">1 Tables</option>
-                                                                        <option value="">2 Tables</option>
-                                                                        <option value="">3 Tables</option>
-                                                                        <option value="">4 Tables</option>
-                                                                        <option value="">5 Tables</option>
+                                                                        <option value="1">1 Table</option>
+                                                                        <option value="2">2 Tables</option>
+                                                                        <option value="3">3 Tables</option>
+                                                                        <option value="4">4 Tables</option>
+                                                                        <option value="5">5 Tables</option>
                                                                     </select>
+                                                                    @error('nbr_table')
+                                                                        <div class="text-danger" style="font-size: 12px;">
+                                                                            {{ $message }}</div>
+                                                                    @enderror
                                                                 </div>
                                                             </div>
-                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                                <div class="field-holder has-icon">
-                                                                    <div class="date-sec"><i class="icon-event_available">
-                                                                        </i><input type="text"
-                                                                            placeholder="Booking date"
-                                                                            class="form-control booking-date"
-                                                                            id="date-of-booking" name="date-of-booking">
-                                                                        <script>
-                                                                            jQuery(document).ready(function() {
-                                                                                var disabledDays = [""];
-                                                                                jQuery("#date-of-booking").datepicker({
-                                                                                    showOtherMonths: true,
-                                                                                    firstDay: 1,
-                                                                                    minDate: 0,
-                                                                                    dateFormat: "dd-mm-yy",
-                                                                                    prevText: "",
-                                                                                    nextText: "",
-                                                                                    monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",
-                                                                                        "Oct", "Nov", "Dec"
-                                                                                    ],
-                                                                                    beforeShow: function(textbox, instance) {
-                                                                                        $(this).parent().append($('#ui-datepicker-div'));
-                                                                                    },
-                                                                                    beforeShowDay: function(date) {
-                                                                                        var day = date.getDay();
-                                                                                        var string = jQuery
-                                                                                            .datepicker
-                                                                                            .formatDate(
-                                                                                                "dd-mm-yy",
-                                                                                                date
-                                                                                            );
-                                                                                        var isDisabled = (jQuery
-                                                                                            .inArray(
-                                                                                                string,
-                                                                                                disabledDays
-                                                                                            ) !=
-                                                                                            -1);
-                                                                                        //day != 0 disables all Sundays
-                                                                                        return [!
-                                                                                            isDisabled
-                                                                                        ];
-                                                                                    },
-                                                                                    onSelect: function(
-                                                                                        date) {
-                                                                                        jQuery(
-                                                                                                "#date-of-booking"
-                                                                                            )
-                                                                                            .val(
-                                                                                                date
-                                                                                            );
-                                                                                        load_available_time(date,
-                                                                                            '6272'
-                                                                                        );
-                                                                                    }
-                                                                                });
-                                                                            });
-                                                                        </script>
-                                                                        <ul class="calendar-options">
-                                                                            <li class="avilable">Available</li>
-                                                                            <li class="unavailable">Unavailable</li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                                <div class="field-holder has-icon">
-                                                                    <div class="booking_time_wrapper">
-                                                                        <div id="time-div-time-date-of-booking"><i
-                                                                                class="icon-clock-o"></i>
-                                                                            <select
-                                                                                class="chosen-select foodbakery-required-field"
-                                                                                id="time-date-of-booking"
-                                                                                style="display: none;">
-                                                                                <option value="">12:00 AM</option>
-                                                                                <option value="">12:15 AM</option>
-                                                                                <option value="">12:30 AM</option>
-                                                                                <option value="">12:45 AM</option>
-                                                                                <option value="">01:00 AM</option>
-                                                                                <option value="">01:15 AM</option>
-                                                                                <option value="">01:30 AM</option>
-                                                                                <option value="">01:45 AM</option>
-                                                                                <option value="">02:00 AM</option>
-                                                                                <option value="">02:15 AM</option>
-                                                                                <option value="">02:30 AM</option>
-                                                                                <option value="">02:45 AM</option>
-                                                                                <option value="">03:00 AM</option>
-                                                                                <option value="">03:15 AM</option>
-                                                                                <option value="">03:30 AM</option>
-                                                                                <option value="">03:45 AM</option>
-                                                                                <option value="">04:00 AM</option>
-                                                                                <option value="">04:15 AM</option>
-                                                                                <option value="">04:30 AM</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+
+                                                            {{-- Your Instructions --}}
                                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                <div class="field-holder has-icon field-textarea"><i
-                                                                        class="icon icon-mode_edit"></i>
-                                                                    <textarea placeholder="Your Instructions" id="contact-booking" name="contact-booking" class="input-field"></textarea>
+                                                                <div class="field-holder has-icon field-textarea">
+                                                                    <i class="icon icon-mode_edit"></i>
+                                                                    <textarea placeholder="Your Instructions" class="input-field"></textarea>
                                                                 </div>
                                                             </div>
+
+                                                            {{-- Submit Btn --}}
                                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                 <div class="field-holder">
                                                                     <div class="submit-btn">
-                                                                        <button type="button"
+                                                                        <button type="submit"
                                                                             class="field-btn bgcolor booking-submit-btn input-button-loader">Submit</button>
                                                                         <span class="booking-loader"></span>
                                                                     </div>
