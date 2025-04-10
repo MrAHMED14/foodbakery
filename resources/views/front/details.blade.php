@@ -5,9 +5,9 @@
 @endsection
 
 @section('content')
-    <!-- Main Section Start -->
     <div class="sub-header align-center">
-        <div class=" restaurant-detail-image-section"
+        {{-- Heading --}}
+        <div class="restaurant-detail-image-section"
             style="background: url('{{ $restaurant->cover_photo ? asset('storage/' . $restaurant->cover_photo) : asset('front/extra-images/cover-photo01.jpg') }}') center center / cover no-repeat; padding-top: 60px; padding-bottom: 30px; margin-top: 0px; margin-bottom: 0px; min-height: 186px !important;">
             <!-- Container Start -->
             <div class="container">
@@ -19,57 +19,83 @@
                             <div class="company-info" style="text-align: left">
                                 <div class="img-holder">
                                     <figure>
-                                        <img src="{{ asset('front/extra-images/listing-logo18.png') }}" alt="">
+                                        <img src="{{ $restaurant->restaurant_logo ? asset('storage/' . $restaurant->restaurant_logo) : asset('front/extra-images/listing-logo18.png') }}"
+                                            alt="{{ $restaurant->name . ' logo' }}">
                                     </figure>
                                 </div>
                                 <div class="text-holder">
-                                    <div class="rating-star">
-                                        <span class="rating-box" style="width: 100%;"></span>
+                                    <div>
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= floor($restaurant->averageRating()))
+                                                <span class="icon-star-full" style="color: #ff981a;"></span>
+                                            @elseif ($i - $restaurant->averageRating() <= 0.5)
+                                                <span class="icon-star-half-empty" style="color: #ff981a;"></span>
+                                            @else
+                                                <span class="icon-star-outlined" style="color: #ff981a;"></span>
+                                            @endif
+                                        @endfor
+                                        <span class="reviews">({{ $restaurant->reviewsCount() }} Reviews)</span>
                                     </div>
-                                    <span class="reviews">(1 Reviews)</span>
-                                    <span class="restaurant-title">Restaurant Demo</span>
+                                    <span class="restaurant-title">{{ $restaurant->name }}</span>
                                     <div class="text">
                                         <i class="icon-local_pizza"></i>
-                                        <p>Apple Juice</p>
+                                        @foreach ($restaurant->cuisines as $cuisine)
+                                            <span style="margin-top: 10px; color: white;">
+                                                {{ $cuisine->name }}
+                                                @if (!$loop->last)
+                                                    ,
+                                                @endif
+                                            </span>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
                             <div class="delivery-timing reviews-sortby">
                                 <div class="text">
-                                    <i class="icon-motorcycle"></i>
                                     <p>
-                                        Delivery fee: £10.00<span>
-                                            Min Order : £10.00 Max Order : £50.00</span>
+                                        <span style="display: flex; align-items: center; justify-content: center;">
+                                            <i class="icon-motorcycle"></i>
+                                            @if ($restaurant->delivery_fee)
+                                                Delivery fee: £{{ $restaurant->delivery_fee }}
+                                            @else
+                                                Delivery fee: Free
+                                            @endif
+                                        </span>
+                                        @if ($restaurant->minimum_order && $restaurant->maximum_order)
+                                            <span>Min Order : £{{ $restaurant->minimum_order }} Max Order :
+                                                £{{ $restaurant->maximum_order }}</span>
+                                        @endif
                                     </p>
                                 </div>
                                 <ul>
                                     <li>
                                         <a href="#" class="reviews-sortby-active">
-                                            <span>Today :</span>
-                                            11:00 am - 11:00 pm <i class="icon-chevron-small-down"></i>
+                                            <span>Status :</span>
+                                            @if ($restaurant->isOpenNow())
+                                                <span>Open</span>
+                                            @else
+                                                <span class="opend-time open-day">Closed</span>
+                                            @endif
+                                            <i class="icon-chevron-small-down"></i>
                                         </a>
                                         <ul class="delivery-dropdown">
-                                            <li><a href="#"><span class="opend-day">Monday</span> <span
-                                                        class="opend-time"><small>:</small> 11:00 am - 11:00
-                                                        pm</span></a></li>
-                                            <li><a href="#"><span class="opend-day">Tuesday</span> <span
-                                                        class="opend-time"><small>:</small> 11:00 am - 11:00
-                                                        pm</span></a></li>
-                                            <li><a href="#"><span class="opend-day">Wednesday</span> <span
-                                                        class="opend-time"><small>:</small> 11:00 am - 11:00
-                                                        pm</span></a></li>
-                                            <li><a href="#"><span class="opend-day">Thursday</span> <span
-                                                        class="opend-time"><small>:</small> 11:00 am - 11:00
-                                                        pm</span></a></li>
-                                            <li><a href="#"><span class="opend-day">Friday</span> <span
-                                                        class="opend-time"><small>:</small> 11:00 am - 11:00
-                                                        pm</span></a></li>
-                                            <li><a href="#"><span class="opend-day">Saturday</span> <span
-                                                        class="opend-time"><small>:</small> 11:00 am - 11:00
-                                                        pm</span></a></li>
-                                            <li><a href="#"><span class="opend-day">Sunday</span> <span
-                                                        class="opend-time close-day"><small>:</small>Closed</span></a>
-                                            </li>
+                                            @foreach ($restaurant->openingHours as $openingHour)
+                                                <li>
+                                                    <a href="#">
+                                                        <span class="opend-day">{{ $openingHour->day }}</span>
+                                                        <span class="opend-time">
+                                                            <small>:</small>
+                                                            @if ($openingHour->is_closed)
+                                                                <span class="opend-time close-day">Closed</span>
+                                                            @else
+                                                                {{ \Carbon\Carbon::parse($openingHour->opening_time)->format('h:i A') }}
+                                                                -
+                                                                {{ \Carbon\Carbon::parse($openingHour->closing_time)->format('h:i A') }}
+                                                            @endif
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            @endforeach
                                         </ul>
                                     </li>
                                 </ul>
@@ -83,6 +109,7 @@
             <!-- Container End -->
         </div>
 
+        {{-- Breadcrumbs --}}
         <div class="breadcrumbs align-left">
             <div class="container">
                 <div class="row">
@@ -102,42 +129,9 @@
         <div class="page-section">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 sticky-sidebar">
-                        <div class="filter-toggle">
-                            <span class="filter-toggle-text">Categories By</span><i class="icon-chevron-down"></i>
-                        </div>
-                        <div class="filter-wrapper">
-                            <div class="categories-menu">
-                                <h6><i class="icon-restaurant_menu"></i>Categories</h6>
-                                <ul class="menu-list">
-                                    <li class="active"><a href="#" class="menu-category-link"> Pizzas </a></li>
-                                    <li class=""><a href="#" class="menu-category-link"> Calzone </a></li>
-                                    <li class=""><a href="#" class="menu-category-link"> Garlic Bread </a></li>
-                                    <li class=""><a href="#" class="menu-category-link"> Kebabs </a></li>
-                                    <li class=""><a href="#" class="menu-category-link"> Burgers </a></li>
-                                    <li class=""><a href="#" class="menu-category-link"> Specials </a></li>
-                                    <li class=""><a href="#" class="menu-category-link"> Wraps </a></li>
-                                    <li class=""><a href="#" class="menu-category-link"> Chicken </a></li>
-                                    <li class=""><a href="#" class="menu-category-link"> Paninis </a></li>
-                                    <li class=""><a href="#" class="menu-category-link"> Jacket Potatoes </a>
-                                    </li>
-                                    <li class=""><a href="#" class="menu-category-link"> Starters </a></li>
-                                    <li class=""><a href="#" class="menu-category-link"> Traditional Curries
-                                        </a>
-                                    </li>
-                                    <li class=""><a href="#" class="menu-category-link"> Biryani Dishes </a>
-                                    </li>
-                                    <li class=""><a href="#" class="menu-category-link"> Vegetarian Dishes
-                                        </a></li>
-                                    <li class=""><a href="#" class="menu-category-link"> Rice </a></li>
-                                    <li class=""><a href="#" class="menu-category-link"> Bread </a></li>
-                                    <li class=""><a href="#" class="menu-category-link"> Sauces </a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-7 col-md-7 col-sm-9 col-xs-12">
+                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-24">
                         <div class="tabs-holder horizontal">
+                            {{-- Navigation --}}
                             <ul class="stickynav-tabs nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#home"><i
                                             class="icon- icon-room_service"></i>Menu</a></li>
@@ -149,1569 +143,61 @@
                                         Info</a>
                                 </li>
                             </ul>
+
                             <div class="tab-content">
+                                {{-- Menu --}}
                                 <div id="home" class="tab-pane fade in active">
                                     <div class="menu-itam-holder">
+                                        {{-- Search Box --}}
                                         <div class="field-holder sticky-search">
                                             <input id="menu-srch-6272" data-id="6272"
                                                 class="input-field dev-menu-search-field" type="text"
                                                 placeholder="Search food item">
                                         </div>
+
+                                        {{-- Menu Items --}}
                                         <div id="menu-item-list-6272" class="menu-itam-list">
-                                            <div class="element-title" id="menu-category-0">
-                                                <h5 class="text-color">Pizzas</h5>
-                                                <span>Choose your cut: Triangular, square, fingers or Un cut on any
-                                                    size
-                                                    pizza.</span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo24-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo24-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chicken Tandoori Special 12" Deep Pan</h6>
-                                                        <span>Cheese, tomatoes and italian herbs.</span>
-                                                        <ul class="nutri-icons">
-                                                            <li><a data-toggle="tooltip" title="Contain Bnana"><img
-                                                                        src="{{ asset('front/extra-images/natural-item03.png') }}"
-                                                                        alt=""></a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£4.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-0"><i
-                                                                class="icon-plus4 text-color"></i>
-                                                            <div class="foodbakery-button-loader" style="display: block;">
-                                                                <div class="spinner">
-                                                                    <div class="double-bounce1"></div>
-                                                                    <div class="double-bounce2"></div>
-                                                                </div>
+                                            @foreach ($restaurant->menus as $menu)
+                                                <div class="element-title" id="menu-category-{{ $menu->id }}">
+                                                    <h5 class="text-color">{{ $menu->name }}</h5>
+                                                    <span>{{ $menu->description }}</span>
+                                                </div>
+                                                <ul>
+                                                    @foreach ($menu->dishes as $dish)
+                                                        <li>
+                                                            <div class="image-holder">
+                                                                <img src="{{ asset('front/extra-images/fb_masonary_9-150x150.jpg') }}"
+                                                                    alt="">
                                                             </div>
-                                                        </a>
-                                                        <span id="add-menu-loader-0"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo23-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo23-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chicken Tandoori Special 09" Deep Pan</h6>
-                                                        <span>Cheese, tomatoes, tuna fish, sweetcorn and italian
-                                                            herbs
-                                                        </span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£6.50</span>
-                                                        <a href="#" data-toggle="modal" data-target="#extras-0-1"
-                                                            class="dev-adding-menu-btn"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-1"></span>
-                                                    </div>
-                                                    <div class="modal fade menu-extras-modal" id="extras-0-2"
-                                                        tabindex="-1" role="dialog">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <button type="button" class="close"
-                                                                        data-dismiss="modal" aria-label="Close"><span
-                                                                            aria-hidden="true">×</span></button>
-                                                                    <h2><a>Extras</a></h2>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="menu-selection-container">
-                                                                        <div class="extras-detail-main">
-                                                                            <h3>Drinks</h3>
-                                                                            <div class="extras-detail-options">
-                                                                                <div class="extras-detail-att">
-                                                                                    <label for="extra-1">
-                                                                                        <input type="radio"
-                                                                                            id="extra-1"
-                                                                                            name="extra-0-1">
-                                                                                        <span class="extra-title">Cold
-                                                                                            Drink</span>
-                                                                                        <span
-                                                                                            class="extra-price">£1.50</span>
-                                                                                    </label>
-                                                                                </div>
-                                                                                <div class="extras-detail-att">
-                                                                                    <label for="extra-2">
-                                                                                        <input type="radio"
-                                                                                            id="extra-2"
-                                                                                            name="extra-0-1">
-                                                                                        <span
-                                                                                            class="extra-title">Redbull</span>
-                                                                                        <span
-                                                                                            class="extra-price">£2.50</span>
-                                                                                    </label>
-                                                                                </div>
-                                                                                <div class="extras-detail-att">
-                                                                                    <label for="extra-3">
-                                                                                        <input type="radio"
-                                                                                            id="extra-3"
-                                                                                            name="extra-0-1">
-                                                                                        <span
-                                                                                            class="extra-title">chillies</span>
-                                                                                        <span
-                                                                                            class="extra-price">£3.50</span>
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="extras-detail-selected"></div>
-                                                                        </div>
-                                                                        <div class="extras-btns-holder">
-                                                                            <button style="display:none;"
-                                                                                class="add-extra-menu-btn input-button-loader">Add
-                                                                                to Menu</button>
-                                                                            <a href="#"
-                                                                                class="reset-menu-fields btn">Reset
-                                                                                Fields</a>
-                                                                            <span class="extra-loader"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                            <div class="text-holder">
+                                                                <h6>{{ $dish->name }}</h6>
+                                                                <span>{{ $dish->description }}</span>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo21-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo21-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Margherita 12" Deep Pan</h6>
-                                                        <span>heese, tomatoes and italian herbs</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£5.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-2"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-2"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/blogs-food-bakery-05.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/blogs-food-bakery-05-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6> Margherita 9" Deep Pan</h6>
-                                                        <span>Cheese, tomatoes, shrimps, garlic, mussels, cockles,
-                                                            olives and
-                                                            italian herbs</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£4.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-3"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-3"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo19-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo19-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6> Margherita 9" Deep Pan</h6>
-                                                        <span>Cheese, tomatoes and italian herbs</span>
-                                                        <ul class="nutri-icons">
-                                                            <li><a data-toggle="tooltip" title="Onion"><img
-                                                                        src="{{ asset('front/extra-images/natural-item02.png') }}"
-                                                                        alt=""></a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-4"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-4"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo18-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo18-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Vegetarian 12" Deep Pan</h6>
-                                                        <span>Cheese, tomatoes, shrimps, garlic, mussels, cockles,
-                                                            olives and
-                                                            italian herbs</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-5"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-5"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo16-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo16-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Foodbakery Special 12" Deep Pan</h6>
-                                                        <span>Cheese, tomatoes, mushrooms and italian herbs</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.90</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-6"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-6"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo15-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo15-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Foodbakery Special 9" Deep Pan</h6>
-                                                        <span>Cheese, tomatoes, shrimps, garlic, mussels, cockles,
-                                                            olives and
-                                                            italian herbs</span>
-                                                        <ul class="nutri-icons">
-                                                            <li><a data-toggle="tooltip" title="Vegitable"><img
-                                                                        src="{{ asset('front/extra-images/natural-item04.png') }}"
-                                                                        alt=""></a></li>
-                                                            <li><a data-toggle="tooltip" title="Chille"><img
-                                                                        src="{{ asset('front/extra-images/natural-item05.png') }}"
-                                                                        alt=""></a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£4.80</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-7"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-7"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo14-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo14-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Foodbakery Special 9" Deep Pan</h6>
-                                                        <span>Cheese, tomatoes, mushrooms and italian herbs</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£4.80</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-8"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-8"></span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <div class="element-title" id="menu-category-1">
-                                                <h5 class="text-color">Calzone</h5>
-                                                <span>calzones are usually stuffed with cheeses such as ricotta,
-                                                    mozzarella
-                                                    or a different local cheese.</span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo13-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo13-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Calzone (Folded Pizza)</h6>
-                                                        <span>Cheese, tomatoes, ham, salami, mushrooms, garlic
-                                                            sausage and
-                                                            italian herbs</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.50</span>
-                                                        <a href="#" data-toggle="modal" data-target="#extras-1-9"
-                                                            class="dev-adding-menu-btn"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-9"></span>
-                                                    </div>
-                                                    <div class="modal fade menu-extras-modal" id="extras-1-9"
-                                                        tabindex="-1" role="dialog">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <button type="button" class="close"
-                                                                        data-dismiss="modal" aria-label="Close"><span
-                                                                            aria-hidden="true">×</span></button>
-                                                                    <h2><a>Extras</a></h2>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="menu-selection-container">
-                                                                        <div class="extras-detail-main">
-                                                                            <h3>Extras</h3>
-                                                                            <div class="extras-detail-options">
-                                                                                <div class="extras-detail-att">
-                                                                                    <label for="extra-0-0-9">
-                                                                                        <input type="radio"
-                                                                                            id="extra-0-0-9"
-                                                                                            name="extra-0-9">
-                                                                                        <span class="extra-title">Cold
-                                                                                            Drink</span>
-                                                                                        <span
-                                                                                            class="extra-price">£2.50</span>
-                                                                                    </label>
-                                                                                </div>
-                                                                                <div class="extras-detail-att">
-                                                                                    <label for="extra-1-0-9">
-                                                                                        <input type="radio"
-                                                                                            id="extra-1-0-9"
-                                                                                            name="extra-0-9">
-                                                                                        <span
-                                                                                            class="extra-title">Souce</span>
-                                                                                        <span
-                                                                                            class="extra-price">£1.50</span>
-                                                                                    </label>
-                                                                                </div>
-                                                                                <div class="extras-detail-att">
-                                                                                    <label for="extra-2-0-9">
-                                                                                        <input type="radio"
-                                                                                            id="extra-2-0-9"
-                                                                                            name="extra-0-9">
-                                                                                        <span
-                                                                                            class="extra-title">Chees</span>
-                                                                                        <span
-                                                                                            class="extra-price">£0.80</span>
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="extras-detail-selected"></div>
-                                                                        </div>
-                                                                        <div class="extras-btns-holder">
-                                                                            <button style="display:none;"
-                                                                                class="add-extra-menu-btn input-button-loader">Add
-                                                                                to Menu</button>
-                                                                            <a href="#"
-                                                                                class="reset-menu-fields btn">Reset
-                                                                                Fields</a>
-                                                                            <span class="extra-loader"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                            <div class="price-holder"
+                                                                style="display: flex; align-items: center; gap: 10px;">
+                                                                <span class="price">£{{ $dish->price }}</span>
+
+                                                                <form action="{{ route('cart.add') }}" method="POST">
+                                                                    @csrf
+                                                                    <input type="hidden" name="dish_id"
+                                                                        value="{{ $dish->id }}">
+                                                                    <button type="submit"
+                                                                        style="background-color: transparent; display: inline-block; line-height: 21px; width: 22px; height: 22px; text-align: center; border: 1px solid #c33332; border-radius: 50%;"
+                                                                        class="restaurant-add-menu-btn restaurant-add-menu-btn-21">
+                                                                        <i class="icon-plus4 text-color"></i>
+                                                                    </button>
+                                                                </form>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <div class="element-title" id="menu-category-2">
-                                                <h5 class="text-color">Garlic Bread</h5>
-                                                <span>Garlic bread also garlic toast consists of bread usually a
-                                                    baguette or
-                                                    sour dough like a ciabatta</span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo12-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo12-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Garlic Pizza Bread 9 " Thin</h6>
-                                                        <span>Butter and crushed garlic, then spread a little over
-                                                            the
-                                                            pizza</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£2.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-10"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-10"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo10-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo10-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Garlic Bread 12" Deep</h6>
-                                                        <span>Pizza bread made with extra virgin olive oil</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-11"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-11"></span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <div class="element-title" id="menu-category-3">
-                                                <h5 class="text-color">Kebabs</h5>
-                                                <span>kebab is a common dish, consisting of a skewer with small
-                                                    pieces of
-                                                    meat or seafood, together with vegetables</span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo09-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo09-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Garlic Pizza Bread 12" Thin</h6>
-                                                        <span>Tomatoes, garlic, oregano, and extra virgin olive
-                                                            oil</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£2.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-12"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-12"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/blogs-food-bakery-04.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/blogs-food-bakery-04-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Regular Kebab</h6>
-                                                        <span>Beef meat, split chickpealentils , ginger, garlic,
-                                                            onions, salt
-                                                            and mixed spices</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-13"
-                                                            data-id="13" data-cid="3"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-13"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/fb_masonary_3.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/fb_masonary_3-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Kebabs With Naan</h6>
-                                                        <span>Kebab is a dish of pieces of meat and fish</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£4.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-14"
-                                                            data-id="14" data-cid="3"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-14"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/blogs-food-bakery-03.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/blogs-food-bakery-03-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chapal Kebab Regular</h6>
-                                                        <span>Kababs made with minced mutton meat, is a famous
-                                                            dish</span>
-                                                        <ul class="nutri-icons">
-                                                            <li><a data-toggle="tooltip" title="Vegitable"><img
-                                                                        src="{{ asset('front/extra-images/natural-item04.png') }}"
-                                                                        alt=""></a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-15"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-15"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/fb_masonary_9.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/fb_masonary_9-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Kebabs With nan</h6>
-                                                        <span>For the kebabs: Preheat a tandoor oven or a charcoal
-                                                            grill to
-                                                            medium heat</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£2.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-16"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-16"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/fb_masonary_7.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/fb_masonary_7-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chicken Kebab Regular</h6>
-                                                        <span>Kababs made with minced mutton meat, is a famous
-                                                            dish</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£6.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-17"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-17"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/fb_masonary_1.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/fb_masonary_1-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chicken Kebab With Nan</h6>
-                                                        <span>Prepare a Tandoor or charcoal grill for moderate heat.
-                                                            Thread
-                                                            the marinated chicken onto a metal skewer</span>
-                                                        <ul class="nutri-icons">
-                                                            <li><a data-toggle="tooltip" title="Contain Egg"><img
-                                                                        src="{{ asset('front/extra-images/natural-item01.png') }}"
-                                                                        alt=""></a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-18"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-18"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/blogs-food-bakery-02.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/blogs-food-bakery-02-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chicken Boti Kebab Regular</h6>
-                                                        <span>For this extremely tasty recipe you just need chicken,
-                                                            almond
-                                                            and spices. </span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£8.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-19"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-19"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo09-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo09-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chicken Boti Kebab with nan</h6>
-                                                        <span>For this extremely tasty recipe you just need naan,
-                                                            chicken,
-                                                            almond and spices. </span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£8.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-20"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-20"></span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <div class="element-title" id="menu-category-4">
-                                                <h5 class="text-color">Burgers</h5>
-                                                <span>Hamburger is a kind of sandwich consisting of grilled cutlets,
-                                                    served
-                                                    inside that cut round loaf.</span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/fb_masonary_9.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/fb_masonary_9-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Cheeseburger</h6>
-                                                        <span>Topped with pineapple and cheese</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£6.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-21"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-21"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/blogs-food-bakery-11.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/blogs-food-bakery-11-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Half Pounder</h6>
-                                                        <span>Topped with pineapple and cheese</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£2.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-22"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-22"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/blogs-food-bakery-13.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/blogs-food-bakery-13-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Half Pounder Meal</h6>
-                                                        <span>Topped with 1000 island dressing</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-23"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-23"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/fb_masonary_4-683x1024.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/fb_masonary_4-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Quarter Pounder</h6>
-                                                        <span>Topped&#8203; with mozzarella cheese, tomato relish,
-                                                            cheddar
-                                                            cheese and green peppers</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-24"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-24"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/blogs-food-bakery-12.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/blogs-food-bakery-12-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Quarter Pounder Meal</h6>
-                                                        <span>Topped with cheese</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£2.99</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-25"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-25"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/blogs-food-bakery-08.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/blogs-food-bakery-08-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chilli Burger</h6>
-                                                        <span>Topped with mozzarella cheese, tomato relish, cheddar
-                                                            cheese
-                                                            and green peppers</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£4.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-26"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-26"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/fb_masonary_6-683x1024.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/fb_masonary_6-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chilli Burger Half Pounder</h6>
-                                                        <span>Topped with coleslaw</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£2.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-27"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-27"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/fb_masonary_10.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/fb_masonary_10-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chilli Burger Half Pounder Meal</h6>
-                                                        <span>Topped with spicy chilli sauce</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-28"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-28"></span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <div class="element-title" id="menu-category-5">
-                                                <h5 class="text-color">Specials</h5>
-                                                <span>specials on a separate menu, making them easy and economical
-                                                    to
-                                                    change.</span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/fb_masonary_8.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/fb_masonary_8-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Donner Meat</h6>
-                                                        <span>Prepared with onions, capsicums, garlic, fresh
-                                                            tomatoes and
-                                                            chef`s own selected spices</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-29"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-29"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo13-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo13-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chicken Meat</h6>
-                                                        <span>Prepared with onions, capsicums, garlic, fresh
-                                                            tomatoes and
-                                                            chef`s own selected spices</span>
-                                                        <ul class="nutri-icons">
-                                                            <li><a data-toggle="tooltip" title="Vegitable"><img
-                                                                        src="{{ asset('front/extra-images/natural-item04.png') }}"
-                                                                        alt=""></a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£4.90</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-30"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-30"></span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <div class="element-title" id="menu-category-6">
-                                                <h5 class="text-color">Wraps</h5>
-                                                <span>Sandwich and Wrap Trays come with your choice of a
-                                                    fresh.</span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo12-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo12-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chicken Wrap</h6>
-                                                        <span>Sliced grilled chicken breast, nestled in a fresh mix
-                                                            of Green
-                                                            Leaf lettuce with shredded</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-31"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-31"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo10-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo10-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Donner Wrap</h6>
-                                                        <span>Meat cooked on a vertical rotisserie</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£5.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-32"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-32"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo07-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo07-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chicken Tikka Wrap</h6>
-                                                        <span>Mix together the yoghurt, tikka paste and lemon
-                                                            juice</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£4.99</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-33"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-33"></span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <div class="element-title" id="menu-category-7">
-                                                <h5 class="text-color">Chicken</h5>
-                                                <span>The chicken (Gallus gallus domesticus) is a type of
-                                                    domesticated
-                                                    fowl,</span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo09-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo09-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chicken Piece on Its Own</h6>
-                                                        <span>Fried chicken is a dish consisting of chicken pieces
-                                                            usually
-                                                            from broiler chickens</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£1.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-34"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-34"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo17-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo17-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>1 Piece of Chicken Meal</h6>
-                                                        <span>Salad topped reviewer Kelly's expectations for a
-                                                            chicken
-                                                            salad</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£2.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-35"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-35"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo02-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo02-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>2 Pieces of Chicken Meal</h6>
-                                                        <span>A delightful chicken dish with a little spicy
-                                                            kick.</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-36"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-36"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo11-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo11-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Popcorn Chicken</h6>
-                                                        <span>This is a wonderful Southern treat in which everyone
-                                                            will
-                                                            enjoy! </span>
-                                                        <ul class="nutri-icons">
-                                                            <li><a data-toggle="tooltip" title="Onion"><img
-                                                                        src="{{ asset('front/extra-images/natural-item02.png') }}"
-                                                                        alt=""></a></li>
-                                                            <li><a data-toggle="tooltip" title="Vegitable"><img
-                                                                        src="{{ asset('front/extra-images/natural-item04.png') }}"
-                                                                        alt=""></a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-37"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-37"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo10-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo10-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chicken Nuggets</h6>
-                                                        <span>These are really easy and taste great! Kids love
-                                                            them!</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.70</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-38"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-38"></span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <div class="element-title" id="menu-category-8">
-                                                <h5 class="text-color">Paninis</h5>
-                                                <span>Sandwiches are pressed down and heated on the panini</span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo08-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo08-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Tuna Panini</h6>
-                                                        <span>These patties are great dipped in ketchup, mustard, or
-                                                            hot
-                                                            sauce.</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.49</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-39"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-39"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo05-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo05-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Vegetable Panini</h6>
-                                                        <span>This is a delicious sandwich which can be served for
-                                                            lunch or
-                                                            dinner. Paired with a green salad</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£4.88</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-40"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-40"></span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <div class="element-title" id="menu-category-9">
-                                                <h5 class="text-color">Jacket Potatoes</h5>
-                                                <span>Jacket potatoes have been a popular menu choice for
-                                                    Wetherspoon
-                                                    customers</span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo19-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo19-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Jacket Potato with 2 Fillings</h6>
-                                                        <span>Twice baked potatoes, every kids favorite dish</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£2.99</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-41"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-41"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo19-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo19-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Lamb Chops (4)</h6>
-                                                        <span>Tasty lamb chops are cooked on the stovetop with a
-                                                            tasty
-                                                            balsamic sauce</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£4.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-42"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-42"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo24-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo24-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chicken Boti (8)</h6>
-                                                        <span>Chicken cubes mildly flavored with cheddar
-                                                            cheese,grilled to
-                                                            perfection</span>
-                                                        <ul class="nutri-icons">
-                                                            <li><a data-toggle="tooltip" title="Onion"><img
-                                                                        src="{{ asset('front/extra-images/natural-item02.png') }}"
-                                                                        alt=""></a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£4.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-43"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-43"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo23-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo23-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Seekh Kebab</h6>
-                                                        <span>Seekh kebab can also be served in a naan bread much
-                                                            like döner
-                                                            kebab</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£4.99</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-44"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-44"></span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <div class="element-title" id="menu-category-10">
-                                                <h5 class="text-color">Starters</h5>
-                                                <span>STARTERS. Edamame; Edamame with Spicy Dipping Sauce;
-                                                    Vegetable</span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo22-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo22-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chicken Pakora</h6>
-                                                        <span>A deliciously crunchy and satisfying Indian
-                                                            starter</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£2.40</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-45"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-45"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo21-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo21-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Crispy Samosa</h6>
-                                                        <span>Samosa, a crispy and spicy deep fried snack that has
-                                                            an crisp
-                                                            and flaky outer layer</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£1.88</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-46"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-46"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo20-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo20-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Mushroom Bhaji</h6>
-                                                        <span>Serve with rice for a vegetarian dinner or with Naan
-                                                            bread for
-                                                            a starter</span>
-                                                        <ul class="nutri-icons">
-                                                            <li><a data-toggle="tooltip" title="Contain Egg"><img
-                                                                        src="{{ asset('front/extra-images/natural-item01.png') }}"
-                                                                        alt=""></a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.67</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-47"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-47"></span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <div class="element-title" id="menu-category-11">
-                                                <h5 class="text-color">Traditional Curries</h5>
-                                                <span> chicken tikka masala, bhuna, dhansak, vindaloo</span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo18-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo18-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chicken Rogan Josh</h6>
-                                                        <span>It consists of braised lamb chunks cooked with a gravy
-                                                            based on
-                                                            browned onions or shallots</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£5.99</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-48"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-48"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo19-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo19-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Keema Rogan Josh</h6>
-                                                        <span>It consists of braised lamb chunks cooked with a gravy
-                                                            based on
-                                                            browned onions or shallots</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£7.99</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-49"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-49"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo17-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo17-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Prawn Cocktail</h6>
-                                                        <span>A bed of crisp iceberg lettuce is topped with diced
-                                                            tomato and
-                                                            avocado</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.99</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-50"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-50"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo16-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo16-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>King Prawn &amp; Rice</h6>
-                                                        <span>Pour the eggs into the empty side of the pan, then
-                                                            scramble
-                                                            them, stirring</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£6.99</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-51"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-51"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo15-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo15-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Fish Masala</h6>
-                                                        <span>Heat oil in wok over moderate heat until hot but not
-                                                            smoking.
-                                                            Add mustard seeds and cook until they make popping
-                                                            sounds</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£5.99</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-52"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-52"></span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <div class="element-title" id="menu-category-12">
-                                                <h5 class="text-color">Biryani Dishes</h5>
-                                                <span>Seafood dishes are distinct food dishes which use seafood
-                                                </span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo14-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo14-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chicken</h6>
-                                                        <span>Popular variations use chicken instead of goat</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£6.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-53"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-53"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo13-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo13-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Keema</h6>
-                                                        <span>Made with mince meat and Basmati rice and some
-                                                            spices</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£5.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-54"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-54"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo12-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo12-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Mixed</h6>
-                                                        <span>Made mixed biryani with chicken, prawn and fish</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£6.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-55"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-55"></span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <div class="element-title" id="menu-category-13">
-                                                <h5 class="text-color">Vegetarian Dishes</h5>
-                                                <span>Biryani is a beloved staple in food menus in the Pakistani
-                                                    cuisine and
-                                                    Sindhi cuisine</span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo11-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo11-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Garlic Mushroom</h6>
-                                                        <span>Add mushrooms and toss with garlic butter to
-                                                            coat</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£5.50</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-56"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-56"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo09-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo09-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Bombay Potato</h6>
-                                                        <span>Blend together the ginger, garlic and quartered tomato
-                                                            until
-                                                            smooth</span>
-                                                        <ul class="nutri-icons">
-                                                            <li><a data-toggle="tooltip" title="Chille"><img
-                                                                        src="{{ asset('front/extra-images/natural-item05.png') }}"
-                                                                        alt=""></a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£4.99</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-57"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-57"></span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <div class="element-title" id="menu-category-14">
-                                                <h5 class="text-color">Rice</h5>
-                                                <span> vegetarian recipes including vegetarian breakfasts, lunches
-                                                    and
-                                                    dinners</span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo08-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo08-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Mushroom Rice</h6>
-                                                        <span>Melt butter in a saucepan over medium heat. Cook
-                                                            mushrooms,
-                                                            garlic and green onion until mushrooms</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£5.99</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-58"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-58"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo06-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo06-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Egg Fried Rice</h6>
-                                                        <span>Fried rice is a Chinese dish of steamed rice that has
-                                                            been
-                                                            stir-fried in a wok and, usually, mixed.</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.89</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-59"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-59"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo05-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo05-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Boiled Rice</h6>
-                                                        <span> Is rice that has been partially boiled in the
-                                                            husk</span>
-                                                        <ul class="nutri-icons">
-                                                            <li><a data-toggle="tooltip" title="Contain Bnana"><img
-                                                                        src="{{ asset('front/extra-images/natural-item03.png') }}"
-                                                                        alt=""></a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.99</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-60"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-60"></span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <div class="element-title" id="menu-category-15">
-                                                <h5 class="text-color">Bread</h5>
-                                                <span> the starchy seeds of an annual southeast Asian cereal grass
-                                                    (Oryza
-                                                    sativa) that are cooked and used for food</span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo04-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo04-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Chapatti</h6>
-                                                        <span>The Indus valley is known to be one of the ancestral
-                                                            lands of
-                                                            cultivated wheat</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£3.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-61"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-61"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder"> <a
-                                                            href="{{ asset('front/extra-images/cover-photo08-1024x187.jpg') }}"><img
-                                                                src="{{ asset('front/extra-images/cover-photo08-150x150.jpg') }}"
-                                                                alt=""></a></div>
-                                                    <div class="text-holder">
-                                                        <h6>Roti</h6>
-                                                        <span>Roti is a flatbread originating from the South Asia,
-                                                            made from
-                                                            stoneground wholemeal flour.</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£1.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-62"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-62"></span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <div class="element-title" id="menu-category-16">
-                                                <h5 class="text-color">Sauces</h5>
-                                                <span>Sauces in French cuisine date back to the Middle Ages.</span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <div class="image-holder">
-                                                        <a
-                                                            href="{{ asset('front/extra-images/cover-photo03-1024x187.jpg') }}">
-                                                            <img src="{{ asset('front/extra-images/cover-photo03-150x150.jpg') }}"
-                                                                alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="text-holder">
-                                                        <h6>Mint Sauce</h6>
-                                                        <span>Mint sauce is a sauce traditionally made from finely
-                                                            chopped
-                                                            peppermint (Mentha × piperita) leaves, soaked in
-                                                            vinegar</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£1.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-63"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-63"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder">
-                                                        <a
-                                                            href="{{ asset('front/extra-images/cover-photo02-1024x187.jpg') }}">
-                                                            <img src="{{ asset('front/extra-images/cover-photo02-150x150.jpg') }}"
-                                                                alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="text-holder">
-                                                        <h6>Chilli Sauce</h6>
-                                                        <span>Chilli sauce is a type of hot sauce or chili sauce
-                                                            made from a
-                                                            paste of chili peppers, distilled vinegar, garlic,
-                                                            sugar, and
-                                                            salt</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£1.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-64"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-64"></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="image-holder">
-                                                        <a
-                                                            href="{{ asset('front/extra-images/cover-photo01-1024x187.jpg') }}">
-                                                            <img src="{{ asset('front/extra-images/cover-photo01-150x150.jpg') }}"
-                                                                alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="text-holder">
-                                                        <h6>BBQ Sauce</h6>
-                                                        <span>BBQ Sauce is used as a flavoring sauce, a marinade,
-                                                            basting or
-                                                            topping for meat cooked in the barbecue cooking
-                                                            style</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">£1.00</span>
-                                                        <a href="#"
-                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-65"><i
-                                                                class="icon-plus4 text-color"></i></a>
-                                                        <span id="add-menu-loader-65"></span>
-                                                    </div>
-                                                </li>
-                                            </ul>
+                                                        </li>
+                                                    @endforeach
+
+                                                </ul>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
+
+                                {{-- Reviews --}}
                                 <div id="menu1" class="tab-pane fade">
                                     <div class="reviews-holder">
                                         <div class="add-new-review-holder" style="display: none;">
@@ -1729,6 +215,7 @@
                                             </div>
                                         </div>
                                         <div class="reviwes-restaurant-holder">
+                                            {{-- Over all Rating --}}
                                             <div class="over-all-rating-holder">
                                                 <div class="overall-ratings-container">
                                                     <div class="overall-rating">
@@ -1737,8 +224,7 @@
                                                             <li>
                                                                 <em>5.0 </em>
                                                                 <div class="rating-star">
-                                                                    <span class="rating-box"
-                                                                        style="width: 100%;"></span>
+                                                                    <span class="rating-box" style="width: 100%;"></span>
                                                                 </div>
                                                                 <span class="reviews-count">(based on 1
                                                                     reviews)</span>
@@ -1779,9 +265,76 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            {{-- Add Review --}}
+                                            @if (Auth::check() && Auth::user()->id !== $restaurant->user_id)
+                                                <div style="margin-bottom: 20px;">
+                                                    <form action="{{ route('reviews.store') }}" method="POST">
+                                                        @csrf
+
+                                                        <div style="margin-bottom: 20px;">
+                                                            <input type="hidden" name="restaurant_id"
+                                                                value="{{ $restaurant->id }}" required>
+
+                                                            <label style="font-weight: bold;">Your Rating:</label>
+                                                            <div id="star-rating"
+                                                                style="font-size: 20px; color: #ddd; cursor: pointer;">
+                                                                @for ($i = 1; $i <= 5; $i++)
+                                                                    <i class="fa fa-star"
+                                                                        data-value="{{ $i }}"></i>
+                                                                @endfor
+                                                            </div>
+                                                            <input type="hidden" name="rating" id="rating"
+                                                                value="0">
+
+                                                            @error('rating')
+                                                                <div class="text-danger" style="font-size: 12px;">
+                                                                    {{ $message }}</div>
+                                                            @enderror
+                                                        </div>
+
+                                                        <div style="margin-bottom: 20px;">
+                                                            <label style="font-weight: bold;">Your Review:</label>
+                                                            <div class="field-holder field-textarea">
+                                                                <textarea name="comment" rows="5" placeholder="Write your review here..." class="input-field" required>{{ old('comment') }}</textarea>
+                                                            </div>
+
+                                                            @error('comment')
+                                                                <div class="text-danger" style="font-size: 12px;">
+                                                                    {{ $message }}</div>
+                                                            @enderror
+                                                        </div>
+
+                                                        <button type="submit" class="btn-submit"
+                                                            style="padding: 8px 20px; background: #28a745; color: white; border: none; cursor: pointer;">
+                                                            Submit Review
+                                                        </button>
+                                                    </form>
+
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            $('#star-rating i').on('click', function() {
+                                                                let rating = $(this).data('value');
+                                                                $('#rating').val(rating);
+
+                                                                $('#star-rating i').css('color', '#ddd');
+
+                                                                $('#star-rating i').each(function(index) {
+                                                                    if (index < rating) {
+                                                                        $(this).css('color', '#ffc107');
+                                                                    }
+                                                                });
+                                                            });
+                                                        });
+                                                    </script>
+                                                </div>
+                                            @endif
+
+
+                                            {{-- Reviews List --}}
                                             <div class="review-listing">
                                                 <div class="elements-title">
-                                                    <h5>Customer Reviews For Restaurant Demo <span>1</span></h5>
+                                                    <h5>Customer Reviews For {{ $restaurant->name }}</h5>
                                                     <div class="sort-by">
                                                         <span class="ajax-loader-sorty-by" style="display: none;">
                                                             <img src="{{ asset('front/images/ajax-loader.gif') }}"
@@ -1818,50 +371,86 @@
                                                         </ul>
                                                     </div>
                                                 </div>
+
+                                                {{-- Reviews --}}
                                                 <ul class="review-restaurant">
-                                                    <li class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                                                        <div class="list-holder ">
-                                                            <div class="review-text">
-                                                                <div class="review-title">
-                                                                    <h6>: Best Food </h6>
-                                                                    <div class="rating-holder">
-                                                                        <div class="rating-star">
-                                                                            <span style="width: 100%;"
-                                                                                class="rating-box"></span>
+                                                    @foreach ($restaurant->reviews as $review)
+                                                        <li class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                                            <div class="list-holder ">
+                                                                <div class="review-text">
+                                                                    <div class="review-title">
+                                                                        <h6>{{ $review->user->name }}</h6>
+                                                                        <div class="rating-holder">
+                                                                            <div style="font-size: 15px; color: #ddd;">
+                                                                                @for ($i = 1; $i <= 5; $i++)
+                                                                                    @if ($i <= $review->rating)
+                                                                                        <i class="fa fa-star"
+                                                                                            data-value="{{ $i }}"
+                                                                                            style="color:#ffc107;"></i>
+                                                                                    @else
+                                                                                        <i class="fa fa-star"
+                                                                                            data-value="{{ $i }}"></i>
+                                                                                    @endif
+                                                                                @endfor
+                                                                            </div>
                                                                         </div>
                                                                     </div>
+                                                                    <span
+                                                                        style="color: #7d808d">{{ $review->created_at->diffForHumans() }}</span>
+                                                                    <p>{{ $review->comment }}</p>
                                                                 </div>
-                                                                <em class="review-date">25 Apr 2018</em>
-                                                                <p>A wonderfull experience. </p>
                                                             </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                                                        <div class="list-holder ">
-                                                            <div class="review-text">
-                                                                <div class="review-title">
-                                                                    <h6>: Best food </h6>
-                                                                    <div class="rating-holder">
-                                                                        <div class="rating-star">
-                                                                            <span style="width: 100%;"
-                                                                                class="rating-box"></span>
+                                                        </li>
+
+                                                        @if ($review->response)
+                                                            <li
+                                                                class="col-lg-12 col-md-12 col-sm-12 col-xs-12 review_reply">
+                                                                <div class="list-holder ">
+                                                                    <div class="review-text">
+                                                                        <div class="review-title">
+                                                                            <h6>
+                                                                                Restaurant Owner:
+                                                                                {{ $restaurant->user->name }} </h6>
+                                                                            <div class="rating-holder">
+                                                                            </div>
                                                                         </div>
+                                                                        <span
+                                                                            style="color: #7d808d">{{ $review->response->created_at->diffForHumans() }}</span>
+                                                                        <p>
+                                                                            {{ $review->response->reply }}
+                                                                        </p>
                                                                     </div>
                                                                 </div>
-                                                                <em class="review-date">25 Apr 2018</em>
-                                                                <p>I had great food the other day </p>
-                                                            </div>
-                                                        </div>
-                                                    </li>
+                                                            </li>
+                                                        @elseif (Auth::check() && Auth::user()->id === $restaurant->user_id)
+                                                            <li
+                                                                class="col-lg-12 col-md-12 col-sm-12 col-xs-12 review_reply">
+                                                                <div class="list-holder ">
+                                                                    <div class="review-title">
+                                                                        <h6>Your Reply</h6>
+                                                                    </div>
+                                                                    <form
+                                                                        action="{{ route('reviews.reply', $review->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <textarea name="reply" rows="2" placeholder="Write your reply here..." required></textarea>
+                                                                        <button type="submit"
+                                                                            class="btn-submit">Reply</button>
+                                                                    </form>
+                                                                </div>
+                                                            </li>
+                                                        @endif
+                                                    @endforeach
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                {{-- Book a Table --}}
                                 <div id="menu2" class="tab-pane fade">
                                     <div class="booking-info-sec">
-                                        <form name="booking-form" id="booking-form" class="booking-form"
-                                            method="post">
+                                        <form name="booking-form" id="booking-form" class="booking-form" method="post">
                                             <div class="row">
                                                 <div class="booking-info">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -1877,13 +466,13 @@
                                                                 <div class="field-holder has-icon"><i
                                                                         class="icon icon-user"></i><input type="text"
                                                                         placeholder="First Name" class="input-field"
-                                                                        id="first-name" name="first-name"></div>
+                                                                        id="first-name"></div>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                                 <div class="field-holder has-icon"><i
                                                                         class="icon icon-user"></i><input type="text"
                                                                         placeholder="Last Name" class="input-field"
-                                                                        id="lastname-booking" name="lastname-booking">
+                                                                        id="lastname-booking">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -1891,29 +480,29 @@
                                                                         class="icon icon-envelope2"></i><input
                                                                         type="text" placeholder="Email"
                                                                         class="input-field foodbakery-email-field"
-                                                                        id="email-booking" name="email-booking">
+                                                                        id="email-booking">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                                 <div class="field-holder has-icon"><i
                                                                         class="icon icon-users3"></i>
-                                                                    <select class="chosen-select"
-                                                                        style="display: none;">
+                                                                    <select class="chosen-select" style="display: none;">
                                                                         <option selected="selected" value="">
-                                                                            Guests
+                                                                            Tables
                                                                         </option>
-                                                                        <option value="">2 Guests</option>
-                                                                        <option value="">4 Guests</option>
-                                                                        <option value="">6 Guests</option>
-                                                                        <option value="">8 Guests</option>
+                                                                        <option value="">1 Tables</option>
+                                                                        <option value="">2 Tables</option>
+                                                                        <option value="">3 Tables</option>
+                                                                        <option value="">4 Tables</option>
+                                                                        <option value="">5 Tables</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                                 <div class="field-holder has-icon">
-                                                                    <div class="date-sec"><i
-                                                                            class="icon-event_available"> </i><input
-                                                                            type="text" placeholder="Booking date"
+                                                                    <div class="date-sec"><i class="icon-event_available">
+                                                                        </i><input type="text"
+                                                                            placeholder="Booking date"
                                                                             class="form-control booking-date"
                                                                             id="date-of-booking" name="date-of-booking">
                                                                         <script>
@@ -2028,28 +617,19 @@
                                         </form>
                                     </div>
                                 </div>
+
+                                {{-- Restaurant Info --}}
                                 <div id="menu3" class="tab-pane fade">
                                     <div class="contact-info-detail">
-                                        <h5>Overview Restaurant Demo</h5>
+                                        <h5>{{ $restaurant->name }}</h5>
                                         <p class="restaurant-desc"></p>
-                                        <p>Base prepared fresh daily. Extra toppings are available in choose
-                                            extraChoose
-                                            you sauce: Go for BBQ sauce or piri piri sauce on your pizza base for no
-                                            extra cost.Choose your cut: Triangular, square, fingers or Un cut on any
-                                            size pizza
+                                        <p>{{ $restaurant->description }}
                                         </p>
                                         <div class="map-sec-holder">
-                                            <div class="cs-map-section">
-                                                <div class="cs-map">
-                                                    <div class="cs-map-content">
-                                                        <div class="mapouter">
-                                                            <div class="gmap_canvas">
-                                                                <img class="img-responsive"
-                                                                    src="{{ asset('front/extra-images/map-location.png') }}"
-                                                                    alt="">
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                            <div>
+                                                <div class="cs-map-section">
+                                                    <iframe width="100" height="280" id="gmap_canvas"
+                                                        src="https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
                                                 </div>
                                             </div>
                                         </div>
@@ -2057,30 +637,40 @@
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <div class="contact-info">
                                                     <h5>Contact details</h5>
-                                                    <p>Totnes, United Kingdom</p>
+                                                    <p>{{ $restaurant->address }}, {{ $restaurant->state }}</p>
+                                                    <p>
+                                                        <span><strong>Manager email:</strong>
+                                                            {{ $restaurant->user->email }}</span>
+                                                    </p>
                                                     <ul>
                                                         <li class="cell"><i class="icon-phone"></i><a
-                                                                href="#">+44
-                                                                (0) 20 3310 2000</a></li>
+                                                                href="#">{{ $restaurant->phone }}</a></li>
                                                         <li class="pizzaeast"><i class="icon-globe2"></i><a
                                                                 href="#">http://www.chimpgroup.com</a></li>
                                                         <li class="email"><i class="icon-mail5"></i><a
-                                                                class="text-color" href="#">Send Enquiry
-                                                                By Email</a></li>
+                                                                class="text-color"
+                                                                href="#">{{ $restaurant->email }}</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <div class="widget widget-timing">
                                                     <h5>Opening Hours</h5>
+
                                                     <ul>
-                                                        <li><span>Monday</span>11:00 am - 11:00 pm</li>
-                                                        <li><span>Tuesday</span>11:00 am - 11:00 pm</li>
-                                                        <li><span>Wednesday</span>11:00 am - 11:00 pm</li>
-                                                        <li><span>Thursday</span>11:00 am - 11:00 pm</li>
-                                                        <li><span>Friday</span>11:00 am - 11:00 pm</li>
-                                                        <li><span>Saturday</span>11:00 am - 11:00 pm</li>
-                                                        <li><span>Sunday</span>Off</li>
+                                                        @foreach ($restaurant->openingHours as $openingHour)
+                                                            <li>
+                                                                <span>{{ $openingHour->day }}</span>
+                                                                @if ($openingHour->is_closed)
+                                                                    Closed
+                                                                @else
+                                                                    {{ \Carbon\Carbon::parse($openingHour->opening_time)->format('h:i A') }}
+                                                                    -
+                                                                    {{ \Carbon\Carbon::parse($openingHour->closing_time)->format('h:i A') }}
+                                                                @endif
+                                                                </span>
+                                                            </li>
+                                                        @endforeach
                                                     </ul>
                                                 </div>
                                             </div>
@@ -2090,102 +680,62 @@
                             </div>
                         </div>
                     </div>
+
+                    {{-- Basket Section --}}
                     <div class="sticky-sidebar col-lg-3 col-md-3 col-sm-12 col-xs-12">
                         <div class="user-order-holder">
                             <div class="user-order">
-                                <h6><i class="icon-shopping-basket"></i>Your Order</h6>
+                                <h6><i class="icon-shopping-basket"></i>Your Basket</h6>
                                 <span class="error-message pre-order-msg">This restaurant allows Pre orders.</span>
                                 <span class="discount-info" style="display: block;">If you have a discount code,<br>
                                     you will
                                     be able to input it<br> at the payments stage.</span>
-                                <div class="select-option dev-select-fee-option">
-                                    <ul>
-                                        <li>
-                                            <input id="order-pick-up-fee" type="radio" name="order_fee_type">
-                                            <label for="order-pick-up-fee">Pick-Up</label>
-                                            <span>£15.00</span>
-                                        </li>
-                                        <li>
-                                            <input id="order-delivery-fee" checked="checked" type="radio"
-                                                name="order_fee_type">
-                                            <label for="order-delivery-fee">Delivery</label>
-                                            <span>£10.00</span>
-                                        </li>
-                                    </ul>
-                                </div>
+
                                 <div id="dev-menu-orders-list">
                                     <ul class="categories-order">
-                                        <li>
-                                            <a href="#" class="btn-cross dev-remove-menu-item"><i
-                                                    class=" icon-cross3"></i></a>
-                                            <a>Chicken Tandoori Special 12" Deep Pan</a>
-                                            <span class="category-price">£4.50</span>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="btn-cross dev-remove-menu-item"><i
-                                                    class=" icon-cross3"></i></a>
-                                            <a>Chicken Tandoori Special 09" Deep Pan</a>
-                                            <span class="category-price">£6.50</span>
-                                            <ul>
-                                                <li>Drinks - chillies : <span class="category-price">£3.50</span>
-                                                </li>
-                                            </ul>
-                                            <a href="#" data-toggle="modal" data-target="#extras-0-1"
-                                                class="update-menu dev-update-menu-btn">Edit</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="btn-cross dev-remove-menu-item"><i
-                                                    class=" icon-cross3"></i></a>
-                                            <a>Margherita 12" Deep Pan</a>
-                                            <span class="category-price">£5.50</span>
-                                        </li>
+                                        @if (empty($cart))
+                                            <li class="">
+                                                <span>There are no items in your basket.</span>
+                                            </li>
+                                        @else
+                                            @foreach ($cart as $restaurantId => $dishes)
+                                                @foreach ($dishes as $dish)
+                                                    <li id="dish-{{ $dish['dish_id'] }}">
+                                                        <div
+                                                            style="display: flex; align-items: center; justify-content: space-between;">
+                                                            <form action="{{ route('cart.removeDish') }}" method="POST"
+                                                                class="dev-menu-item-form">
+                                                                @csrf
+                                                                <input type="hidden" name="restaurant_id"
+                                                                    value="{{ $restaurantId }}">
+                                                                <input type="hidden" name="dish_id"
+                                                                    value="{{ $dish['dish_id'] }}">
+
+                                                                <button type="submit"
+                                                                    class="btn-cross dev-remove-menu-item"
+                                                                    style="background: transparent; border: none;"><i
+                                                                        class="icon-cross3"></i></button>
+                                                            </form>
+                                                            <a>{{ $dish['name'] }}</a>
+                                                            <span class="category-price">x{{ $dish['quantity'] }} -
+                                                                £{{ $dish['price'] }}</span>
+                                                        </div>
+                                                    </li>
+                                                @endforeach
+                                            @endforeach
+                                        @endif
                                     </ul>
+
                                     <div class="price-area dev-menu-price-con">
-                                        <ul>
+                                        {{-- <ul>
                                             <li>Subtotal <span class="price">£<em
                                                         class="dev-menu-subtotal">20.00</em></span></li>
-                                            <li class="restaurant-fee-con">
-                                                <span class="fee-title">Pick-Up</span>
-                                                <span class="price">£<em class="dev-menu-charges">15.00</em></span>
-                                            </li>
-                                            <li>VAT (13%) <span class="price">£<em
-                                                        class="dev-menu-vtax">4.55</em></span></li>
-                                        </ul>
-                                        <p class="total-price">Total <span class="price">£<em
-                                                    class="dev-menu-grtotal">39.55</em></span></p>
+                                        </ul> --}}
+                                        <p class="total-price">Total <span
+                                                class="price dev-menu-grtotal">£{{ $totalPrice }}</span></p>
                                     </div>
                                 </div>
-                                <div id="dev-no-menu-orders-list">
-                                    <span class="success-message">There are no items in your basket.</span>
-                                </div>
-                                <div class="pay-option dev-order-pay-options">
-                                    <ul>
-                                        <li>
-                                            <input id="order-cash-payment" type="radio" name="order_payment_method">
-                                            <label for="order-cash-payment"><i class="icon-coins"></i>Cash</label>
-                                        </li>
-                                        <li>
-                                            <input id="order-card-payment" type="radio" checked="checked"
-                                                name="order_payment_method">
-                                            <label for="order-card-payment"><i
-                                                    class="icon-credit-card4"></i>Card</label>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <div class="input-group date">
-                                                <input type="text" name="delivery_date" id="datetimepicker1"
-                                                    class="form-control" value="04-04-2020 10:07"
-                                                    placeholder="Select Date and Time">
-                                                <span class="input-group-addon">
-                                                    <span class="icon-event_available"></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <a href="#" class="menu-order-confirm">Confirm Order</a>
                                 <span class="menu-loader"></span>
                             </div>
@@ -2195,5 +745,4 @@
             </div>
         </div>
     </div>
-    <!-- Main Section End -->
 @endsection
