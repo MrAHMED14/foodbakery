@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Restaurant;
 use App\Models\Review;
 use App\Models\ReviewResponse;
 use Illuminate\Http\Request;
@@ -16,6 +17,16 @@ class ReviewController extends Controller
             'comment' => 'required|string|max:500',
             'rating' => 'required|integer|min:1|max:5',
         ]);
+
+        $restaurant = Restaurant::findOrFail($request->restaurant_id);
+        
+        if (Auth::check() && Auth::user()->id === $restaurant->user_id) {
+            return back()->with('error', 'You cannot review your own restaurant.');
+        }
+
+        if(!$restaurant->is_verified) {
+            return back()->with('error', 'This restaurant is not verified.');
+        }
 
         Review::create([
             'user_id' => Auth::user()->id,
