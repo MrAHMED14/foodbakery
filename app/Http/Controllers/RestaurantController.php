@@ -36,7 +36,7 @@ class RestaurantController extends Controller
 
         $maxRestaurants = 10;
         $query = $request->input('search');
-        $cuisineTypesInput = $request->input('cuisine_types'); // Get the selected cuisine types
+        $cuisineTypesInput = $request->input('cuisine_types');
 
         $restaurantsQuery = Restaurant::where('is_verified', 1);
 
@@ -51,11 +51,11 @@ class RestaurantController extends Controller
             });
         }
 
-        $restaurants = $restaurantsQuery->paginate($maxRestaurants);
+        // TODO: Remove orderBy('id', 'asc') later
+        $restaurants = $restaurantsQuery->orderBy('id', 'asc')->paginate($maxRestaurants);
 
         $cuisineTypes = CuisineType::all();
 
-        // dd($restaurants);
         return view('front.listings', compact('restaurants', 'query', 'cuisineTypes', 'cuisineTypesInput'));
     }
 
