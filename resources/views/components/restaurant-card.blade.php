@@ -4,8 +4,7 @@
     <div class="img-holder">
         <figure>
             <a href="#">
-                <img src="{{ asset('front/extra-images/listing-logo12.png') }}" class="img-list wp-post-image"
-                    alt="">
+                <img src="{{ $restaurant->restaurant_logo ? asset('storage/' . $restaurant->restaurant_logo) : asset('front/extra-images/listing-logo12.png') }}" class="img-list wp-post-image" alt="">
             </a>
         </figure>
         @if ($restaurant->isOpenNow())
