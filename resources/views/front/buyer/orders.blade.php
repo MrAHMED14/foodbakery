@@ -59,23 +59,35 @@
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="user-orders-list">
-                                            <div class="row">
-                                                @foreach ($orders as $order)
-                                                    <x-app.user-order-card :order="$order" />
-                                                @endforeach
-                                            </div>
+                                            @if ($orders->isEmpty())
+                                                <ul class="table-generic" id="portfolio">
+                                                    <li style="width: 100%;">
+                                                        <h3 style="text-align: center; padding: 20px; margin: 50px 0 50px;">
+                                                            No orders have been made so far.
+                                                        </h3>
+                                                    </li>
+                                                </ul>
+                                            @else
+                                                <div class="row">
+                                                    @foreach ($orders as $order)
+                                                        <x-app.user-order-card :order="$order" />
+                                                    @endforeach
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
 
                                 {{-- Pagination --}}
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="page-nation">
-                                            {{ $orders->links('pagination::bootstrap-4') }}
+                                @if ($orders->hasPages())
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="page-nation">
+                                                {{ $orders->links('pagination::bootstrap-4') }}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
