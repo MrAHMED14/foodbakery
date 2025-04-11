@@ -52,7 +52,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/open-close', [RestaurantController::class, 'openClose'])->name('open_close');
             Route::get('/menu-builder', [RestaurantController::class, 'menuBuilder'])->name('menu_builder');
             Route::get('/orders', [OrderController::class, 'restaurantOrders'])->name('orders');
-            Route::get('/bookings', [RestaurantController::class, 'bookings'])->name('bookings');
+            Route::get('/bookings', [ReservationController::class, 'showRestaurantReservations'])->name('bookings');
             Route::get('/reviews', [RestaurantController::class, 'reviews'])->name('reviews');
             Route::get('/memberships', [RestaurantController::class, 'memberships'])->name('memberships');
             Route::get('/withdrawals', [RestaurantController::class, 'withdrawals'])->name('withdrawals');
@@ -82,7 +82,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::group(['prefix' => 'buyer', 'as' => 'buyer.'], function () {
             Route::get('/dashboard', [BuyerController::class, 'buyerDashboard'])->name('dashboard');
-            Route::get('/bookings', [BuyerController::class, 'bookings'])->name('bookings');
+            Route::get('/bookings', [ReservationController::class, 'showUserReservations'])->name('bookings');
             Route::get('/reviews', [BuyerController::class, 'reviews'])->name('reviews');
             Route::get('/orders', [OrderController::class, 'userOrders'])->name('orders');
             Route::get('/shortlists', [BuyerController::class, 'shortlists'])->name('shortlists');

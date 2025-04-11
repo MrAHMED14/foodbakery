@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
 use App\Models\Restaurant;
 use App\Services\ReservationService;
 use Illuminate\Http\Request;
@@ -38,5 +39,28 @@ class ReservationController extends Controller
             session()->flash('error', $e->getMessage());
             return back();
         }
+    }
+
+    public function showUserReservations()
+    {
+        $user = Auth::id();
+        $reservations = Reservation::where('user_id', $user)
+            ->orderByRaw('reservation_date >= ? desc', [now()])
+            ->orderBy('reservation_date', 'asc')
+            ->paginate(10);
+
+        return view('front.buyer.bookings', compact('reservations'));
+    }
+
+    public function showRestaurantReservations()
+    {
+        $restaurant = Auth::user()->restaurant->id;
+
+        $reservations = Reservation::where('restaurant_id', $restaurant)
+            ->orderByRaw('reservation_date >= ? desc', [now()])
+            ->orderBy('reservation_date', 'asc')
+            ->paginate(10);
+
+        return view('front.restaurant.bookings', compact('reservations'));
     }
 }
