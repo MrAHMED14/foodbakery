@@ -42,6 +42,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/reviews/{review}/reply', [ReviewController::class, 'reply'])->name('reviews.reply');
 
         Route::group(['prefix' => 'restaurant', 'as' => 'restaurant.'], function () {
+            Route::post('/menus/store', [RestaurantController::class, 'storeMenu'])->name('menus.store');
+            Route::put('/menus/{menu}', [RestaurantController::class, 'updateMenu'])->name('menus.update');
+            Route::delete('/menus/{menu}', [RestaurantController::class, 'destroyMenu'])->name('menus.destroy');
+
+            Route::post('/dishes/store', [RestaurantController::class, 'storeDish'])->name('dishes.store');
+            Route::put('/dishes/{dish}', [RestaurantController::class, 'updateDish'])->name('dishes.update');
+            Route::delete('/dishes/{dish}', [RestaurantController::class, 'destroyDish'])->name('dishes.destroy');
+
             Route::post('/profile/update', [RestaurantController::class, 'update'])->name('update');
             Route::post('/profile/update-location', [RestaurantController::class, 'updateLocation'])->name('update.location');
             Route::post('/profile/update-opening-hours', [RestaurantController::class, 'updateOpeningHours'])->name('update.opening_hours');

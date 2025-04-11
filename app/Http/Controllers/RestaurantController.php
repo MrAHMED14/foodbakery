@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\CuisineType;
+use App\Models\Dish;
+use App\Models\Menu;
 use App\Models\Restaurant;
 use App\Models\User;
 use App\Services\CartService;
@@ -287,6 +289,185 @@ class RestaurantController extends Controller
         return back()->with('success', 'Opening hours updated successfully.');
     }
 
+    public function storeMenu(Request $request)
+    {
+        $request->validate([
+            'menu_name' => 'required|string|max:255',
+            'menu_description' => 'nullable|string|max:500',
+        ]);
+
+        $restaurant = Auth::user()->restaurant;
+
+        if (!$restaurant) {
+            return back()->with('error', 'Restaurant not found.');
+        }
+
+        $existingMenu = $restaurant->menus()->where('name', $request->menu_name)->first();
+        if ($existingMenu) {
+            return back()->with('error', 'You already have a menu with this name.');
+        }
+
+        $menu = new Menu();
+        $menu->name = $request->menu_name;
+        $menu->description = $request->menu_description;
+        $menu->restaurant_id = $restaurant->id;
+        $menu->save();
+
+        return back()->with('success', 'Menu created successfully.');
+    }
+
+    public function updateMenu(Request $request, Menu $menu)
+    {
+        $request->validate([
+            'menu_name' => 'required|string|max:255',
+            'menu_description' => 'nullable|string|max:500',
+        ]);
+
+        $restaurant = Auth::user()->restaurant;
+
+        if (!$restaurant) {
+            return back()->with('error', 'Restaurant not found.');
+        }
+
+        if ($menu->restaurant_id !== $restaurant->id) {
+            return back()->with('error', 'You do not have permission to update this menu.');
+        }
+
+        $existingMenu = $restaurant->menus()
+            ->where('name', $request->menu_name)
+            ->where('id', '!=', $menu->id)
+            ->first();
+
+        if ($existingMenu) {
+            return back()->with('error', 'You already have a menu with this name.');
+        }
+
+        $menu->name = $request->menu_name;
+        $menu->description = $request->menu_description;
+        $menu->save();
+
+        return back()->with('success', 'Menu updated successfully.');
+    }
+
+    public function destroyMenu(Menu $menu)
+    {
+        $restaurant = Auth::user()->restaurant;
+
+        if (!$restaurant) {
+            return back()->with('error', 'Restaurant not found.');
+        }
+
+        if ($menu->restaurant_id !== $restaurant->id) {
+            return back()->with('error', 'You do not have permission to delete this menu.');
+        }
+
+        $menu->delete();
+
+        return back()->with('success', 'Menu deleted successfully.');
+    }
+
+    public function storeDish(Request $request)
+    {
+        $request->validate([
+            'menu_id' => 'required|exists:menus,id',
+            'dish_name' => 'required|string|max:255',
+            'dish_description' => 'nullable|string|max:500',
+            'dish_price' => 'required|numeric|min:0',
+            'dish_image' => 'nullable|file|mimes:jpeg,jpg,png|max:2048',
+        ]);
+
+        $restaurant = Auth::user()->restaurant;
+
+        if (!$restaurant) {
+            return back()->with('error', 'Restaurant not found.');
+        }
+
+        $menu = $restaurant->menus()->find($request->menu_id);
+        if (!$menu) {
+            return back()->with('error', 'Menu not found.');
+        }
+
+        $imagePath = $request->file('dish_image') ? $request->file('dish_image')->store('restaurants/dishes', 'public') : null;
+
+        $dish = new Dish();
+        $dish->name = $request->dish_name;
+        $dish->description = $request->dish_description;
+        $dish->price = $request->dish_price;
+        $dish->dish_image = $imagePath;
+        $dish->menu_id = $menu->id;
+        $dish->save();
+
+        return back()->with('success', 'Dish created successfully.');
+    }
+
+    public function updateDish(Request $request, Dish $dish)
+    {
+        $request->validate([
+            'menu_id' => 'required|exists:menus,id',
+            'dish_name' => 'required|string|max:255',
+            'dish_description' => 'nullable|string|max:500',
+            'dish_price' => 'required|numeric|min:0',
+            'dish_image' => 'nullable|file|mimes:jpeg,jpg,png|max:2048',
+        ]);
+
+        $restaurant = Auth::user()->restaurant;
+
+        if (!$restaurant) {
+            return back()->with('error', 'Restaurant not found.');
+        }
+
+        $menu = $restaurant->menus()->where('id', $request->menu_id)->first();
+        if (!$menu) {
+            return back()->with('error', 'Menu not found.');
+        }
+
+        if ($menu->restaurant_id !== $restaurant->id) {
+            return back()->with('error', 'You do not have permission to update this menu.');
+        }
+
+        $existingDish = $menu->dishes()
+            ->where('name', $request->dish_name)
+            ->where('id', '!=', $dish->id)
+            ->first();
+
+        if ($existingDish) {
+            return back()->with('error', 'You already have a dish with this name in this menu.');
+        }
+
+        if ($request->hasFile('dish_image')) {
+            $imagePath = $request->file('dish_image')->store('restaurants/dishes', 'public');
+            $dish->dish_image = $imagePath;
+        }
+
+        $dish->menu_id = $menu->id;
+        $dish->name = $request->dish_name;
+        $dish->price = $request->dish_price;
+        $dish->description = $request->dish_description;
+        $dish->save();
+
+        return back()->with('success', 'Dish updated successfully.');
+    }
+
+    public function destroyDish(Dish $dish)
+    {
+        $restaurant = Auth::user()->restaurant;
+
+        if (!$restaurant) {
+            return back()->with('error', 'Restaurant not found.');
+        }
+
+        if ($dish->menu->restaurant_id !== $restaurant->id) {
+            return back()->with('error', 'You do not have permission to delete this dish.');
+        }
+
+        $dish->delete();
+
+        return back()->with('success', 'Dish deleted successfully.');
+    }
+
+
+
+
     /*
         !-----------------------------------------------------------------------!
         !---------------------------* UNCHANGED CODE *--------------------------!
@@ -336,7 +517,8 @@ class RestaurantController extends Controller
 
     public function menuBuilder()
     {
-        return view('front.restaurant.menu-builder');
+        $menus = Auth::user()->restaurant->menus;
+        return view('front.restaurant.menu-builder', compact('menus'));
     }
 
     public function orders()
