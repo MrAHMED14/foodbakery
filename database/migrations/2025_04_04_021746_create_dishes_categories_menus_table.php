@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->foreignId('restaurant_id')->constrained('restaurants');
+            $table->foreignId('restaurant_id')->constrained('restaurants')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('dish_image')->nullable();
             $table->decimal('price', 8, 2);
-            $table->foreignId('menu_id')->constrained('menus');
+            $table->foreignId('menu_id')->constrained('menus')->onDelete('cascade');
             $table->foreignId('categorie_id')->nullable()->constrained('categories')->onDelete('set null');
             $table->timestamps();
         });
