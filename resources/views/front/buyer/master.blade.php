@@ -48,6 +48,7 @@
 	<script src="{{asset('front/js/jquery-3.6.0.min.js')}}"></script>
 	<script src="{{asset('front/js/modernizr.js')}}"></script>
 	<script src="{{asset('front/js/bootstrap.js')}}"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -58,13 +59,15 @@
         <!-- header End -->
 
         @if (session('success'))
-            <div style="z-index: 100; color: green; background-color: #d4edda; padding: 10px;">
+            <div style="z-index: 100; color: #008A2E; background-color: #ECFDF3; padding: 16px;">
+                <i class="fa fa-check-circle" aria-hidden="true" style="padding-right: 5px;"></i>
                 {{ session('success') }}
             </div>
         @endif
 
         @if (session('error'))
-            <div style="z-index: 100; color: red; background-color: #f8d7da; padding: 10px;">
+            <div style="z-index: 100; color: #E60000; background-color: #fff0f0; padding: 16px;">
+                <i class="fa fa-exclamation-circle" aria-hidden="true" style="padding-right: 5px;"></i>
                 {{ session('error') }}
             </div>
         @endif
