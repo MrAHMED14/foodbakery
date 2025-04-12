@@ -57,18 +57,37 @@
                                                         <label for="address">Address:</label>
                                                         <input type="text" name="address" id="address"
                                                             placeholder="Enter your address" required>
+
+                                                            @error('address')
+                                                            <div class="text-danger" style="font-size: 12px;">
+                                                                {{ $message }}
+                                                            </div>
+                                                        @enderror
                                                     </div>
 
                                                     <div class="field-holder">
                                                         <label for="city">City:</label>
                                                         <input type="text" name="city" id="city"
                                                             placeholder="Enter your city" required>
+
+                                                        @error('city')
+                                                            <div class="text-danger" style="font-size: 12px;">
+                                                                {{ $message }}
+                                                            </div>
+                                                        @enderror
                                                     </div>
 
                                                     <div class="field-holder">
                                                         <label for="state">State:</label>
                                                         <input type="text" name="state" id="state"
                                                             placeholder="Enter your state" required>
+
+                                                        @error('state')
+                                                            <div class="text-danger" style="font-size: 12px;">
+                                                                {{ $message }}
+                                                            </div>
+                                                        @enderror
+
                                                     </div>
 
                                                     <div class="field-holder">
@@ -77,6 +96,12 @@
                                                             <option value="delivery">Delivery</option>
                                                             <option value="pickup">Pickup</option>
                                                         </select>
+
+                                                        @error('order_type')
+                                                            <div class="text-danger" style="font-size: 12px;">
+                                                                {{ $message }}
+                                                            </div>
+                                                        @enderror
                                                     </div>
 
                                                     <div class="field-holder">
@@ -86,6 +111,12 @@
                                                             <option value="paypal">PayPal</option>
                                                             <option value="cash_on_delivery">Cash on Delivery</option>
                                                         </select>
+
+                                                        @error('payment_method')
+                                                            <div class="text-danger" style="font-size: 12px;">
+                                                                {{ $message }}
+                                                            </div>
+                                                        @enderror
                                                     </div>
 
                                                     <button type="submit" class="btn-submit"
