@@ -108,7 +108,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //Admin route
     Route::middleware(['role:' . User::ROLE_ADMIN])->group(function () {
         Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
-            Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+            Route::get('/dashboard', [AdminController::class, 'index'])->name('index');
         });
     });
 });

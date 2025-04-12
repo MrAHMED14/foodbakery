@@ -325,7 +325,7 @@
                                                 {{ Auth::user()->name }}
                                             </a>
                                             <ul>
-                                                <li class="active"><a href="{{ route('admin.dashboard') }}"><i
+                                                <li class="active"><a href="{{ route('admin.index') }}"><i
                                                             class="icon-dashboard3"></i>Dashboard</a></li>
                                                 <li>
                                                     <form method="POST" action="{{ route('logout') }}">
