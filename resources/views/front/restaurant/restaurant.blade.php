@@ -207,6 +207,23 @@
                                                         </div>
                                                     </div>
 
+                                                    {{-- TODO: Implement this --}}
+                                                    {{-- Capacity --}}
+                                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                        <div class="field-holder">
+                                                            <label>Capacity</label>
+                                                            <input type="number" {{--  name="restaurant_capacity" --}}
+                                                                placeholder="Enter max tables number on the restaurant"
+                                                                class="foodbakery-dev-req-field">
+
+                                                            @error('restaurant_capacity')
+                                                                <div class="text-danger" style="font-size: 12px;">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
                                                     {{-- Description --}}
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="field-holder">
