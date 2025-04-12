@@ -683,7 +683,7 @@
                                     </div>
                                 </div>
 
-                                <a href="#" class="menu-order-confirm">Confirm Order</a>
+                                <a href="{{ route('order.checkout') }}" class="menu-order-confirm">Confirm Order</a>
                                 <span class="menu-loader"></span>
                             </div>
                         </div>

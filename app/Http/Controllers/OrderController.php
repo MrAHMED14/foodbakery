@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderLine;
+use App\Services\CartService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+    protected $cartService;
+
+    public function __construct(CartService $cartService)
+    {
+        $this->cartService = $cartService;
+    }
 
     public function userOrders()
     {
@@ -26,6 +33,14 @@ class OrderController extends Controller
     {
         $orders = Order::where('user_id', Auth::user()->id)->paginate(10);
         return view('front.buyer.orders', compact('orders'));
+    }
+
+    // This method is used to show the order form
+    public function create()
+    {
+        $cart = $this->cartService->getCart();
+        $totalPrice = $this->cartService->getTotalPrice();
+        return view('front.buyer.checkout', compact('cart', 'totalPrice'));
     }
 
     public function checkout(Request $request)

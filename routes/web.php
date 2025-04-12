@@ -86,7 +86,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/cart', [CartController::class, 'view'])->name('cart.view');
         Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
         Route::post('/cart/remove', [CartController::class, 'removeDish'])->name('cart.removeDish');
-        Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+
+        Route::get('/checkout', [OrderController::class, 'create'])->name('order.checkout');
+        Route::post('/checkout', [OrderController::class, 'checkout'])->name('order.checkout.store');
 
         Route::group(['prefix' => 'buyer', 'as' => 'buyer.'], function () {
             Route::get('/dashboard', [BuyerController::class, 'buyerDashboard'])->name('dashboard');
