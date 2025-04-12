@@ -99,6 +99,7 @@ class RestaurantController extends Controller
 
             //# User Information
             'user_name' => 'required|string|max:255',
+            'manager_phone' => 'nullable|string|max:20',
             'user_email' => 'required|email|unique:users',
             'user_password' => 'required|confirmed'
         ]);
@@ -110,12 +111,11 @@ class RestaurantController extends Controller
             $user = User::create([
                 'name' => $validatedData['user_name'],
                 'email' => $validatedData['user_email'],
+                'phone' => $validatedData['manager_phone'] ?? null,
                 'role' => User::ROLE_RESTAURANT,
                 'password' => Hash::make($validatedData['user_password']),
             ]);
 
-
-            // Handle file uploads with storage paths
             $logoPath = $request->file('restaurant_logo') ? $request->file('restaurant_logo')->store('restaurants/logos', 'public') : null;
             $coverPhotoPath = $request->file('restaurant_cover_photo') ? $request->file('restaurant_cover_photo')->store('restaurants/covers', 'public') : null;
 

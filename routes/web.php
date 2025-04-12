@@ -24,8 +24,12 @@ Route::group(['prefix' => '', 'as' => 'front.'], function () {
     Route::get('/single', [FrontController::class, 'single'])->name('single');
 
     Route::get('/listing', [RestaurantController::class, 'index'])->name('listings');
-    Route::get('/register-restaurant', [RestaurantController::class, 'registerRestaurant'])->name('register_restaurant');
-    Route::post('/register-restaurant', [RestaurantController::class, 'store'])->name('restaurants.store');
+
+    Route::middleware('guest')->group(function () {
+        Route::get('/register-restaurant', [RestaurantController::class, 'registerRestaurant'])->name('register_restaurant');
+        Route::post('/register-restaurant', [RestaurantController::class, 'store'])->name('restaurants.store');
+    });
+
     Route::get('/listing-details/{restaurant}', [RestaurantController::class, 'show'])->name('listing_details');
 
     Route::get('/blog', [FrontController::class, 'blog'])->name('blog');
