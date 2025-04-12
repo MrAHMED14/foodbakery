@@ -182,6 +182,7 @@
     <!-- dashboard init -->
     <script src="{{ asset('back/js/pages/dashboard.init.js') }}"></script>
     <script src="{{ asset('back/js/app.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.key') }}&libraries=places"></script>
 </body>
 
 </html>
