@@ -91,7 +91,7 @@
                                                                         style="background-color: #1e73be;">Processing</span>
                                                                 </div>
                                                                 <div><a href="#" data-toggle="modal"
-                                                                        data-target="#order-det-22606"><i
+                                                                        data-target={{ '#order_detail_' . $order->id }}><i
                                                                             class="icon-plus2 text-color"></i></a>
                                                                 </div>
                                                             </li>
@@ -117,82 +117,67 @@
                                                                                         <div
                                                                                             class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                                                             <div
-                                                                                                class="list-detail-options has-checkbox">
-                                                                                                <h3>
-                                                                                                    Restaurant Demo
+                                                                                                class="customer-detail-holder">
+                                                                                                <h3>Customer Detail
                                                                                                 </h3>
-                                                                                                <ul
-                                                                                                    class="order-detail-options">
+                                                                                                <ul class="customer-detail">
                                                                                                     <li
                                                                                                         class="order-number">
                                                                                                         <strong>Order
                                                                                                             ID:</strong>
-                                                                                                        <span>22606</span>
+                                                                                                        <span>{{ sprintf('%05d', $order->id) }}</span>
                                                                                                     </li>
-                                                                                                    <li
-                                                                                                        class="req-delivery">
-                                                                                                        <strong>Delivery
-                                                                                                            Time:</strong>
-                                                                                                        <span>10
-                                                                                                            Minutes
-                                                                                                        </span>
+                                                                                                    <li>
+                                                                                                        <strong>Name
+                                                                                                            :</strong>
+                                                                                                        <span>{{ $order->user->name }}</span>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <strong>Phone Number
+                                                                                                            :</strong>
+                                                                                                        <span>{{ $order->user->phone }}</span>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <strong>Email
+                                                                                                            :</strong>
+                                                                                                        <span>{{ $order->user->email }}</span>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <strong>State
+                                                                                                            :</strong>
+                                                                                                        <span>{{ $order->state }}</span>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <strong>city
+                                                                                                            :</strong>
+                                                                                                        <span>{{ $order->city }}</span>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <strong>Address
+                                                                                                            :</strong>
+                                                                                                        <span>{{ $order->address }}</span>
                                                                                                     </li>
                                                                                                     <li
                                                                                                         class="created-date">
                                                                                                         <strong>Delivery
                                                                                                             Date:</strong>
                                                                                                         <span>
-                                                                                                            Apr 9,
-                                                                                                            2020
-                                                                                                            06:38 AM
+                                                                                                            {{ \Carbon\Carbon::parse($order->order_date)->format('M j, Y h:i A') }}
                                                                                                         </span>
                                                                                                     </li>
                                                                                                     <li class="order-type">
                                                                                                         <strong>Type:</strong>
-                                                                                                        <span>order</span>
+                                                                                                        <span>{{ $order->order_type }}</span>
                                                                                                     </li>
                                                                                                     <li class="order-type">
                                                                                                         <strong>Payment
                                                                                                             Status:</strong>
-                                                                                                        <span>Approved</span>
-                                                                                                    </li>
-
-                                                                                                </ul>
-                                                                                            </div>
-
-                                                                                        </div>
-                                                                                        <div
-                                                                                            class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                                                            <div
-                                                                                                class="customer-detail-holder">
-                                                                                                <h3>Customer Detail
-                                                                                                </h3>
-                                                                                                <ul class="customer-detail">
-                                                                                                    <li>
-                                                                                                        <strong>Name
-                                                                                                            :</strong>
-                                                                                                        <span>Buyer
-                                                                                                            Demo</span>
-                                                                                                    </li>
-                                                                                                    <li>
-                                                                                                        <strong>Phone
-                                                                                                            Number
-                                                                                                            :</strong>
-                                                                                                        <span>0123456789</span>
-                                                                                                    </li>
-                                                                                                    <li>
-                                                                                                        <strong>Email
-                                                                                                            :</strong>
-                                                                                                        <span>dum4@chimpgroup.com</span>
-                                                                                                    </li>
-                                                                                                    <li>
-                                                                                                        <strong>Address
-                                                                                                            :</strong>
-                                                                                                        <span>London</span>
+                                                                                                        <span>{{ $order->payment_status }}</span>
                                                                                                     </li>
                                                                                                 </ul>
                                                                                             </div>
                                                                                         </div>
+
                                                                                         <div
                                                                                             class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                                             <div
@@ -229,6 +214,7 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
+
                                                                                         <div
                                                                                             class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                                             <h2 class="heading">Food
@@ -245,137 +231,36 @@
                                                                                                             per
                                                                                                         </div>
                                                                                                     </li>
-                                                                                                    <li
-                                                                                                        class="order-heading-titles">
-                                                                                                        <div>
-                                                                                                            <h4>Pizzas
-                                                                                                            </h4>
-                                                                                                            <h5>Foodbakery
-                                                                                                                Special
-                                                                                                                9"
-                                                                                                                Deep
-                                                                                                                Pan
-                                                                                                            </h5>
-                                                                                                        </div>
-                                                                                                        <div><span
-                                                                                                                class="category-price">£4.80</span>
-                                                                                                        </div>
-                                                                                                    </li>
-                                                                                                    <li
-                                                                                                        class="order-heading-titles">
-                                                                                                        <div>
-                                                                                                            <h4>Pizzas
-                                                                                                            </h4>
-                                                                                                            <h5>Foodbakery
-                                                                                                                Special
-                                                                                                                9"
-                                                                                                                Deep
-                                                                                                                Pan
-                                                                                                            </h5>
-                                                                                                        </div>
-                                                                                                        <div><span
-                                                                                                                class="category-price">£4.80</span>
-                                                                                                        </div>
-                                                                                                    </li>
-                                                                                                    <li
-                                                                                                        class="order-heading-titles">
-                                                                                                        <div>
-                                                                                                            <h4>Pizzas
-                                                                                                            </h4>
-                                                                                                            <h5>Foodbakery
-                                                                                                                Special
-                                                                                                                12"
-                                                                                                                Deep
-                                                                                                                Pan
-                                                                                                            </h5>
-                                                                                                        </div>
-                                                                                                        <div><span
-                                                                                                                class="category-price">£3.90</span>
-                                                                                                        </div>
-                                                                                                    </li>
-                                                                                                    <li
-                                                                                                        class="order-heading-titles">
-                                                                                                        <div>
-                                                                                                            <h4>Garlic
-                                                                                                                Bread
-                                                                                                            </h4>
-                                                                                                            <h5>Garlic
-                                                                                                                Bread
-                                                                                                                12"
-                                                                                                                Deep
-                                                                                                            </h5>
-                                                                                                        </div>
-                                                                                                        <div><span
-                                                                                                                class="category-price">£3.50</span>
-                                                                                                        </div>
-                                                                                                    </li>
-                                                                                                    <li
-                                                                                                        class="order-heading-titles">
-                                                                                                        <div>
-                                                                                                            <h4>Kebabs
-                                                                                                            </h4>
-                                                                                                            <h5>Kebabs
-                                                                                                                With
-                                                                                                                Naan
-                                                                                                            </h5>
-                                                                                                        </div>
-                                                                                                        <div><span
-                                                                                                                class="category-price">£4.50</span>
-                                                                                                        </div>
-                                                                                                    </li>
-                                                                                                    <li
-                                                                                                        class="order-heading-titles">
-                                                                                                        <div>
-                                                                                                            <h4>Burgers
-                                                                                                            </h4>
-                                                                                                            <h5>Quarter
-                                                                                                                Pounder
-                                                                                                            </h5>
-                                                                                                        </div>
-                                                                                                        <div><span
-                                                                                                                class="category-price">£3.00</span>
-                                                                                                        </div>
-                                                                                                    </li>
+
+                                                                                                    @foreach ($order->orderLines as $orderLine)
+                                                                                                        <li
+                                                                                                            class="order-heading-titles">
+                                                                                                            <div>
+                                                                                                                <h4>{{ $orderLine->dish->name }}
+                                                                                                                </h4>
+                                                                                                                <h5>{{ $orderLine->dish->description }}
+                                                                                                                </h5>
+                                                                                                            </div>
+                                                                                                            <div><span
+                                                                                                                    class="category-price">£{{ $orderLine->dish->price }}</span>
+                                                                                                            </div>
+                                                                                                        </li>
+                                                                                                    @endforeach
                                                                                                 </ul>
                                                                                             </div>
                                                                                         </div>
+
                                                                                         <div
                                                                                             class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                                             <div class="row">
-                                                                                                <div
-                                                                                                    class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                                                                    <h3>Order Total
-                                                                                                    </h3>
-                                                                                                </div>
                                                                                                 <div
                                                                                                     class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                                                                     <ul
                                                                                                         class="order-detail-options order-total">
                                                                                                         <li
-                                                                                                            class="created-date">
-                                                                                                            <strong>Subtotal:</strong>
-                                                                                                            <span>£24.50</span>
-                                                                                                        </li>
-                                                                                                        <li
-                                                                                                            class="order-type">
-                                                                                                            <strong>
-                                                                                                                Pick
-                                                                                                                Up
-                                                                                                                Fee:
-                                                                                                            </strong>
-                                                                                                            <span>£10.00</span>
-                                                                                                        </li>
-                                                                                                        <li
-                                                                                                            class="order-type">
-                                                                                                            <strong>VAT
-                                                                                                                (13%)
-                                                                                                            </strong>
-                                                                                                            <span>£4.48</span>
-                                                                                                        </li>
-                                                                                                        <li
                                                                                                             class="order-type total-price">
                                                                                                             <strong>Total:</strong>
-                                                                                                            <span>£38.99</span>
+                                                                                                            <span>£{{ $order->total }}</span>
                                                                                                         </li>
                                                                                                     </ul>
                                                                                                 </div>
