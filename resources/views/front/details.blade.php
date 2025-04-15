@@ -573,11 +573,9 @@
                                         <p>{{ $restaurant->description }}
                                         </p>
                                         <div class="map-sec-holder">
-                                            <div>
-                                                <div class="cs-map-section">
-                                                    <iframe width="100" height="280" id="gmap_canvas"
-                                                        src="https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
-                                                </div>
+                                            <div class="cs-map-section" style="border-radius: 10px;">
+                                                <div id="restaurantMap"
+                                                    style="width: 100%; height: 400px; border-radius: 10px;"></div>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -692,4 +690,31 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const lat = {{ $restaurant->latitude ?? 0 }};
+        const lng = {{ $restaurant->longitude ?? 0 }};
+        let restaurantMap = L.map('restaurantMap', {
+            center: [lat, lng],
+            zoom: 17,
+            zoomControl: true,
+            dragging: true,
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(restaurantMap);
+
+        const marker = L.marker([lat, lng]).addTo(restaurantMap);
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            const target = $(e.target).attr("href");
+            if (target === '#menu3') {
+                setTimeout(() => {
+                    restaurantMap.invalidateSize();
+                    restaurantMap.setView([lat, lng]);
+                }, 300);
+            }
+        });
+    </script>
 @endsection
