@@ -81,7 +81,7 @@ class RestaurantController extends Controller
             'restaurant_city' => 'required|string|max:255',
             'restaurant_state' => 'required|string|max:255',
             'restaurant_phone' => 'required|string|max:20',
-            'restaurant_email' => 'required|string|max:255|unique:restaurants',
+            'restaurant_email' => 'required|string|max:255|unique:restaurants,email',
             'restaurant_latitude' => 'nullable|numeric|between:-90,90',
             'restaurant_longitude' => 'nullable|numeric|between:-180,180',
             'restaurant_description' => 'nullable|string|max:255',
@@ -94,13 +94,13 @@ class RestaurantController extends Controller
             'restaurant_minimum_order' => 'nullable|numeric',
             'restaurant_maximum_order' => 'nullable|numeric',
             'restaurant_delivery_fee' => 'nullable|numeric',
-            'cuisine_types' => 'nullable|array',  // This allows multiple cuisine types
-            'cuisine_types.*' => 'exists:cuisine_types,id', // Ensure the selected cuisine types exist in the DB
+            'cuisine_types' => 'nullable|array',
+            'cuisine_types.*' => 'exists:cuisine_types,id',
 
             //# User Information
             'user_name' => 'required|string|max:255',
             'manager_phone' => 'nullable|string|max:20',
-            'user_email' => 'required|email|unique:users',
+            'user_email' => 'required|email|unique:users,email',
             'user_password' => 'required|confirmed'
         ]);
 
@@ -155,7 +155,7 @@ class RestaurantController extends Controller
             return redirect()->route('login');
         } catch (\Exception $e) {
             DB::rollBack();
-            session()->flash('error', 'Failed to register restaurant. Please try again.');
+            session()->flash('error', 'Failed to register restaurant. Please try again. -' /*. $e->getMessage()*/);
             return back();
         }
     }
