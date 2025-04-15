@@ -11,7 +11,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                        <div class="user-dashboard loader-holder">
+                        <div class="user-dashboard loader-holder" style="border-radius: 10px;">
                             <div class="user-holder">
                                 <div id="restaurant-sets-holder">
                                     <form method="POST" action="{{ route('front.restaurants.store') }}"
@@ -34,7 +34,7 @@
                                                                             <div style="width: 100%; height: 100%;">
                                                                                 <img style="width: 100%; height: 250px; object-fit: cover; border:1px solid rgb(218, 213, 213); border-radius: 5px;"
                                                                                     id="cover-image"
-                                                                                    src="{{ asset('front/extra-images/cover-photo01.jpg') }}"
+                                                                                    src="{{ asset('front/extra-images/cover-placeholder.png') }}"
                                                                                     alt="">
                                                                             </div>
                                                                             <div class="upload-file">
@@ -76,7 +76,8 @@
                                                                                         <div class="item-thumb">
                                                                                             <img class="thumbnail"
                                                                                                 id="logo-image"
-                                                                                                src="{{ asset('front/extra-images/listing-logo12.png') }}"
+                                                                                                src="{{ asset('front/extra-images/user-placeholder.png') }}"
+                                                                                                style="aspect-ratio: 1 / 1; padding: 0;"
                                                                                                 alt="">
                                                                                         </div>
                                                                                     </div>
@@ -427,7 +428,7 @@
                                                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                                     <div class="field-holder">
                                                                         <label>Latitude</label>
-                                                                        <input type="number" name="restaurant_latitude"
+                                                                        <input id="latitude" type="number" name="restaurant_latitude"
                                                                             min="-90" max="90" step="0.000001"
                                                                             placeholder="Latitude">
                                                                         @error('restaurant_latitude')
@@ -441,7 +442,7 @@
                                                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                                     <div class="field-holder">
                                                                         <label>Longitude</label>
-                                                                        <input type="number" name="restaurant_longitude"
+                                                                        <input id="longitude" type="number" name="restaurant_longitude"
                                                                             min="-180" max="180" step="0.000001"
                                                                             placeholder="Longitude">
                                                                         @error('restaurant_longitude')
@@ -451,25 +452,10 @@
                                                                     </div>
                                                                 </div>
 
-                                                                {{-- Search Location --}}
-                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                    <div class="field-holder">
-                                                                        <label>Find On Map</label>
-                                                                        <input type="text"
-                                                                            placeholder="Type Your Address"
-                                                                            class="foodbakery-search-location">
-                                                                        <button class="btn-submit"
-                                                                            style="margin-top: 10px; ">Search
-                                                                            Location</button>
-                                                                    </div>
-                                                                </div>
-
                                                                 {{-- Map Section --}}
                                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                    <div class="cs-map-section">
-                                                                        <iframe width="100" height="280"
-                                                                            id="gmap_canvas"
-                                                                            src="https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+                                                                    <div class="cs-map-section" style="border-radius: 10px;">
+                                                                        <div id="map" style="width: 100%; height: 400px; border-radius: 10px;"></div>
                                                                     </div>
                                                                 </div>
 
@@ -534,10 +520,10 @@
 
                                     <script>
                                         const defaultLogoImage =
-                                            "{{ asset('front/extra-images/listing-logo12.png') }}";
+                                            "{{ asset('front/extra-images/user-placeholder.png') }}";
 
                                         const defaultCoverImage =
-                                            "{{ asset('front/extra-images/cover-photo01.jpg') }}";
+                                            "{{ asset('front/extra-images/cover-placeholder.png') }}";
 
                                         document.getElementById('file-1').addEventListener('change', function(event) {
                                             const [file] = event.target.files;
@@ -577,4 +563,66 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const latInput = document.getElementById('latitude');
+            const lngInput = document.getElementById('longitude');
+
+            const fallbackLat = 35.384126;
+            const fallbackLng = 1.314610;
+
+            function initLeafletMap(lat, lng) {
+                const map = L.map('map').setView([lat, lng], 13);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+
+                const marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+
+                latInput.value = lat.toFixed(6);
+                lngInput.value = lng.toFixed(6);
+
+                marker.on('dragend', function () {
+                    const pos = marker.getLatLng();
+                    latInput.value = pos.lat.toFixed(6);
+                    lngInput.value = pos.lng.toFixed(6);
+                });
+
+                function updateMarkerFromInputs() {
+                    const updatedLat = parseFloat(latInput.value);
+                    const updatedLng = parseFloat(lngInput.value);
+                    if (!isNaN(updatedLat) && !isNaN(updatedLng)) {
+                        const newLatLng = L.latLng(updatedLat, updatedLng);
+                        marker.setLatLng(newLatLng);
+                        map.setView(newLatLng, 15);
+                    }
+                }
+
+                latInput.addEventListener('input', updateMarkerFromInputs);
+                lngInput.addEventListener('input', updateMarkerFromInputs);
+
+                L.Control.geocoder({
+                    defaultMarkGeocode: false
+                }).on('markgeocode', function (e) {
+                    const latlng = e.geocode.center;
+                    marker.setLatLng(latlng);
+                    map.setView(latlng, 15);
+                    latInput.value = latlng.lat.toFixed(6);
+                    lngInput.value = latlng.lng.toFixed(6);
+                }).addTo(map);
+            }
+
+            // Try to get user location
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    initLeafletMap(position.coords.latitude, position.coords.longitude);
+                },
+                function () {
+                    initLeafletMap(fallbackLat, fallbackLng);
+                }
+            );
+        });
+    </script>
 @endsection
