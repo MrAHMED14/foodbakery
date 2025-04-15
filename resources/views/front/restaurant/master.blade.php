@@ -101,7 +101,7 @@
 	<script src="{{asset('front/js/wow.js')}}"></script>
 	<script src="{{asset('front/js/functions-plugin.js')}}"></script>
 	<script src="{{asset('front/js/functions.js')}}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.key') }}&libraries=places"></script>
+
 </body>
 
 </html>
