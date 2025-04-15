@@ -44,7 +44,7 @@
                 <button type="button" class="btn header-item" id="page-header-user-dropdown" data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     <img class="rounded-circle header-profile-user" style="width: 40px; height: 40px; padding: 2px;"
-                        src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('front/extra-images/team-medium-img1.jpg') }}">
+                        src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('front/extra-images/user-placeholder.png') }}">
                     <span class="d-none d-xl-inline-block ms-1 fw-medium">{{ $user->name }}</span>
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                 </button>

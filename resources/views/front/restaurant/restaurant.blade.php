@@ -48,7 +48,7 @@
                                                                 <div style="width: 100%; height: 100%;">
                                                                     <img style="width: 100%; height: 250px; object-fit: cover; border:1px solid rgb(218, 213, 213); border-radius: 5px;"
                                                                         id="cover-image"
-                                                                        src="{{ $user->restaurant->cover_photo ? asset('storage/' . $user->restaurant->cover_photo) : asset('front/extra-images/cover-photo01.jpg') }}"
+                                                                        src="{{ $user->restaurant->cover_photo ? asset('storage/' . $user->restaurant->cover_photo) : asset('front/extra-images/cover-placeholder.png') }}"
                                                                         alt="">
                                                                 </div>
                                                                 <div class="upload-file">
@@ -86,7 +86,8 @@
                                                                         <div class="drag-list">
                                                                             <div class="item-thumb">
                                                                                 <img class="thumbnail" id="logo-image"
-                                                                                    src="{{ $user->restaurant->restaurant_logo ? asset('storage/' . $user->restaurant->restaurant_logo) : asset('front/extra-images/listing-logo12.png') }}"
+                                                                                    src="{{ $user->restaurant->restaurant_logo ? asset('storage/' . $user->restaurant->restaurant_logo) : asset('front/extra-images/user-placeholder.png') }}"
+                                                                                    style="aspect-ratio: 1 / 1; padding: 0;"
                                                                                     alt="">
                                                                             </div>
                                                                         </div>
@@ -378,10 +379,10 @@
 
                                 <script>
                                     const defaultLogoImage =
-                                        "{{ $user->restaurant->restaurant_logo ? asset('storage/' . $user->restaurant->restaurant_logo) : asset('front/extra-images/listing-logo12.png') }}";
+                                        "{{ $user->restaurant->restaurant_logo ? asset('storage/' . $user->restaurant->restaurant_logo) : asset('front/extra-images/user-placeholder.png') }}";
 
                                     const defaultCoverImage =
-                                        "{{ $user->restaurant->cover_photo ? asset('storage/' . $user->restaurant->cover_photo) : asset('front/extra-images/cover-photo01.jpg') }}";
+                                        "{{ $user->restaurant->cover_photo ? asset('storage/' . $user->restaurant->cover_photo) : asset('front/extra-images/cover-placeholder.png') }}";
 
                                     document.getElementById('file-1').addEventListener('change', function(event) {
                                         const [file] = event.target.files;

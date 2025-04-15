@@ -223,7 +223,7 @@
                                         <li class="user-dashboard-menu-children">
                                             <a href="javascript:void(0);" class="">
                                                 <figure class="profile-image">
-                                                    <img src="{{ Auth::user()->photo ? asset('storage/' . Auth::user()->photo) : asset('front/extra-images/team-medium-img1.jpg') }}" alt="{{ Auth::user()->name }}">
+                                                    <img src="{{ Auth::user()->photo ? asset('storage/' . Auth::user()->photo) : asset('front/extra-images/user-placeholder.png') }}" alt="{{ Auth::user()->name }}">
                                                 </figure>
                                                 {{ Auth::user()->name }}
                                             </a>
@@ -266,7 +266,7 @@
                                         <li class="user-dashboard-menu-children">
                                             <a href="javascript:void(0);" class="">
                                                 <figure class="profile-image">
-                                                    <img src="{{ Auth::user()->restaurant->restaurant_logo ? asset('storage/' . Auth::user()->restaurant->restaurant_logo) : asset('front/extra-images/listing-logo12.png') }}" alt="{{Auth::user()->restaurant->name }}">
+                                                    <img src="{{ Auth::user()->restaurant->restaurant_logo ? asset('storage/' . Auth::user()->restaurant->restaurant_logo) : asset('front/extra-images/user-placeholder.png') }}" alt="{{Auth::user()->restaurant->name }}">
                                                 </figure>
                                                 {{ Auth::user()->name }}
                                             </a>
@@ -319,7 +319,7 @@
                                         <li class="user-dashboard-menu-children">
                                             <a href="javascript:void(0);" class="">
                                                 <figure class="profile-image">
-                                                    <img src="{{ asset('front/extra-images/listing-logo18.png') }}"
+                                                    <img src="{{ asset('front/extra-images/user-placeholder.png') }}"
                                                         alt="">
                                                 </figure>
                                                 {{ Auth::user()->name }}

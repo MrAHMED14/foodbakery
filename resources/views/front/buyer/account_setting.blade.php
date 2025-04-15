@@ -74,12 +74,12 @@
                                                     <div class="current-img">
                                                         <div class="row mt">
                                                             <div id="cropContainerModal"
-                                                                data-def-img="{{ asset('front/extra-images/team-medium-img1.jpg') }}"
+                                                                data-def-img="{{ asset('front/extra-images/user-placeholder.png') }}"
                                                                 data-img-type="default">
                                                                 <figure>
                                                                     <a>
                                                                         <img id="preview-image"
-                                                                            src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('front/extra-images/team-medium-img1.jpg') }}"
+                                                                            src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('front/extra-images/user-placeholder.png') }}"
                                                                             alt="User Image">
                                                                     </a>
                                                                 </figure>
@@ -118,7 +118,7 @@
 
                                         <script>
                                             const defaultImage =
-                                                "{{ $user->photo ? asset('storage/' . $user->photo) : asset('front/extra-images/team-medium-img1.jpg') }}";
+                                                "{{ $user->photo ? asset('storage/' . $user->photo) : asset('front/extra-images/user-placeholder.png') }}";
 
                                             document.getElementById('file').addEventListener('change', function(event) {
                                                 const [file] = event.target.files;

@@ -3,7 +3,7 @@
 @endphp
 
 <div class="page-section restaurant-detail-image-section"
-style="background: url('{{ $user->restaurant->cover_photo ? asset('storage/' . $user->restaurant->cover_photo) : asset('front/extra-images/cover-photo01.jpg') }}') center center / cover no-repeat;">
+style="background: url('{{ $user->restaurant->cover_photo ? asset('storage/' . $user->restaurant->cover_photo) : asset('front/extra-images/cover-placeholder.png') }}') center center / cover no-repeat;">
     <!-- Container Start -->
     <div class="container">
         <!-- Row Start -->
@@ -14,7 +14,7 @@ style="background: url('{{ $user->restaurant->cover_photo ? asset('storage/' . $
                     <div class="company-info">
                         <div class="img-holder">
                             <figure>
-                                <img src="{{ $user->restaurant->restaurant_logo ? asset('storage/' . $user->restaurant->restaurant_logo) : asset('front/extra-images/listing-logo12.png') }}" alt="{{$user->restaurant->name }}">
+                                <img src="{{ $user->restaurant->restaurant_logo ? asset('storage/' . $user->restaurant->restaurant_logo) : asset('front/extra-images/user-placeholder.png') }}" alt="{{$user->restaurant->name }}">
                             </figure>
                         </div>
 

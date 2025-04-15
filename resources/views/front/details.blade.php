@@ -8,7 +8,7 @@
     <div class="sub-header align-center">
         {{-- Heading --}}
         <div class="restaurant-detail-image-section"
-            style="background: url('{{ $restaurant->cover_photo ? asset('storage/' . $restaurant->cover_photo) : asset('front/extra-images/cover-photo01.jpg') }}') center center / cover no-repeat; padding-top: 60px; padding-bottom: 30px; margin-top: 0px; margin-bottom: 0px; min-height: 186px !important;">
+            style="background: url('{{ $restaurant->cover_photo ? asset('storage/' . $restaurant->cover_photo) : asset('front/extra-images/cover-placeholder.png') }}') center center / cover no-repeat; padding-top: 60px; padding-bottom: 30px; margin-top: 0px; margin-bottom: 0px; min-height: 186px !important;">
             <!-- Container Start -->
             <div class="container">
                 <!-- Row Start -->
@@ -19,7 +19,7 @@
                             <div class="company-info" style="text-align: left">
                                 <div class="img-holder">
                                     <figure>
-                                        <img src="{{ $restaurant->restaurant_logo ? asset('storage/' . $restaurant->restaurant_logo) : asset('front/extra-images/listing-logo18.png') }}"
+                                        <img src="{{ $restaurant->restaurant_logo ? asset('storage/' . $restaurant->restaurant_logo) : asset('front/extra-images/user-placeholder.png') }}"
                                             alt="{{ $restaurant->name . ' logo' }}">
                                     </figure>
                                 </div>
