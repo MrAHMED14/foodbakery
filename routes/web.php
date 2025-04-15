@@ -59,7 +59,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/profile/update-opening-hours', [RestaurantController::class, 'updateOpeningHours'])->name('update.opening_hours');
 
             Route::get('/dashboard', [RestaurantController::class, 'restaurantDashboard'])->name('dashboard');
-            Route::get('/restaurant', [RestaurantController::class, 'restaurant'])->name('restaurant');
+            Route::get('/profile', [RestaurantController::class, 'restaurant'])->name('restaurant');
             Route::get('/location', [RestaurantController::class, 'location'])->name('location');
             Route::get('/open-close', [RestaurantController::class, 'openClose'])->name('open_close');
             Route::get('/menu-builder', [RestaurantController::class, 'menuBuilder'])->name('menu_builder');

@@ -174,6 +174,7 @@ class RestaurantController extends Controller
             'restaurant_logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'restaurant_name' => 'required|string|max:255',
             'restaurant_phone' => 'nullable|string|max:20',
+            'restaurant_capacity' => 'nullable|integer',
             'manager_phone' => 'nullable|string|max:20',
             'manager_name' => 'required|string|max:255',
             'contact_email' => 'nullable|email',
@@ -200,6 +201,7 @@ class RestaurantController extends Controller
         $restaurant->name = $request->restaurant_name;
         $restaurant->phone = $request->restaurant_phone;
         $restaurant->email = $request->contact_email;
+        $restaurant->capacity = $request->restaurant_capacity;
         $restaurant->description = $request->restaurant_description;
         $restaurant->accepts_orders = $request->accepts_orders;
         $restaurant->accepts_reservations = $request->accepts_reservations;

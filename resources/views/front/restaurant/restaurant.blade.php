@@ -208,12 +208,12 @@
                                                         </div>
                                                     </div>
 
-                                                    {{-- TODO: Implement this --}}
                                                     {{-- Capacity --}}
                                                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                         <div class="field-holder">
                                                             <label>Capacity</label>
-                                                            <input type="number" {{--  name="restaurant_capacity" --}}
+                                                            <input type="number" name="restaurant_capacity"
+                                                                value="{{ old('restaurant_capacity', $user->restaurant->capacity) }}"
                                                                 placeholder="Enter max tables number on the restaurant"
                                                                 class="foodbakery-dev-req-field">
 
