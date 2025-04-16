@@ -30,7 +30,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         if(Auth::user()->role == User::ROLE_ADMIN) {
-            return redirect()->intended(route('admin.dashboard', absolute: false));
+            return redirect()->intended(route('admin.index', absolute: false));
         }
 
         if(Auth::user()->role == User::ROLE_RESTAURANT) {
