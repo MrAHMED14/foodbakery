@@ -9,13 +9,13 @@
             <div class="navbar-brand-box">
                 <a href="{{ route('admin.index') }}" class="logo logo-dark">
                     <span class="logo-lg">
-                        <i class="fa fa-cutlery" aria-hidden="true"></i>
+                        {{-- <i class="fa fa-cutlery" aria-hidden="true"></i> --}}
                         <span class="logo-txt" style="font-weight: 900;">FoodBakery</span>
                     </span>
                 </a>
                 <a href="{{ route('admin.index') }}" class="logo logo-light">
                     <span class="logo-lg">
-                        <i class="fa fa-cutlery" aria-hidden="true"></i>
+                        {{-- <i class="fa fa-cutlery" aria-hidden="true"></i> --}}
                         <span class="logo-txt" style="font-weight: 900;">FoodBakery</span>
                     </span>
                 </a>
@@ -31,12 +31,6 @@
                 <button type="button" class="btn header-item" id="mode-setting-btn">
                     <i data-feather="moon" class="icon-lg layout-mode-dark"></i>
                     <i data-feather="sun" class="icon-lg layout-mode-light"></i>
-                </button>
-            </div>
-
-            <div class="dropdown d-inline-block">
-                <button type="button" class="btn header-item right-bar-toggle me-2">
-                    <i data-feather="settings" class="icon-lg"></i>
                 </button>
             </div>
 
