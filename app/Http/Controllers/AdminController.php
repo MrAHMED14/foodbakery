@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Restaurant;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -36,4 +37,19 @@ class AdminController extends Controller
         return back()->with('success', 'Verification status updated!');
     }
 
+    public function users(Request $request)
+    {
+        $query = $request->input('search');
+        $perPage = 10;
+
+        $users = User::search($query)
+            ->orderBy('id', 'asc')
+            ->paginate($perPage);
+
+        if ($request->ajax()) {
+            return view('back.body.users-table', compact('users'))->render();
+        }
+
+        return view('back.users', compact('users', 'query'));
+    }
 }

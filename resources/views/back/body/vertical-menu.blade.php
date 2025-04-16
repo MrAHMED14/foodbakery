@@ -18,6 +18,13 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{ route('admin.users') }}">
+                        <i data-feather="users"></i>
+                        <span data-key="t-users">Users</span>
+                    </a>
+                </li>
+
                 {{-- Multiple level --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">

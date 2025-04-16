@@ -6,10 +6,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, Searchable;
 
     public const ROLE_RESTAURANT = 'restaurateur';
     public const ROLE_ADMIN = 'admin';
@@ -74,5 +75,15 @@ class User extends Authenticatable
     public function isUser()
     {
         return $this->role === self::ROLE_USER;
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'id'          => $this->id,
+            'name'        => $this->name,
+            'email'       => $this->email,
+            'phone'       => $this->phone,
+        ];
     }
 }
