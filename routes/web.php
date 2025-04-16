@@ -58,6 +58,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/profile/update-location', [RestaurantController::class, 'updateLocation'])->name('update.location');
             Route::post('/profile/update-opening-hours', [RestaurantController::class, 'updateOpeningHours'])->name('update.opening_hours');
 
+            Route::get('/gallery', [RestaurantController::class, 'gallery'])->name('gallery');
+            Route::post('/gallery/upload', [RestaurantController::class, 'uploadPhotos'])->name('gallery.upload');
+            Route::delete('/gallery/{id}', [RestaurantController::class, 'destroyPhotos'])->name('gallery.delete');
+
+
             Route::get('/dashboard', [RestaurantController::class, 'restaurantDashboard'])->name('dashboard');
             Route::get('/profile', [RestaurantController::class, 'restaurant'])->name('restaurant');
             Route::get('/location', [RestaurantController::class, 'location'])->name('location');

@@ -11,6 +11,9 @@
                 <li class="{{ request()->routeIs('restaurant.menu_builder') ? 'active' : '' }}">
                     <a href="{{ route('restaurant.menu_builder') }}"><i class="icon-menu5"></i>Menu Builder</a>
                 </li>
+                <li class="{{ request()->routeIs('restaurant.gallery') ? 'active' : '' }}">
+                    <a href="{{ route('restaurant.gallery') }}"><i class="icon-image"></i>Photo Gallery</a>
+                </li>
                 <li class="{{ request()->routeIs('restaurant.orders') ? 'active' : '' }}">
                     <a href="{{ route('restaurant.orders') }}"><i class="icon-add_shopping_cart"></i>Orders</a>
                 </li>

@@ -132,7 +132,7 @@
                     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-24">
                         <div class="tabs-holder horizontal">
                             {{-- Navigation --}}
-                            <ul class="stickynav-tabs nav nav-tabs">
+                            <ul class="stickynav-tabs nav nav-tabs" style="z-index: 99;">
                                 <li class="active"><a data-toggle="tab" href="#home"><i
                                             class="icon- icon-room_service"></i>Menu</a></li>
                                 <li><a data-toggle="tab" href="#menu1"><i class="icon- icon-textsms"></i>Reviews
@@ -571,15 +571,16 @@
                                 <div id="menu3" class="tab-pane fade">
                                     <div class="contact-info-detail">
                                         <h5>{{ $restaurant->name }}</h5>
-                                        <p class="restaurant-desc"></p>
-                                        <p>{{ $restaurant->description }}
-                                        </p>
+
+                                        <p class="restaurant-desc">{{ $restaurant->description }}</p>
+
                                         <div class="map-sec-holder">
                                             <div class="cs-map-section" style="border-radius: 10px;">
                                                 <div id="restaurantMap"
-                                                    style="width: 100%; height: 400px; border-radius: 10px;"></div>
+                                                    style="width: 100%; height: 400px; border-radius: 10px; z-index: 10;"></div>
                                             </div>
                                         </div>
+
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <div class="contact-info">
@@ -621,6 +622,55 @@
                                                     </ul>
                                                 </div>
                                             </div>
+                                        </div>
+
+                                        {{-- Photo Gallery --}}
+                                        <div style="width: 100%; margin-top: 10px;">
+                                            @if ($restaurant->photoGallery->isNotEmpty())
+                                                <div class="restaurant-gallery" style="margin-top: 20px;">
+                                                    <div id="lightgallery"
+                                                        style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                                        @foreach ($restaurant->photoGallery->take(4) as $index => $photo)
+                                                            <a href="{{ asset('storage/' . $photo->image_url) }}"
+                                                                data-lg-size="1600-1067"
+                                                                style="flex: 1 1 calc(25% - 10px); max-width: calc(25% - 10px); position: relative; border-radius: 8px; overflow: hidden; display: block;">
+
+                                                                <img src="{{ asset('storage/' . $photo->image_url) }}"
+                                                                    style="width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; border-radius: 8px;">
+
+                                                                @if ($index === 3 && $restaurant->photoGallery->count() > 4)
+                                                                    <div
+                                                                        style="
+                                                                            position: absolute;
+                                                                            top: 0;
+                                                                            left: 0;
+                                                                            width: 100%;
+                                                                            height: 100%;
+                                                                            background: rgba(0, 0, 0, 0.6);
+                                                                            color: white;
+                                                                            display: flex;
+                                                                            align-items: center;
+                                                                            justify-content: center;
+                                                                            font-size: 1.5rem;
+                                                                            font-weight: bold;
+                                                                        ">
+                                                                        +{{ $restaurant->photoGallery->count() - 4 }}
+                                                                    </div>
+                                                                @endif
+                                                            </a>
+                                                        @endforeach
+
+                                                        @foreach ($restaurant->photoGallery->slice(4) as $photo)
+                                                            <a href="{{ asset('storage/' . $photo->image_url) }}"
+                                                                data-lg-size="1600-1067" style="display: none;">
+                                                                <img src="{{ asset('storage/' . $photo->image_url) }}"
+                                                                    style="display: none;">
+                                                            </a>
+                                                        @endforeach
+
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -694,6 +744,19 @@
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lightGallery(document.getElementById('lightgallery'), {
+                plugins: [lgZoom, lgThumbnail],
+                thumbnail: true,
+                zoom: true,
+                download: false,
+                fullScreen: true,
+                selector: 'a'
+            });
+        });
+    </script>
+
+    <script>
         const lat = {{ $restaurant->latitude ?? 0 }};
         const lng = {{ $restaurant->longitude ?? 0 }};
         let restaurantMap = L.map('restaurantMap', {
@@ -709,7 +772,7 @@
 
         const marker = L.marker([lat, lng]).addTo(restaurantMap);
 
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
             const target = $(e.target).attr("href");
             if (target === '#menu3') {
                 setTimeout(() => {

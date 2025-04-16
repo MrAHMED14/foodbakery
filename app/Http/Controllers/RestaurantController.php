@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CuisineType;
 use App\Models\Dish;
 use App\Models\Menu;
+use App\Models\PhotoGallery;
 use App\Models\Restaurant;
 use App\Models\User;
 use App\Services\CartService;
@@ -467,8 +468,41 @@ class RestaurantController extends Controller
         return back()->with('success', 'Dish deleted successfully.');
     }
 
+    public function gallery()
+    {
+        return view('front.restaurant.gallery');
+    }
 
+    public function uploadPhotos(Request $request)
+    {
+        $request->validate([
+            'photos.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
 
+        $restaurant = Auth::user()->restaurant;
+
+        foreach ($request->file('photos') as $photo) {
+            $path = $photo->store('restaurants/gallery', 'public');
+            $restaurant->photoGallery()->create([
+                'image_url' => $path
+            ]);
+        }
+
+        return back()->with('success', 'Photos uploaded successfully.');
+    }
+
+    public function destroyPhotos($id)
+    {
+        $photo = PhotoGallery::findOrFail($id);
+
+        if ($photo->restaurant_id !== Auth::user()->restaurant->id) {
+            abort(403);
+        }
+
+        $photo->delete();
+
+        return redirect()->back()->with('success', 'Image deleted.');
+    }
 
     /*
         !-----------------------------------------------------------------------!
