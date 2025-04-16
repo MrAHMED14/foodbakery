@@ -186,16 +186,18 @@
                                                                 style="display: flex; align-items: center; gap: 10px;">
                                                                 <span class="price">£{{ $dish->price }}</span>
 
-                                                                <form action="{{ route('cart.add') }}" method="POST">
-                                                                    @csrf
-                                                                    <input type="hidden" name="dish_id"
-                                                                        value="{{ $dish->id }}">
-                                                                    <button type="submit"
-                                                                        style="background-color: transparent; display: inline-block; line-height: 21px; width: 22px; height: 22px; text-align: center; border: 1px solid #c33332; border-radius: 50%;"
-                                                                        class="restaurant-add-menu-btn restaurant-add-menu-btn-21">
-                                                                        <i class="icon-plus4 text-color"></i>
-                                                                    </button>
-                                                                </form>
+                                                                @if (Auth::check() && Auth::user()->isUser())
+                                                                    <form action="{{ route('cart.add') }}" method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="dish_id"
+                                                                            value="{{ $dish->id }}">
+                                                                        <button type="submit"
+                                                                            style="background-color: transparent; display: inline-block; line-height: 21px; width: 22px; height: 22px; text-align: center; border: 1px solid #c33332; border-radius: 50%;"
+                                                                            class="restaurant-add-menu-btn restaurant-add-menu-btn-21">
+                                                                            <i class="icon-plus4 text-color"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                @endif
                                                             </div>
                                                         </li>
                                                     @endforeach
