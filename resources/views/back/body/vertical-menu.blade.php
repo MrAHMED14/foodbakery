@@ -25,63 +25,47 @@
                     </a>
                 </li>
 
-                {{-- Multiple level --}}
+                <li>
+                    <a href="#reviews">
+                        <i data-feather="message-square"></i>
+                        <span data-key="t-reviews">Reviews</span>
+                    </a>
+                </li>
+
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
-                        <span data-key="t-apps">Multiple levels</span>
+                        <i data-feather="settings"></i>
+                        <span data-key="t-settings">Settings</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
-                            <a href="#apps-calendar.html">
-                                <span data-key="t-calendar">Calendar</span>
+                            <a href="#admin-profile">
+                                <span data-key="t-admin-profile">Admin Profile</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="#apps-chat.html">
-                                <span data-key="t-chat">Chat</span>
+                            <a href="#cuisine-types">
+                                <span data-key="t-cuisine-types">Cuisine Types</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="javascript: void(0);" class="has-arrow">
-                                <span data-key="t-email">Email</span>
+                            <a href="#stats">
+                                <span data-key="t-stats">Stats</span>
                             </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="#apps-email-inbox.html" data-key="t-inbox">Inbox</a></li>
-                                <li><a href="#apps-email-read.html" data-key="t-read-email">Read Email</a></li>
-                            </ul>
                         </li>
+
                         <li>
-                            <a href="javascript: void(0);" class="has-arrow">
-                                <span data-key="t-invoices">Invoices</span>
-                            </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="#apps-invoices-list.html" data-key="t-invoice-list">Invoice List</a></li>
-                                <li><a href="#apps-invoices-detail.html" data-key="t-invoice-detail">Invoice Detail</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow">
+                            <a href="javascript: void(0);">
                                 <span data-key="t-contacts">Contacts</span>
                             </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="#apps-contacts-grid.html" data-key="t-user-grid">User Grid</a></li>
-                                <li><a href="#apps-contacts-list.html" data-key="t-user-list">User List</a></li>
-                                <li><a href="#apps-contacts-profile.html" data-key="t-profile">Profile</a></li>
-                            </ul>
                         </li>
+
                         <li>
-                            <a href="javascript: void(0);" class="">
-                                <span data-key="t-blog">Blog</span>
-                                <span class="badge rounded-pill badge-soft-danger float-end" key="t-new">New</span>
+                            <a href="#site-configuration">
+                                <span data-key="t-site-configuration">Site Configuration</span>
                             </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="#apps-blog-grid.html" data-key="t-blog-grid">Blog Grid</a></li>
-                                <li><a href="#apps-blog-list.html" data-key="t-blog-list">Blog List</a></li>
-                                <li><a href="#apps-blog-detail.html" data-key="t-blog-details">Blog Details</a></li>
-                            </ul>
                         </li>
                     </ul>
                 </li>
