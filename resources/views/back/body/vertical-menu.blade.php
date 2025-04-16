@@ -11,6 +11,13 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{ route('admin.restaurants') }}">
+                        <i data-feather="archive"></i>
+                        <span data-key="t-restaurants">Restaurants</span>
+                    </a>
+                </li>
+
                 {{-- Multiple level --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">

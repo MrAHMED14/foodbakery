@@ -114,6 +114,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['role:' . User::ROLE_ADMIN])->group(function () {
         Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             Route::get('/dashboard', [AdminController::class, 'index'])->name('index');
+            Route::get('/restaurants', [AdminController::class, 'restaurants'])->name('restaurants');
+            Route::patch('/admin/restaurants/{restaurant}/toggle-verification', [AdminController::class, 'toggleRestaurantVerification'])->name('toggleVerification');
         });
     });
 });
