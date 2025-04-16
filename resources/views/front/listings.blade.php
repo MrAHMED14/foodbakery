@@ -57,7 +57,7 @@
                                                                                 <i class="icon-times"></i></a>
                                                                             <input type="hidden" class="foodbakery-radius"
                                                                                 name="foodbakery_radius" value="10">
-                                                                            <p>Show with in</p>
+                                                                            <p style="color: rgb(14, 13, 13);">Show with in</p>
                                                                             <input id="ex16b333" type="text"
                                                                                 data-value="10" value="10"
                                                                                 style="display: none;">
@@ -98,7 +98,7 @@
                                                                             </script>
                                                                             <span>Miles: <span
                                                                                     id="ex16b333CurrentSliderValLabel">10</span></span><br>
-                                                                            <p class="my-location">of <i
+                                                                            <p class="my-location"><i
                                                                                     class="cs-color icon-location-arrow"></i><a
                                                                                     id="foodbakery-geo-location-all"
                                                                                     class="cs-color foodbakery-geo-location313324"
