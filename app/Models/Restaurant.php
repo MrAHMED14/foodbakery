@@ -150,6 +150,11 @@ class Restaurant extends Model
             'id'          => $this->id,
             'name'        => $this->name,
             'description' => $this->description,
+            'email'       => $this->email,
+            'phone'       => $this->phone,
+            'city'        => $this->city,
+            'state'       => $this->state,
+            'address'     => $this->address,
         ];
     }
 }
