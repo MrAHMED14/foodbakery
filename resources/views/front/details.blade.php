@@ -19,7 +19,7 @@
                             <div class="company-info" style="text-align: left">
                                 <div class="img-holder">
                                     <figure>
-                                        <img src="{{ $restaurant->restaurant_logo ? asset('storage/' . $restaurant->restaurant_logo) : asset('front/extra-images/user-placeholder.png') }}"
+                                        <img src="{{ $restaurant->restaurant_logo ? asset('storage/' . $restaurant->restaurant_logo) : asset('front/extra-images/restaurant-placeholder.png') }}"
                                             alt="{{ $restaurant->name . ' logo' }}">
                                     </figure>
                                 </div>

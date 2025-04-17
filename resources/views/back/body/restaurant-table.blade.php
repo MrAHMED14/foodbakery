@@ -41,7 +41,7 @@
                                     <img src="{{ $restaurant->cover_photo ? asset('storage/' . $restaurant->cover_photo) : asset('front/extra-images/cover-placeholder.png') }}"
                                     class="w-100" style="height: 250px; object-fit: cover; object-position: center; border-radius: 2px;">
 
-                                    <img src="{{ $restaurant->restaurant_logo ? asset('storage/' . $restaurant->restaurant_logo) : asset('front/extra-images/user-placeholder.png') }}"
+                                    <img src="{{ $restaurant->restaurant_logo ? asset('storage/' . $restaurant->restaurant_logo) : asset('front/extra-images/restaurant-placeholder.png') }}"
                                     class="ring-1 ring-white "
                                     style="position: absolute; bottom: -20px; left: 20px; width: 100px; border-radius: 5px; outline: 5px solid white; aspect-ratio: 1 / 1;  object-fit: cover; object-position: center;">
                                 </div>

@@ -266,7 +266,7 @@
                                         <li class="user-dashboard-menu-children">
                                             <a href="javascript:void(0);" class="">
                                                 <figure class="profile-image">
-                                                    <img src="{{ Auth::user()->restaurant->restaurant_logo ? asset('storage/' . Auth::user()->restaurant->restaurant_logo) : asset('front/extra-images/user-placeholder.png') }}" alt="{{Auth::user()->restaurant->name }}">
+                                                    <img src="{{ Auth::user()->restaurant->restaurant_logo ? asset('storage/' . Auth::user()->restaurant->restaurant_logo) : asset('front/extra-images/restaurant-placeholder.png') }}" alt="{{Auth::user()->restaurant->name }}">
                                                 </figure>
                                                 {{ Auth::user()->name }}
                                             </a>

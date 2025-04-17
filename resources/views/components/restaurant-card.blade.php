@@ -4,7 +4,8 @@
     <div class="img-holder">
         <figure>
             <a href="#">
-                <img src="{{ $restaurant->restaurant_logo ? asset('storage/' . $restaurant->restaurant_logo) : asset('front/extra-images/user-placeholder.png') }}" class="img-list wp-post-image" style="border-radius: 5px;" alt="logo">
+                <img src="{{ $restaurant->restaurant_logo ? asset('storage/' . $restaurant->restaurant_logo) : asset('front/extra-images/restaurant-placeholder.png') }}"
+                    class="img-list wp-post-image" style="border-radius: 5px;" alt="logo">
             </a>
         </figure>
         @if ($restaurant->isOpenNow())
@@ -46,32 +47,35 @@
             @endforeach
         </span>
         <div class="delivery-potions">
-            <div class="post-time">
-                <i class="icon-motorcycle"></i>
-                <div class="time-tooltip">
-                    <div class="time-tooltip-holder">
-                        <b class="tooltip-label">Delivery time</b>
-                        <b class="tooltip-info">Your order will be delivered in 10 minutes.</b>
+            @if ($restaurant->accepts_orders)
+                <div class="post-time">
+                    <i class="icon-motorcycle"></i>
+                    <div class="time-tooltip">
+                        <div class="time-tooltip-holder">
+                            <b class="tooltip-label">Pre orders</b>
+                            <b class="tooltip-info">This restaurant allows Pre orders.</b>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="post-time">
-                <i class="icon-clock4"></i>
-                <div class="time-tooltip">
-                    <div class="time-tooltip-holder">
-                        <b class="tooltip-label">Pickup time</b>
-                        <b class="tooltip-info">You can pickup order in 15 minutes.</b>
+            @endif
+
+            @if ($restaurant->accepts_reservations)
+                <div class="post-time">
+                    <i class="icon-table"></i>
+                    <div class="time-tooltip">
+                        <div class="time-tooltip-holder">
+                            <b class="tooltip-label">Reservation</b>
+                            <b class="tooltip-info">This restaurant allows Reservation.</b>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
+
             <span>{{ $restaurant->city }}</span>
         </div>
     </div>
     <div class="list-option">
-        <a href="#" class="shortlist-btn" data-toggle="modal" data-target="#sign-in">
-            <i class="icon-heart4"></i>
-        </a>
-        <a href="{{ route('front.listing_details', $restaurant->id) }}" class="viewmenu-btn text-color" wire:navigate>
+        <a href="{{ route('front.listing_details', $restaurant->id) }}" class="viewmenu-btn text-color">
             View Menu
         </a>
     </div>
