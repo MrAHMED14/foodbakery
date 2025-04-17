@@ -8,7 +8,7 @@
     <!-- Main Section Start -->
     <div class="sub-header align-center">
         <div class="subheader-holder"
-            style=" background:url({{ asset('front/extra-images/subheader-img2-1.jpg') }})  no-repeat; background-size: cover; padding-top: 60px; padding-bottom: 30px; margin-top: 0px; margin-bottom: 0px; min-height: 186px !important;">
+            style="background:url({{ asset('front/extra-images/listing-cover.png') }}) no-repeat; background-position: bottom; background-size: cover; padding-top: 70px; padding-bottom: 40px; margin-top: 0px; margin-bottom: 0px; min-height: 186px !important;">
             <!-- Container Start -->
             <div class="container ">
                 <div class="row">
@@ -300,7 +300,7 @@
                                 {{-- Pagination --}}
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="page-nation">
+                                        <div class="page-nation" style="text-align: center;">
                                             {{ $restaurants->links('pagination::bootstrap-4') }}
                                         </div>
                                     </div>

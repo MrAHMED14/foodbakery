@@ -11,6 +11,10 @@ class FrontController extends Controller
         return view('front.index');
     }
 
+    public function indexNew(){
+        return view('front.index-new');
+    }
+
     public function contact(){
         return view('front.contact_us');
     }
