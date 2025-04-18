@@ -26,27 +26,27 @@
                 <li class="{{ request()->routeIs('restaurant.memberships') ? 'active' : '' }}">
                     <a href="{{ route('restaurant.memberships') }}"><i class="icon-card_membership"></i>Memberships</a>
                 </li>
-                <li class="{{ request()->routeIs('restaurant.withdrawals') ? 'active' : '' }}">
+                {{-- <li class="{{ request()->routeIs('restaurant.withdrawals') ? 'active' : '' }}">
                     <a href="{{ route('restaurant.withdrawals') }}"><i class="icon-bill"></i>Withdrawals</a>
-                </li>
-                <li class="{{ request()->routeIs('restaurant.earnings') ? 'active' : '' }}">
+                </li> --}}
+                {{-- <li class="{{ request()->routeIs('restaurant.earnings') ? 'active' : '' }}">
                     <a href="{{ route('restaurant.earnings') }}"><i class="icon-money"></i>Earnings</a>
-                </li>
+                </li> --}}
                 <li class="{{ request()->routeIs('restaurant.statement') ? 'active' : '' }}">
                     <a href="{{ route('restaurant.statement') }}"><i class="icon-file-text22"></i>Statement</a>
                 </li>
-                <li class="{{ request()->routeIs('restaurant.team_management') ? 'active' : '' }}">
+                {{-- <li class="{{ request()->routeIs('restaurant.team_management') ? 'active' : '' }}">
                     <a href="{{ route('restaurant.team_management') }}"><i class="icon-flow-tree"></i>Team Management</a>
-                </li>
+                </li> --}}
                 <li class="{{ request()->routeIs('restaurant.change_password') ? 'active' : '' }}">
                     <a href="{{ route('restaurant.change_password') }}"><i class="icon-unlock-alt"></i>Change Password</a>
                 </li>
                 <li>
                     <a id="profile_delete" href="#"><i class="icon-delete"></i>Delete Profile</a>
                 </li>
-                <li>
+                {{-- <li>
                     <a class="logout-btn" href="{{ route('front.index') }}"><i class="icon-log-out"></i>Signout</a>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </div>
