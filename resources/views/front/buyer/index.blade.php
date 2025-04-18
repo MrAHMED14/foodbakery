@@ -38,21 +38,21 @@
                                                     <div class="suggest-list-holder">
                                                         <div class="img-holder">
                                                             <figure>
-                                                                <a href="listings.html"><img
+                                                                <a href="#"><img
                                                                         src="{{ asset('front/extra-images/fb-restaurant-06.jpg') }}"
                                                                         alt=""> </a>
                                                             </figure>
                                                         </div>
                                                         <div class="text-holder">
                                                             <div class="post-title">
-                                                                <h5><a href="listings.html">Dragon Express</a></h5>
+                                                                <h5><a href="#">Dragon Express</a></h5>
                                                             </div>
                                                             <span class="post-categories"> Apple Juice , Carrot Juice , Ice
                                                                 Cream </span>
                                                             <div class="list-option">
                                                                 <a href="#" class="shortlist-btn shortlisted"><i
                                                                         class="icon-heart4"></i></a>
-                                                                <a href="listings.html" class="viewmenu-btn">View Menu</a>
+                                                                <a href="#" class="viewmenu-btn">View Menu</a>
                                                             </div>
                                                             <div class="delivery-potions">
                                                                 <div class="post-time">
@@ -80,20 +80,20 @@
                                                     <div class="suggest-list-holder">
                                                         <div class="img-holder">
                                                             <figure>
-                                                                <a href="listings.html"><img
+                                                                <a href="#"><img
                                                                         src="{{ asset('front/extra-images/listing-logo18.png') }}"
                                                                         alt=""> </a>
                                                             </figure>
                                                         </div>
                                                         <div class="text-holder">
                                                             <div class="post-title">
-                                                                <h5><a href="listings.html">Restaurant Demo </a></h5>
+                                                                <h5><a href="#">Restaurant Demo </a></h5>
                                                             </div>
                                                             <span class="post-categories"> Type of food : Apple Juice</span>
                                                             <div class="list-option">
                                                                 <a href="#" class="shortlist-btn shortlist-btn"><i
                                                                         class="icon-heart-o"></i> </a>
-                                                                <a href="listings.html" class="viewmenu-btn">View Menu</a>
+                                                                <a href="#" class="viewmenu-btn">View Menu</a>
                                                             </div>
                                                             <div class="delivery-potions">
                                                                 <div class="post-time">
