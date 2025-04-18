@@ -1,0 +1,56 @@
+[
+    {
+        "user": {
+            "name": "Abdlhamid Ahmed",
+            "email": "restaurant@restaurant.com",
+            "password": "restaurant"
+        },
+        "restaurant": {
+            "name": "Al Mardoma Restaurant and Grills | مطعم ومشاوي المردومة",
+            "address": "135 Rue Didouche Mourad, Sidi M'Hamed 16000, Algeria",
+            "city": "Sidi M'Hamed",
+            "state": "Alger",
+            "phone": "0578 42 13 05",
+            "latitude": "35.36278",
+            "longitude": "1.328208",
+            "cover_photo": "static/restaurant-1/covers/cover-1.png",
+            "restaurant_logo": "static/restaurant-1/logos/logo-1.jpg",
+            "is_verified": true,
+            "capacity": 1
+        },
+        "cuisines": [1, 2, 3],
+        "menus": [
+            {
+                "name": "Burgers",
+                "dishes": [
+                    {
+                        "name": "CLASSIQUE",
+                        "description": "Steak haché, cheddar, laitue, tomate, oignons cru, cornichons (sauce classique)",
+                        "dish_image": "static/restaurant-1/dishes/burger-1.jpg",
+                        "price": 19.99
+                    },
+                    {
+                        "name": "CHUCKY",
+                        "description": "Filet de poulet grillé, mozzarella, laitue, tomates, tapenade d'olives (sauce curry / crème d'ail)",
+                        "dish_image": "static/restaurant-1/dishes/burger-2.jpg",
+                        "price": 29.99
+                    },
+                    {
+                        "name": "SPICY",
+                        "description": "Steak assaisoné, aubergine & poivrons grillés, cornichons (sauce El Chapo)",
+                        "dish_image": "static/restaurant-1/dishes/burger-3.jpg",
+                        "price": 39.99
+                    },
+                    {
+                        "name": "SIGNATURE",
+                        "description": "Double steak haché, Gouda x2, laitue, Ananas grillé aux sésame, avocats, œuf (sauce guacamole)",
+                        "dish_image": "static/restaurant-1/dishes/burger-4.jpg",
+                        "price": 49.99
+                    }
+                ]
+            }
+        ],
+        "gallery_images": 25,
+        "gallery_path": "static/restaurant-1/gallery"
+    }
+]

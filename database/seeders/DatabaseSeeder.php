@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(CuisineTypeSeeder::class);
+        $this->call(DeploymentSeeder::class);
         $this->call(UserSeeder::class);
 
         User::factory(50)->create(['role' => User::ROLE_RESTAURANT])->each(function ($user) {
