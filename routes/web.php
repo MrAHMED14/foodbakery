@@ -86,6 +86,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/profile/update', [BuyerController::class, 'update'])->name('account-setting.update');
         Route::post('/profile/change-password', [BuyerController::class, 'changePassword'])->name('account-setting.changePassword');
 
+        Route::post('/reserve', [ReservationController::class, 'store'])->name('reservation.reserve');
+
         Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
         Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
         Route::post('/cart/remove', [CartController::class, 'removeDish'])->name('cart.removeDish');
