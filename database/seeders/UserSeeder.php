@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\CuisineType;
+use App\Models\Dish;
+use App\Models\Menu;
 use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -24,12 +27,29 @@ class UserSeeder extends Seeder
 
         // Restaurant Owner
         $restaurantOwner = User::create([
-            'name' => 'Restaurant Owner',
-            'email' => 'restaurant@restaurant.com',
+            'name'     => 'Restaurant Owner',
+            'email'    => 'restaurant@restaurant.com',
             'password' => Hash::make('restaurant'),
-            'role' => User::ROLE_RESTAURANT,
+            'role'     => User::ROLE_RESTAURANT,
         ]);
-        Restaurant::factory()->create(['user_id' => $restaurantOwner->id, 'is_verified' => true, 'capacity' => 1]);
+
+        $restaurant = Restaurant::factory()->create([
+            'user_id'     => $restaurantOwner->id,
+            'is_verified' => true,
+            'capacity'    => 1,
+        ]);
+
+        $restaurant->cuisines()->attach(
+            CuisineType::inRandomOrder()->take(rand(1, 3))->pluck('id')->toArray()
+        );
+
+        Menu::factory(rand(1, 3))->create([
+            'restaurant_id' => $restaurant->id,
+        ])->each(function ($menu) {
+            Dish::factory(rand(5, 10))->create([
+                'menu_id' => $menu->id,
+            ]);
+        });
 
         // Normal Customer
         User::create([

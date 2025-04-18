@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(UserSeeder::class);
         $this->call(CuisineTypeSeeder::class);
+        $this->call(UserSeeder::class);
 
         User::factory(50)->create(['role' => User::ROLE_RESTAURANT])->each(function ($user) {
             $restaurant = Restaurant::factory()->create([
@@ -27,9 +27,7 @@ class DatabaseSeeder extends Seeder
 
             $cuisineIds = CuisineType::inRandomOrder()->take(rand(1, 3))->pluck('id');
 
-            $restaurant->cuisines()->attach($cuisineIds->toArray(), [
-                'is_specialty' => true,
-            ]);
+            $restaurant->cuisines()->attach($cuisineIds->toArray());
 
             $menus = Menu::factory(rand(1, 3))->create([
                 'restaurant_id' => $restaurant->id,

@@ -26,6 +26,8 @@ class RestaurantFactory extends Factory
             'longitude' => $this->faker->longitude(),
             'description' => $this->faker->paragraphs(3, true),
             'capacity' => $this->faker->numberBetween(10, 100),
+            'accepts_orders' => $this->faker->boolean(70),
+            'accepts_reservations' => $this->faker->boolean(70),
             'is_verified' => $this->faker->boolean(70),
             'user_id' => User::factory(),
         ];
