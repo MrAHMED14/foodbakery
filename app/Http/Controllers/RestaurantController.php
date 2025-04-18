@@ -52,8 +52,8 @@ class RestaurantController extends Controller
             });
         }
 
-        // TODO: Remove orderBy('id', 'asc') later
-        $restaurants = $restaurantsQuery->orderBy('id', 'asc')->paginate($maxRestaurants);
+        // TODO: Change orderBy to rating later
+        $restaurants = $restaurantsQuery->orderBy('id', 'desc')->paginate($maxRestaurants);
 
         $cuisineTypes = CuisineType::all();
 

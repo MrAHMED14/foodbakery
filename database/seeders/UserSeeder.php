@@ -25,32 +25,6 @@ class UserSeeder extends Seeder
             'role' => User::ROLE_ADMIN,
         ]);
 
-        // Restaurant Owner
-        $restaurantOwner = User::create([
-            'name'     => 'Restaurant Owner',
-            'email'    => 'restaurant@restaurant.com',
-            'password' => Hash::make('restaurant'),
-            'role'     => User::ROLE_RESTAURANT,
-        ]);
-
-        $restaurant = Restaurant::factory()->create([
-            'user_id'     => $restaurantOwner->id,
-            'is_verified' => true,
-            'capacity'    => 1,
-        ]);
-
-        $restaurant->cuisines()->attach(
-            CuisineType::inRandomOrder()->take(rand(1, 3))->pluck('id')->toArray()
-        );
-
-        Menu::factory(rand(1, 3))->create([
-            'restaurant_id' => $restaurant->id,
-        ])->each(function ($menu) {
-            Dish::factory(rand(5, 10))->create([
-                'menu_id' => $menu->id,
-            ]);
-        });
-
         // Normal Customer
         User::create([
             'name' => 'Customer User',
