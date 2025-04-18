@@ -22,8 +22,6 @@ Route::group(['prefix' => '', 'as' => 'front.'], function () {
     Route::get('/price', [FrontController::class, 'price'])->name('price');
     Route::get('/result', [FrontController::class, 'result'])->name('result');
 
-    Route::get('/single', [FrontController::class, 'single'])->name('single');
-
     Route::get('/listing', [RestaurantController::class, 'index'])->name('listings');
 
     Route::middleware('guest')->group(function () {
@@ -88,12 +86,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/profile/update', [BuyerController::class, 'update'])->name('account-setting.update');
         Route::post('/profile/change-password', [BuyerController::class, 'changePassword'])->name('account-setting.changePassword');
 
-        //* for testing
-        Route::get('/reserve', [ReservationController::class, 'showForm'])->name('reservation.showForm');
-        Route::post('/reserve', [ReservationController::class, 'store'])->name('reservation.reserve');
-
         Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
-        Route::get('/cart', [CartController::class, 'view'])->name('cart.view');
         Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
         Route::post('/cart/remove', [CartController::class, 'removeDish'])->name('cart.removeDish');
 
@@ -121,15 +114,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
     });
 });
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
 
 require __DIR__ . '/auth.php';

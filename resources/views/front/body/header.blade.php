@@ -15,7 +15,6 @@
                         <nav id="site-navigation" class="main-navigation">
                             <ul>
                                 <li><a href="{{ route('front.listings') }}">Restaurants</a></li>
-                                <li><a href="{{ route('cart.view') }}">Cart</a></li>
                                 <li>
                                     <a href="#">Pages</a>
                                     <ul>
@@ -202,10 +201,10 @@
                                     <li class="popular-location">Popular Locations</li>
                                     <li>
                                         <ul>
-                                            <li><a href="{{ route('front.result') }}">Tiaret</a></li>
-                                            <li><a href="{{ route('front.result') }}">Sougueur</a></li>
-                                            <li><a href="{{ route('front.result') }}">Mahdia</a></li>
-                                            <li><a href="{{ route('front.result') }}">Chalala</a></li>
+                                            <li><a href="{{ route('front.listings') }}">Tiaret</a></li>
+                                            <li><a href="{{ route('front.listings') }}">Sougueur</a></li>
+                                            <li><a href="{{ route('front.listings') }}">Mahdia</a></li>
+                                            <li><a href="{{ route('front.listings') }}">Chalala</a></li>
                                         </ul>
                                     </li>
                                 </ul>
