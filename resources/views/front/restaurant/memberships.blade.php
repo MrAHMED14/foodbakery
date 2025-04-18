@@ -22,7 +22,7 @@
                                 <ul class="membership-info-main">
                                     <li id="membership_current">
                                         <div class="element-title">
-                                            <h4>Current Membership</h4>
+                                            <h4>Current Membership (static)</h4>
                                             <div class="buy-new-pakg-actions">
                                                 <label>
                                                     <a id="update_membership" href="#">Update Membership</a>

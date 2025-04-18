@@ -19,7 +19,9 @@
                     <div class="user-dashboard loader-holder">
                         <div class="user-holder">
                             <div class="element-title has-border right-filters-row">
-                                <h5>Statements</h5>
+                                <h5>
+                                    Statements (static)
+                                </h5>
                                 <div class="right-filters row">
                                     <div class="col-lg-6 col-md-6 col-xs-6 pull-right">
                                         <div class="input-field">

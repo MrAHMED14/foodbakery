@@ -25,6 +25,7 @@
                                             <h5>
                                                 <span>Reviews Given</span>
                                                 <span class="element-slogan">(4)</span>
+                                                <span>(static)</span>
                                             </h5>
                                             <div class="right-filters row pull-right">
                                                 <div class="col-lg-6 col-md-6 col-xs-6">
