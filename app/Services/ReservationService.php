@@ -17,6 +17,10 @@ class ReservationService
             throw new Exception('Restaurant is not verified.');
         }
 
+        if($restaurant->accepts_reservations == 0){
+            throw new \Exception('Restaurant is not accepting reservations at the moment.');
+        }
+
         $reservationDateTime = Carbon::parse($reservationDate);
         $startTime = $reservationDateTime->copy();
         //TODO: Make session duration dynamic (come from restaurant)

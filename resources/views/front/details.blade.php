@@ -137,8 +137,12 @@
                                             class="icon- icon-room_service"></i>Menu</a></li>
                                 <li><a data-toggle="tab" href="#menu1"><i class="icon- icon-textsms"></i>Reviews
                                         ({{ $restaurant->reviewsCount() }})</a></li>
+
+                                @if ($restaurant->accepts_reservations)
                                 <li><a data-toggle="tab" href="#menu2"><i class="icon- icon-food"></i>Book a Table
                                     </a></li>
+                                @endif
+
                                 <li><a data-toggle="tab" href="#menu3"><i class="icon- icon-info3"></i>Restaurant
                                         Info</a>
                                 </li>
@@ -186,7 +190,7 @@
                                                                 style="display: flex; align-items: center; gap: 10px;">
                                                                 <span class="price">£{{ $dish->price }}</span>
 
-                                                                @if (Auth::check() && Auth::user()->isUser())
+                                                                @if (Auth::check() && Auth::user()->isUser() && $restaurant->accepts_orders)
                                                                     <form action="{{ route('cart.add') }}" method="POST">
                                                                         @csrf
                                                                         <input type="hidden" name="dish_id"
@@ -467,119 +471,123 @@
                                 </div>
 
                                 {{-- Book a Table --}}
-                                <div id="menu2" class="tab-pane fade">
-                                    <div class="booking-info-sec">
-                                        <form action="{{ route('reservation.reserve') }}" method="POST">
-                                            @csrf
+                                @if ($restaurant->accepts_reservations)
+                                    <div id="menu2" class="tab-pane fade">
+                                        <div class="booking-info-sec">
+                                            <form action="{{ route('reservation.reserve') }}" method="POST">
+                                                @csrf
 
-                                            <div class="row">
-                                                <div class="booking-info">
-                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                <h5>Book This Restaurant</h5>
-                                                                <p class="booking-desc">All kinds of dining
-                                                                    experiences
-                                                                    are waiting to be discovered. Check out the best
-                                                                    restaurants and Book Using following Form.</p>
-                                                            </div>
-
-                                                            <input type="hidden" name="restaurant_id"
-                                                                value="{{ $restaurant->id }}" hidden>
-
-                                                            {{-- First Name --}}
-                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                                <div class="field-holder has-icon">
-                                                                    <i class="icon icon-user"></i>
-                                                                    <input type="text" name="first_name"
-                                                                        placeholder="First Name" class="input-field"
-                                                                        id="first-name" required>
-
-                                                                    @error('first_name')
-                                                                        <div class="text-danger" style="font-size: 12px;">
-                                                                            {{ $message }}
-                                                                        </div>
-                                                                    @enderror
+                                                <div class="row">
+                                                    <div class="booking-info">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <h5>Book This Restaurant</h5>
+                                                                    <p class="booking-desc">All kinds of dining
+                                                                        experiences
+                                                                        are waiting to be discovered. Check out the best
+                                                                        restaurants and Book Using following Form.</p>
                                                                 </div>
-                                                            </div>
 
-                                                            {{-- Last Name --}}
-                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                                <div class="field-holder has-icon"><i
-                                                                        class="icon icon-user"></i><input type="text"
-                                                                        name="last_name" placeholder="Last Name"
-                                                                        class="input-field" id="lastname-booking" required>
+                                                                <input type="hidden" name="restaurant_id"
+                                                                    value="{{ $restaurant->id }}" hidden>
 
-                                                                    @error('last_name')
-                                                                        <div class="text-danger" style="font-size: 12px;">
-                                                                            {{ $message }}
-                                                                        </div>
-                                                                    @enderror
+                                                                {{-- First Name --}}
+                                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                    <div class="field-holder has-icon">
+                                                                        <i class="icon icon-user"></i>
+                                                                        <input type="text" name="first_name"
+                                                                            placeholder="First Name" class="input-field"
+                                                                            id="first-name" required>
+
+                                                                        @error('first_name')
+                                                                            <div class="text-danger" style="font-size: 12px;">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
                                                                 </div>
-                                                            </div>
 
-                                                            {{-- Reservation Date --}}
-                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                                <div class="field-holder">
-                                                                    <div class="">
-                                                                        <input type="datetime-local"
-                                                                            name="reservation_date"
-                                                                            class="form-control booking-date" required>
-                                                                        @error('reservation_date')
+                                                                {{-- Last Name --}}
+                                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                    <div class="field-holder has-icon"><i
+                                                                            class="icon icon-user"></i><input
+                                                                            type="text" name="last_name"
+                                                                            placeholder="Last Name" class="input-field"
+                                                                            id="lastname-booking" required>
+
+                                                                        @error('last_name')
+                                                                            <div class="text-danger" style="font-size: 12px;">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+
+                                                                {{-- Reservation Date --}}
+                                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                    <div class="field-holder">
+                                                                        <div class="">
+                                                                            <input type="datetime-local"
+                                                                                name="reservation_date"
+                                                                                class="form-control booking-date" required>
+                                                                            @error('reservation_date')
+                                                                                <div class="text-danger"
+                                                                                    style="font-size: 12px;">
+                                                                                    {{ $message }}</div>
+                                                                            @enderror
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                {{-- Number of Tables --}}
+                                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                    <div class="field-holder has-icon"><i
+                                                                            class="icon icon-table"></i>
+                                                                        <select class="chosen-select"
+                                                                            style="display: none;" name="nbr_table">
+                                                                            <option selected="selected" value="">
+                                                                                Number of Tables
+                                                                            </option>
+                                                                            <option value="1">1 Table</option>
+                                                                            <option value="2">2 Tables</option>
+                                                                            <option value="3">3 Tables</option>
+                                                                            <option value="4">4 Tables</option>
+                                                                            <option value="5">5 Tables</option>
+                                                                        </select>
+                                                                        @error('nbr_table')
                                                                             <div class="text-danger" style="font-size: 12px;">
                                                                                 {{ $message }}</div>
                                                                         @enderror
                                                                     </div>
                                                                 </div>
-                                                            </div>
 
-                                                            {{-- Number of Tables --}}
-                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                                <div class="field-holder has-icon"><i
-                                                                        class="icon icon-table"></i>
-                                                                    <select class="chosen-select" style="display: none;"
-                                                                        name="nbr_table">
-                                                                        <option selected="selected" value="">
-                                                                            Number of Tables
-                                                                        </option>
-                                                                        <option value="1">1 Table</option>
-                                                                        <option value="2">2 Tables</option>
-                                                                        <option value="3">3 Tables</option>
-                                                                        <option value="4">4 Tables</option>
-                                                                        <option value="5">5 Tables</option>
-                                                                    </select>
-                                                                    @error('nbr_table')
-                                                                        <div class="text-danger" style="font-size: 12px;">
-                                                                            {{ $message }}</div>
-                                                                    @enderror
+                                                                {{-- Your Instructions --}}
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <div class="field-holder has-icon field-textarea">
+                                                                        <i class="icon icon-mode_edit"></i>
+                                                                        <textarea placeholder="Your Instructions" class="input-field"></textarea>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
 
-                                                            {{-- Your Instructions --}}
-                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                <div class="field-holder has-icon field-textarea">
-                                                                    <i class="icon icon-mode_edit"></i>
-                                                                    <textarea placeholder="Your Instructions" class="input-field"></textarea>
-                                                                </div>
-                                                            </div>
-
-                                                            {{-- Submit Btn --}}
-                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                <div class="field-holder">
-                                                                    <div class="submit-btn">
-                                                                        <button type="submit"
-                                                                            class="field-btn bgcolor booking-submit-btn input-button-loader">Submit</button>
-                                                                        <span class="booking-loader"></span>
+                                                                {{-- Submit Btn --}}
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <div class="field-holder">
+                                                                        <div class="submit-btn">
+                                                                            <button type="submit"
+                                                                                class="field-btn bgcolor booking-submit-btn input-button-loader">Submit</button>
+                                                                            <span class="booking-loader"></span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </form>
+                                            </form>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
 
                                 {{-- Restaurant Info --}}
                                 <div id="menu3" class="tab-pane fade">
@@ -698,7 +706,9 @@
                         <div class="user-order-holder">
                             <div class="user-order">
                                 <h6><i class="icon-shopping-basket"></i>Your Basket</h6>
-                                <span class="error-message pre-order-msg">This restaurant allows Pre orders.</span>
+                                @if ($restaurant->accepts_orders == 0)
+                                    <span class="error-message pre-order-msg">This restaurant does not accept pre-orders.</span>
+                                @endif
                                 <span class="discount-info" style="display: block;">If you have a discount code,<br>
                                     you will
                                     be able to input it<br> at the payments stage.</span>

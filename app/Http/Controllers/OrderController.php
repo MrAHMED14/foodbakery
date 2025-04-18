@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderLine;
+use App\Models\Restaurant;
 use App\Services\CartService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,6 @@ class OrderController extends Controller
         return view('front.buyer.orders', compact('orders'));
     }
 
-    // This method is used to show the order form
     public function create()
     {
         $cart = $this->cartService->getCart();
@@ -60,9 +60,19 @@ class OrderController extends Controller
         ]);
 
         foreach ($cart as $restaurantId => $dishes) {
+            $restaurant = Restaurant::findOrFail($restaurantId);
+
+            if ($restaurant->is_verified == 0) {
+                return back()->with('error', 'Restaurant ' . $restaurant->name .' is not verified.');
+            }
+
+            if($restaurant->accepts_orders == 0){
+                return back()->with('error', 'Restaurant ' . $restaurant->name .' is not accepting orders at the moment.');
+            }
+
             $order = Order::create([
                 'user_id' => Auth::user()->id,
-                'restaurant_id' => $restaurantId,
+                'restaurant_id' => $restaurant->id,
                 'order_date' => now(),
                 'status' => 'pending',
                 'total' => 0,

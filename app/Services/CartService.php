@@ -14,6 +14,10 @@ class CartService
             throw new \Exception('Restaurant is not verified.');
         }
 
+        if ($dish->menu->restaurant->accepts_orders == 0) {
+            throw new \Exception('Restaurant is not accepting orders at the moment.');
+        }
+
         $restaurantId = $dish->menu->restaurant_id;
 
         $cart = session()->get('cart', []);
