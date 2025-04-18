@@ -22,6 +22,8 @@ class ReservationController extends Controller
         $request->validate([
             'restaurant_id'    => 'required|exists:restaurants,id',
             'reservation_date' => 'required|date|after:now',
+            'first_name'       => 'required|string',
+            'last_name'        => 'required|string',
             'nbr_table'        => 'required|integer|min:1',
         ]);
 
@@ -30,6 +32,8 @@ class ReservationController extends Controller
                 Auth::user(),
                 $request->restaurant_id,
                 $request->reservation_date,
+                $request->first_name,
+                $request->last_name,
                 $request->nbr_table
             );
 

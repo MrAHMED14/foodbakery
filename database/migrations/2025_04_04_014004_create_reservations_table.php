@@ -15,7 +15,8 @@ return new class extends Migration {
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->integer('session_duration')->default(90); // 90 minutes
-            //TODO: ADD first_name, last_name
+            $table->string('first_name');
+            $table->string('last_name');
             $table->integer('nbr_table')->default(1);
             $table->string('status')->default('pending');
             $table->string('payment_method')->nullable();

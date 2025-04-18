@@ -489,18 +489,32 @@
 
                                                             {{-- First Name --}}
                                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                                <div class="field-holder has-icon"><i
-                                                                        class="icon icon-user"></i><input type="text"
+                                                                <div class="field-holder has-icon">
+                                                                    <i class="icon icon-user"></i>
+                                                                    <input type="text" name="first_name"
                                                                         placeholder="First Name" class="input-field"
-                                                                        id="first-name"></div>
+                                                                        id="first-name" required>
+
+                                                                    @error('first_name')
+                                                                        <div class="text-danger" style="font-size: 12px;">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
                                                             </div>
 
                                                             {{-- Last Name --}}
                                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                                 <div class="field-holder has-icon"><i
                                                                         class="icon icon-user"></i><input type="text"
-                                                                        placeholder="Last Name" class="input-field"
-                                                                        id="lastname-booking">
+                                                                        name="last_name" placeholder="Last Name"
+                                                                        class="input-field" id="lastname-booking" required>
+
+                                                                    @error('last_name')
+                                                                        <div class="text-danger" style="font-size: 12px;">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
                                                                 </div>
                                                             </div>
 
@@ -577,7 +591,8 @@
                                         <div class="map-sec-holder">
                                             <div class="cs-map-section" style="border-radius: 10px;">
                                                 <div id="restaurantMap"
-                                                    style="width: 100%; height: 400px; border-radius: 10px; z-index: 10;"></div>
+                                                    style="width: 100%; height: 400px; border-radius: 10px; z-index: 10;">
+                                                </div>
                                             </div>
                                         </div>
 

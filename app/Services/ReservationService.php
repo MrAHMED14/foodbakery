@@ -9,7 +9,7 @@ use Exception;
 
 class ReservationService
 {
-    public function createReservation($user, $restaurantId, $reservationDate, $nbrTables, $sessionDuration = 90)
+    public function createReservation($user, $restaurantId, $reservationDate, $firstName, $lastName, $nbrTables, $sessionDuration = 90)
     {
         $restaurant = Restaurant::findOrFail($restaurantId);
 
@@ -55,7 +55,6 @@ class ReservationService
             throw new Exception('No available tables for this time slot.');
         }
 
-        //TODO: ADD first_name, last_name
         return Reservation::create([
             'user_id'          => $user->id,
             'restaurant_id'    => $restaurant->id,
@@ -63,6 +62,8 @@ class ReservationService
             'start_time'       => $startTime->format('H:i:s'),
             'end_time'         => $endTime->format('H:i:s'),
             'session_duration' => $sessionDuration,
+            'first_name'       => $firstName,
+            'last_name'        => $lastName,
             'nbr_table'        => $nbrTables,
             'status'           => 'pending',
         ]);
