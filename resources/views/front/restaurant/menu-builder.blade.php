@@ -397,8 +397,8 @@
                                                                                                     class="icon-bars"></i></span>
 
                                                                                             <div class="icon-holder">
-                                                                                                <img src="{{ $dish->dish_image ? asset('storage/' . $dish->dish_image) : asset('front/extra-images/cover-photo24-150x150.jpg') }}"
-                                                                                                    alt="">
+                                                                                                <img src="{{ $dish->dish_image ? asset('storage/' . $dish->dish_image) : asset('front/extra-images/dish-placeholder.png') }}"
+                                                                                                    alt="" style="aspect-ratio: 1 / 1; object-fit: cover; object-position: center;">
                                                                                             </div>
 
                                                                                             <div class="list-title">
@@ -546,7 +546,7 @@
                                                                                                                                     class="item-thumb">
                                                                                                                                     <img class="thumbnail"
                                                                                                                                         id="edit-image-{{ $dish->id }}"
-                                                                                                                                        src="{{ $dish->dish_image ? asset('storage/' . $dish->dish_image) : asset('front/extra-images/cover-photo24-150x150.jpg') }}"
+                                                                                                                                        src="{{ $dish->dish_image ? asset('storage/' . $dish->dish_image) : asset('front/extra-images/dish-placeholder.png') }}"
                                                                                                                                         alt="">
                                                                                                                                 </div>
                                                                                                                             </div>
@@ -621,8 +621,8 @@
                                                                                                     </form>
 
                                                                                                     <script>
-                                                                                                        const defaultEditImage =
-                                                                                                            "{{ $dish->dish_image ? asset('storage/' . $dish->dish_image) : asset('front/extra-images/cover-photo24-150x150.jpg') }}";
+                                                                                                        const defaultEditImage{{ $dish->id }} =
+                                                                                                            "{{ $dish->dish_image ? asset('storage/' . $dish->dish_image) : asset('front/extra-images/dish-placeholder.png') }}";
 
                                                                                                         document.getElementById('edit-dish-image-{{ $dish->id }}').addEventListener('change', function(event) {
                                                                                                             const [file] = event.target.files;
@@ -634,7 +634,7 @@
                                                                                                         });
 
                                                                                                         function resetEditImage{{ $dish->id }}() {
-                                                                                                            document.getElementById('edit-image-{{ $dish->id }}').src = defaultEditImage;
+                                                                                                            document.getElementById('edit-image-{{ $dish->id }}').src = defaultEditImage{{ $dish->id }};
                                                                                                             document.getElementById('edit-dish-image-{{ $dish->id }}').value = ""; // Clear the selected file
                                                                                                             document.getElementById('edit-remove-dish-image-{{ $dish->id }}').style.display =
                                                                                                                 'none'; // Hide the remove button

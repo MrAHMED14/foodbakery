@@ -14,7 +14,7 @@ class DishFactory extends Factory
         return [
             'name' => $this->faker->words(3, true),
             'description' => $this->faker->paragraph(),
-            'dish_image' => $this->faker->imageUrl(640, 480, 'food', true),
+            'dish_image' => null,
             'price' => $this->faker->randomFloat(2, 5, 50),
             'menu_id' => null,
             'categorie_id' => null,

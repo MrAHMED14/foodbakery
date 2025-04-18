@@ -179,9 +179,16 @@
                                                     @foreach ($menu->dishes as $dish)
                                                         <li>
                                                             <div class="image-holder">
-                                                                <img src="{{ asset('front/extra-images/fb_masonary_9-150x150.jpg') }}"
-                                                                    alt="">
+                                                                <a href="{{ $dish->dish_image ? asset('storage/' . $dish->dish_image) : asset('front/extra-images/dish-placeholder.png') }}"
+                                                                   class="single-lightbox"
+                                                                   data-lg-size="1400-933"
+                                                                   data-lg-id="dish-{{ $dish->id }}">
+                                                                    <img src="{{ $dish->dish_image ? asset('storage/' . $dish->dish_image) : asset('front/extra-images/dish-placeholder.png') }}"
+                                                                         style="aspect-ratio: 1 / 1; object-fit: cover; object-position: center;"
+                                                                         alt="{{ $dish->description }}">
+                                                                </a>
                                                             </div>
+
                                                             <div class="text-holder">
                                                                 <h6>{{ $dish->name }}</h6>
                                                                 <span>{{ $dish->description }}</span>
@@ -770,6 +777,20 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+
+            document.querySelectorAll('.single-lightbox').forEach(function (el) {
+            lightGallery(el, {
+                dynamic: false,
+                download: false,
+                selector: 'this',
+                controls: false,
+                loop: false,
+                closable: true,
+                thumbnail: false,
+                plugins: [lgZoom],
+            });
+        });
+
             lightGallery(document.getElementById('lightgallery'), {
                 plugins: [lgZoom, lgThumbnail],
                 thumbnail: true,
