@@ -1,7 +1,7 @@
 @extends('front.master')
 
 @section('title')
-    Restaurant || Listing Detail
+    {{ $restaurant->name }} - FoodBakery
 @endsection
 
 @section('content')

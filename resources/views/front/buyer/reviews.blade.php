@@ -1,7 +1,7 @@
 @extends('front.buyer.master')
 
 @section('title')
-    Restaurant || Buyer Reviews
+    My Reviews - FoodBakery
 @endsection
 
 @section('content')

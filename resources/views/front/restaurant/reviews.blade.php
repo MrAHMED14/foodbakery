@@ -1,7 +1,7 @@
 @extends('front.restaurant.master')
 
 @section('title')
-    Restaurant || Reviews
+    Reviews - FoodBakery
 @endsection
 
 @section('content')

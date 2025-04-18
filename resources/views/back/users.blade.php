@@ -1,7 +1,7 @@
 @extends('back.master')
 
 @section('title')
-    FoodBakery | Users
+    Users - FoodBakery
 @endsection
 
 @section('content')

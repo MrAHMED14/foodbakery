@@ -5,7 +5,7 @@
 @extends('front.buyer.master')
 
 @section('title')
-    Restaurant || Account Setting
+    Account Setting - FoodBakery
 @endsection
 
 @section('content')
