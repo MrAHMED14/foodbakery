@@ -87,7 +87,7 @@
         <!-- end main content-->
 
         <!-- ========== footer Start ========== -->
-        @include('front.buyer.body.footer')
+        @include('front.body.footer')
         <!-- footer End -->
     </div>
 

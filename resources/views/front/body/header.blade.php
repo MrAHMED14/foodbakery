@@ -236,8 +236,6 @@
                                                             class="icon-comment2"></i>My Reviews</a></li>
                                                 <li><a href="{{ route('buyer.orders') }}" class="btn-edit-profile"><i
                                                             class="icon-add_shopping_cart"></i>My Orders</a></li>
-                                                <li><a href="{{ route('buyer.shortlists') }}"><i
-                                                            class="icon-heart"></i>Shortlists</a></li>
                                                 <li><a href="{{ route('buyer.statement') }}"><i
                                                             class="icon-file-text22"></i>Statement</a></li>
                                                 <li><a href="{{ route('buyer.account_setting') }}"><i
@@ -285,16 +283,8 @@
                                                             class="icon-comment2"></i>Reviews</a></li>
                                                 <li><a href="{{ route('restaurant.memberships') }}"><i
                                                             class="icon-card_membership"></i>Memberships</a></li>
-                                                <li><a href="{{ route('restaurant.withdrawals') }}"><i
-                                                            class="icon-bill"></i>Withdrawals</a></li>
-                                                <li><a href="{{ route('restaurant.earnings') }}"><i
-                                                            class="icon-money"></i>Earnings</a></li>
                                                 <li><a href="{{ route('restaurant.statement') }}"><i
-                                                            class="icon-file-text22"></i>Statement</a></li>
-                                                <li><a href="{{ route('restaurant.team_management') }}"><i
-                                                            class="icon-flow-tree"></i>Team Management</a></li>
-                                                <li><a href="{{ route('restaurant.change_password') }}"><i
-                                                            class="icon-unlock-alt"></i>Change Password</a></li>
+                                                                class="icon-file-text22"></i>Statement</a></li>
                                                 <li>
                                                     <form method="POST" action="{{ route('logout') }}">
                                                         @csrf

@@ -12,10 +12,10 @@
                                     <h5 style="color: #ffffff !important;">Popular Cities</h5>
                                 </div>
                                 <ul>
-                                    <li><a href="{{route('front.result')}}">Tiaret</a></li>
-                                    <li><a href="{{route('front.result')}}">Sougueur</a></li>
-                                    <li><a href="{{route('front.result')}}">Mahdia</a></li>
-                                    <li><a href="{{route('front.result')}}">Chalala</a></li>
+                                    <li><a href="#">Tiaret</a></li>
+                                    <li><a href="#">Sougueur</a></li>
+                                    <li><a href="#">Mahdia</a></li>
+                                    <li><a href="#">Chalala</a></li>
                                 </ul>
                             </div>
                         </div>

@@ -86,7 +86,7 @@
         <!-- end main content-->
 
         <!-- ========== footer Start ========== -->
-        @include('front.restaurant.body.footer')
+        @include('front.body.footer')
         <!-- footer End -->
     </div>
 
