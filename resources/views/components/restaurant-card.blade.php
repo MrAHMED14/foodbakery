@@ -5,7 +5,7 @@
         <figure>
             <a href="#">
                 <img src="{{ $restaurant->restaurant_logo ? asset('storage/' . $restaurant->restaurant_logo) : asset('front/extra-images/restaurant-placeholder.png') }}"
-                    class="img-list wp-post-image" style="border-radius: 5px;" alt="logo">
+                    class="img-list wp-post-image" style="border-radius: 5px; aspect-ratio: 1 / 1; object-fit: cover; object-position: center;" alt="logo">
             </a>
         </figure>
         @if ($restaurant->isOpenNow())

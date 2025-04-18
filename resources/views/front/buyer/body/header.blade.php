@@ -14,7 +14,7 @@
                     <div class="company-info">
                         <div class="img-holder">
                             <figure>
-                                <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('front/extra-images/user-placeholder.png') }}" alt="{{ $user->name }}">
+                                <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('front/extra-images/user-placeholder.png') }}" alt="{{ $user->name }}" style="aspect-ratio: 1 / 1; object-fit: cover; object-position: center;">
                             </figure>
                         </div>
                         <div class="text-holder">

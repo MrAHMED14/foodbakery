@@ -20,7 +20,7 @@
                                 <div class="img-holder">
                                     <figure>
                                         <img src="{{ $restaurant->restaurant_logo ? asset('storage/' . $restaurant->restaurant_logo) : asset('front/extra-images/restaurant-placeholder.png') }}"
-                                            alt="{{ $restaurant->name . ' logo' }}">
+                                            alt="{{ $restaurant->name . ' logo' }}" style="aspect-ratio: 1 / 1; object-fit: cover; object-position: center;">
                                     </figure>
                                 </div>
                                 <div class="text-holder">

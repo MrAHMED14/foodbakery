@@ -14,7 +14,7 @@ style="background: url('{{ $user->restaurant->cover_photo ? asset('storage/' . $
                     <div class="company-info">
                         <div class="img-holder">
                             <figure>
-                                <img src="{{ $user->restaurant->restaurant_logo ? asset('storage/' . $user->restaurant->restaurant_logo) : asset('front/extra-images/restaurant-placeholder.png') }}" alt="{{$user->restaurant->name }}">
+                                <img src="{{ $user->restaurant->restaurant_logo ? asset('storage/' . $user->restaurant->restaurant_logo) : asset('front/extra-images/restaurant-placeholder.png') }}" alt="{{$user->restaurant->name }}" style="aspect-ratio: 1 / 1; object-fit: cover; object-position: center;">
                             </figure>
                         </div>
 

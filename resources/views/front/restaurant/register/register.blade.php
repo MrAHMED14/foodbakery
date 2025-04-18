@@ -77,7 +77,7 @@
                                                                                             <img class="thumbnail"
                                                                                                 id="logo-image"
                                                                                                 src="{{ asset('front/extra-images/user-placeholder.png') }}"
-                                                                                                style="aspect-ratio: 1 / 1; padding: 0;"
+                                                                                                style="padding: 0;aspect-ratio: 1 / 1; object-fit: cover; object-position: center;"
                                                                                                 alt="">
                                                                                         </div>
                                                                                     </div>

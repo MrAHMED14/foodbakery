@@ -87,7 +87,7 @@
                                                                             <div class="item-thumb">
                                                                                 <img class="thumbnail" id="logo-image"
                                                                                     src="{{ $user->restaurant->restaurant_logo ? asset('storage/' . $user->restaurant->restaurant_logo) : asset('front/extra-images/restaurant-placeholder.png') }}"
-                                                                                    style="aspect-ratio: 1 / 1; padding: 0;"
+                                                                                    style="padding: 0; aspect-ratio: 1 / 1; object-fit: cover; object-position: center;"
                                                                                     alt="">
                                                                             </div>
                                                                         </div>

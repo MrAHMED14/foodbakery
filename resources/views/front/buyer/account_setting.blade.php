@@ -80,6 +80,7 @@
                                                                     <a>
                                                                         <img id="preview-image"
                                                                             src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('front/extra-images/user-placeholder.png') }}"
+                                                                            style="aspect-ratio: 1 / 1; object-fit: cover; object-position: center;"
                                                                             alt="User Image">
                                                                     </a>
                                                                 </figure>

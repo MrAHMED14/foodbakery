@@ -223,7 +223,7 @@
                                         <li class="user-dashboard-menu-children">
                                             <a href="javascript:void(0);" class="">
                                                 <figure class="profile-image">
-                                                    <img src="{{ Auth::user()->photo ? asset('storage/' . Auth::user()->photo) : asset('front/extra-images/user-placeholder.png') }}" alt="{{ Auth::user()->name }}">
+                                                    <img src="{{ Auth::user()->photo ? asset('storage/' . Auth::user()->photo) : asset('front/extra-images/user-placeholder.png') }}" alt="{{ Auth::user()->name }}"  style="aspect-ratio: 1 / 1; object-fit: cover; object-position: center;">
                                                 </figure>
                                                 {{ Auth::user()->name }}
                                             </a>
@@ -266,7 +266,7 @@
                                         <li class="user-dashboard-menu-children">
                                             <a href="javascript:void(0);" class="">
                                                 <figure class="profile-image">
-                                                    <img src="{{ Auth::user()->restaurant->restaurant_logo ? asset('storage/' . Auth::user()->restaurant->restaurant_logo) : asset('front/extra-images/restaurant-placeholder.png') }}" alt="{{Auth::user()->restaurant->name }}">
+                                                    <img src="{{ Auth::user()->restaurant->restaurant_logo ? asset('storage/' . Auth::user()->restaurant->restaurant_logo) : asset('front/extra-images/restaurant-placeholder.png') }}" alt="{{Auth::user()->restaurant->name }}" style="aspect-ratio: 1 / 1; object-fit: cover; object-position: center;">
                                                 </figure>
                                                 {{ Auth::user()->name }}
                                             </a>
@@ -320,7 +320,7 @@
                                             <a href="javascript:void(0);" class="">
                                                 <figure class="profile-image">
                                                     <img src="{{ asset('front/extra-images/user-placeholder.png') }}"
-                                                        alt="">
+                                                        alt="" style="aspect-ratio: 1 / 1; object-fit: cover; object-position: center;">
                                                 </figure>
                                                 {{ Auth::user()->name }}
                                             </a>
