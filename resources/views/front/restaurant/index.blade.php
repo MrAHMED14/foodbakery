@@ -1,3 +1,7 @@
+@php
+    $restaurant = Auth::user()->restaurant;
+@endphp
+
 @extends('front.restaurant.master')
 
 @section('title')
@@ -18,11 +22,18 @@
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                     <div class="user-dashboard loader-holder">
                         <div class="user-holder">
-                            <div class="user-message" style="background-color:#1e73be;">
-                                <a class="close" href="#"><i class="icon-cross-out"></i></a>
-                                <h2>Welcome to your Restaurant.</h2>
-                                <p>Restaurant Dashboard gives you quick access to settings and tools for managing your Account like [Change address] and [Change password] . You can [manage Restaurant] Build Menu , Manage Orders, Bookings, Reviews, Memberships, Withdrawals, Earnings, Statements, Change Password, Location and if you are you Restaurant Owner can also [Manage Team]. </p>
-                            </div>
+                            @if ($restaurant->is_verified)
+                                <div class="user-message" style="background-color:#1e73be;">
+                                    <h2 style="text-align: center;">Welcome to your Restaurant.</h2>
+                                </div>
+                            @else
+                                <div class="user-message" style="background-color: #FF9B17;">
+                                    <h2 style="color: #131010 !important;">
+                                        <i class="icon-warning"></i>
+                                        Your restaurant is not verified yet.
+                                    </h2>
+                                </div>
+                            @endif
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="row">
                                     <div class="element-title has-border right-filters-row">
@@ -57,6 +68,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="user-orders-list">
@@ -465,6 +477,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <ul class="pagination">
                                 <li class="active"><a>1</a></li>
                                 <li><a href="#">2</a></li>
