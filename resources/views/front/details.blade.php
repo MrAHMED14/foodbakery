@@ -154,14 +154,14 @@
                                 <div id="home" class="tab-pane fade in active">
                                     <div class="menu-itam-holder">
                                         {{-- Search Box --}}
-                                        <div class="field-holder sticky-search">
+                                        {{-- <div class="field-holder sticky-search">
                                             <input id="menu-srch-6272" data-id="6272"
                                                 class="input-field dev-menu-search-field" type="text"
                                                 placeholder="Search food item">
-                                        </div>
+                                        </div> --}}
 
                                         {{-- Menu Items --}}
-                                        <div id="menu-item-list-6272" class="menu-itam-list">
+                                        <div id="menu-item-list-6272" class="menu-itam-list" style="margin-top: 20px;">
                                             @if ($restaurant->menus->isEmpty())
                                                 <div class="element-title">
                                                     <h3 style="padding-bottom: 20px">
