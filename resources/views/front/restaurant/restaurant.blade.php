@@ -86,7 +86,7 @@
                                                                         <div class="drag-list">
                                                                             <div class="item-thumb">
                                                                                 <img class="thumbnail" id="logo-image"
-                                                                                    src="{{ $user->restaurant->restaurant_logo ? asset('storage/' . $user->restaurant->restaurant_logo) : asset('front/extra-images/user-placeholder.png') }}"
+                                                                                    src="{{ $user->restaurant->restaurant_logo ? asset('storage/' . $user->restaurant->restaurant_logo) : asset('front/extra-images/restaurant-placeholder.png') }}"
                                                                                     style="aspect-ratio: 1 / 1; padding: 0;"
                                                                                     alt="">
                                                                             </div>
@@ -379,7 +379,7 @@
 
                                 <script>
                                     const defaultLogoImage =
-                                        "{{ $user->restaurant->restaurant_logo ? asset('storage/' . $user->restaurant->restaurant_logo) : asset('front/extra-images/user-placeholder.png') }}";
+                                        "{{ $user->restaurant->restaurant_logo ? asset('storage/' . $user->restaurant->restaurant_logo) : asset('front/extra-images/restaurant-placeholder.png') }}";
 
                                     const defaultCoverImage =
                                         "{{ $user->restaurant->cover_photo ? asset('storage/' . $user->restaurant->cover_photo) : asset('front/extra-images/cover-placeholder.png') }}";
