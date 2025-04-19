@@ -29,12 +29,12 @@
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                         <div class="main-search fancy bg-holder" style="margin-bottom: 0; border-radius: 10px;">
-                            <form>
+                            <form method="GET" action="{{ route("front.listings") }}">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
                                         <div class="field-holder">
                                             <span class="foodbakery-search-location-icon"><i class="icon-search"></i></span>
-                                            <input type="text" placeholder="Resturant name" style="border-radius: 5px;padding-left: 35px">
+                                            <input type="text" name="search" placeholder="Resturant name" style="border-radius: 5px;padding-left: 35px; text-transform: initial !important;">
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
@@ -50,7 +50,7 @@
                                                         <div class="select-popup popup-open">
                                                             <a id="location_close_popup333" href="javascript:0;" class="location-close-popup">
                                                                 <i class="icon-times"></i></a>
-                                                            <input type="hidden" class="foodbakery-radius" name="foodbakery_radius" value="10">
+                                                            <input type="hidden" class="foodbakery-radius"  {{-- name="foodbakery_radius" --}} value="10">
                                                             <p>Show with in</p>
                                                             <input id="ex16b333" type="text" data-value="10" value="10" style="display: none;" style="border-radius: 5px;">
                                                             <script>
