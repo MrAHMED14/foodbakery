@@ -7,7 +7,7 @@
                     <div class="logo">
                         <figure>
                             <a href="{{ route('front.index') }}" class="light-logo">
-                                <img src="{{ asset('front/extra-images/main-logo.png') }}" alt="FoodBakery">
+                                <img src="{{ asset('front/extra-images/foodbakery.svg') }}" style="width: 100%; height: 25px; margin: 12.5px 0;" alt="FoodBakery">
                             </a>
                         </figure>
                     </div>
