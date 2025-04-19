@@ -26,17 +26,25 @@
         {{-- Page content --}}
         <div class="row">
             <div class="container mt-4">
-                <div class="mb-3" style="display: flex;align-items: center; gap: 20px;">
-                    <div class="w-100">
-                        <input id="restaurantSearch" class="form-control" type="text" placeholder="Search for restaurants..." value="{{ request('search') }}">
-                    </div>
-                    <div class="">
-                        <select id="verifyFilter" class="form-select">
-                            <option value="">All</option>
-                            <option value="1" {{ request('is_verified') == '1' ? 'selected' : '' }}>Verified</option>
-                            <option value="0" {{ request('is_verified') == '0' ? 'selected' : '' }}>Not Verified</option>
-                        </select>
-                    </div>
+                <div class="mb-3">
+                    <form method="GET" id="restaurantFilterForm" class="d-flex flex-column flex-md-row col align-center gap-2">
+                        <div class="w-100">
+                            <label for="restaurantSearch">Search</label>
+                            <input type="text" name="search" id="restaurantSearch" value="{{ request('search') }}"
+                                placeholder="Search..." class="form-control" />
+                        </div>
+
+                        <div style="min-width: 200px;">
+                            <label for="is_verified">Status</label>
+                            <select name="is_verified" id="verifyFilter" class="form-select">
+                                <option value="">All</option>
+                                <option value="1" {{ request('is_verified') === '1' ? 'selected' : '' }}>Verified
+                                </option>
+                                <option value="0" {{ request('is_verified') === '0' ? 'selected' : '' }}>Not Verified
+                                </option>
+                            </select>
+                        </div>
+                    </form>
                 </div>
 
                 <div id="restaurantTableWrapper">
@@ -45,36 +53,19 @@
             </div>
 
             <script>
-                $(document).ready(function () {
-                    function fetchRestaurants(page = 1) {
-                        const search = $('#restaurantSearch').val();
-                        const isVerified = $('#verifyFilter').val();
-
-                        $.ajax({
-                            url: `{{ route('admin.restaurants') }}?page=${page}&search=${search}&is_verified=${isVerified}`,
-                            type: 'GET',
-                            success: function (data) {
-                                $('#restaurantTableWrapper').html(data);
-                            }
-                        });
-                    }
-
-                    $('#restaurantSearch').on('input', function () {
-                        fetchRestaurants(1);
+                $(document).ready(function() {
+                    $('#restaurantSearch').on('keypress', function(e) {
+                        if (e.which === 13) {
+                            e.preventDefault();
+                            $('#restaurantFilterForm').submit();
+                        }
                     });
 
-                    $('#verifyFilter').on('change', function () {
-                        fetchRestaurants(1);
-                    });
-
-                    $(document).on('click', '.pagination a', function (e) {
-                        e.preventDefault();
-                        let page = $(this).attr('href').split('page=')[1];
-                        fetchRestaurants(page);
+                    $('#verifyFilter').on('change', function() {
+                        $('#restaurantFilterForm').submit();
                     });
                 });
             </script>
         </div>
     </div>
-
 @endsection

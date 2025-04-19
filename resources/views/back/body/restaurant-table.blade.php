@@ -17,7 +17,7 @@
                     <td>{{ $restaurant->city }}</td>
                     <td>{{ $restaurant->phone }}</td>
                     <td>
-                        <span class="badge {{ $restaurant->is_verified ? 'bg-success' : 'bg-danger' }}" style="width: fit-content; display: flex;align-items: center;gap: 4px; text-align: center;">
+                        <span class="badge py-1 px-1 {{ $restaurant->is_verified ? 'bg-success' : 'bg-danger' }}" style="width: fit-content; display: flex;align-items: flex-end;gap: 4px; text-align: center;">
                             <i class="fa {{ $restaurant->is_verified ? 'fa-check' : 'fa-times' }}" aria-hidden="true"></i>
                             {{ $restaurant->is_verified ? 'verified' : 'unverified' }}
                         </span>
@@ -52,7 +52,7 @@
                                 <p><strong>Phone:</strong> {{ $restaurant->phone }}</p>
                                 <p><strong>Email:</strong> {{ $restaurant->email }}</p>
                                 <p><strong>Verified:</strong> {{ $restaurant->is_verified ? 'Yes' : 'No' }}</p>
-                                <form method="POST" action="{{ route('admin.toggleVerification', $restaurant->id) }}">
+                                <form method="POST" action="{{ route('admin.toggleVerification', $restaurant->id) }}" onsubmit="return confirm('Are you sure you want to {{ $restaurant->is_verified ? 'unverify' : 'verify' }} this restaurant?');">
                                     @csrf
                                     @method('PATCH')
                                     <input type="hidden" name="is_verified"
