@@ -6,17 +6,23 @@
     <div class="navbar-header">
         <div class="d-flex">
             <!-- LOGO -->
-            <div class="navbar-brand-box">
+            <div class="navbar-brand-box" style="padding: 0 1.1rem;">
                 <a href="{{ route('admin.index') }}" class="logo logo-dark">
+                    <span class="logo-sm">
+                        <img src="{{ asset('front/extra-images/sub-logo.png') }}" alt="" height="35">
+                    </span>
+
                     <span class="logo-lg">
-                        {{-- <i class="fa fa-cutlery" aria-hidden="true"></i> --}}
-                        <span class="logo-txt" style="font-weight: 900;">FoodBakery</span>
+                        <img src="{{ asset('front/extra-images/foodbakery.svg') }}" alt="" height="20">
                     </span>
                 </a>
                 <a href="{{ route('admin.index') }}" class="logo logo-light">
+                    <span class="logo-sm">
+                        <img src="{{ asset('front/extra-images/sub-logo.png') }}" alt="" height="35">
+                    </span>
+
                     <span class="logo-lg">
-                        {{-- <i class="fa fa-cutlery" aria-hidden="true"></i> --}}
-                        <span class="logo-txt" style="font-weight: 900;">FoodBakery</span>
+                        <img src="{{ asset('front/extra-images/foodbakery.svg') }}" alt="" height="20">
                     </span>
                 </a>
             </div>
