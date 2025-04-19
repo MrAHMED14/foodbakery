@@ -26,8 +26,8 @@
         {{-- Page content --}}
         <div class="row">
             <div class="container mt-4">
-                <div class="row mb-3 gap-2">
-                    <div class="col-md-6">
+                <div class="mb-3" style="display: flex;align-items: center; gap: 20px;">
+                    <div class="w-100">
                         <input id="userSearch" class="form-control" type="text" placeholder="Search for users..." value="{{ request('search') }}">
                     </div>
                 </div>

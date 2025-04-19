@@ -17,8 +17,9 @@
                     <td>{{ $restaurant->city }}</td>
                     <td>{{ $restaurant->phone }}</td>
                     <td>
-                        <span class="badge {{ $restaurant->is_verified ? 'bg-success' : 'bg-danger' }}">
-                            {{ $restaurant->is_verified ? 'verified' : 'not verified' }}
+                        <span class="badge {{ $restaurant->is_verified ? 'bg-success' : 'bg-danger' }}" style="width: fit-content; display: flex;align-items: center;gap: 4px; text-align: center;">
+                            <i class="fa {{ $restaurant->is_verified ? 'fa-check' : 'fa-times' }}" aria-hidden="true"></i>
+                            {{ $restaurant->is_verified ? 'verified' : 'unverified' }}
                         </span>
                     </td>
                     <td>
@@ -56,7 +57,8 @@
                                     @method('PATCH')
                                     <input type="hidden" name="is_verified"
                                         value="{{ $restaurant->is_verified ? 0 : 1 }}">
-                                    <button class="btn bg-light mt-2" type="submit">
+                                    <button class="btn text-white font-semibold mt-2 {{ $restaurant->is_verified ? 'bg-danger' : 'bg-success' }}" type="submit" style="display: flex;align-items: center;gap: 4px; text-align: center;">
+                                        <i class="fa {{ $restaurant->is_verified ? 'fa-times' : 'fa-check' }}" aria-hidden="true"></i>
                                         {{ $restaurant->is_verified ? 'Unverify' : 'Verify' }}
                                     </button>
                                 </form>

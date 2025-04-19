@@ -17,15 +17,18 @@
                     <td>{{ $user->phone ?? 'NULL' }}</td>
                     <td>
                         @if ($user->role === \App\Models\User::ROLE_USER)
-                            <span class="badge bg-info">
+                        <span class="badge py-1" style="text-transform: uppercase; background-color: #356e97;">
+                            <i class="fas fa-user"></i>
                                 {{ $user->role }}
                             </span>
                         @elseif ($user->role === \App\Models\User::ROLE_RESTAURANT)
-                            <span class="badge" style="background-color: rgb(21, 177, 156);">
-                                {{ $user->role }}
-                            </span>
+                        <span class="badge py-1" style="text-transform: uppercase; background-color: #a13133;">
+                            <i class="fas fa-id-card"></i>
+                            {{ $user->role }}
+                        </span>
                         @else
-                            <span class="badge bg-dark">
+                            <span class="badge py-1" style="text-transform: uppercase; background-color: #343a40;">
+                                <i class="fas fa-user-shield"></i>
                                 {{ $user->role }}
                             </span>
                         @endif

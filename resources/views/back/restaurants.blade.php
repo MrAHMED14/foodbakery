@@ -26,11 +26,11 @@
         {{-- Page content --}}
         <div class="row">
             <div class="container mt-4">
-                <div class="row mb-3 gap-2">
-                    <div class="col-md-6">
+                <div class="mb-3" style="display: flex;align-items: center; gap: 20px;">
+                    <div class="w-100">
                         <input id="restaurantSearch" class="form-control" type="text" placeholder="Search for restaurants..." value="{{ request('search') }}">
                     </div>
-                    <div class="col-md-3">
+                    <div class="">
                         <select id="verifyFilter" class="form-select">
                             <option value="">All</option>
                             <option value="1" {{ request('is_verified') == '1' ? 'selected' : '' }}>Verified</option>
