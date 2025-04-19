@@ -26,7 +26,7 @@
                 </li>
 
                 <li>
-                    <a href="#reviews">
+                    <a href="{{ route('admin.reviews') }}">
                         <i data-feather="message-square"></i>
                         <span data-key="t-reviews">Reviews</span>
                     </a>
@@ -52,7 +52,7 @@
 
                         <li>
                             <a href="#stats">
-                                <span data-key="t-stats">Stats</span>
+                                <span data-key="t-stats">States</span>
                             </a>
                         </li>
 

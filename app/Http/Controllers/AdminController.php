@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Restaurant;
+use App\Models\Review;
+use App\Models\ReviewResponse;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -24,10 +26,6 @@ class AdminController extends Controller
             ->orderBy('id', 'asc')
             ->paginate($perPage);
 
-        if ($request->ajax()) {
-            return view('back.body.restaurant-table', compact('restaurants'))->render();
-        }
-
         return view('back.restaurants', compact('restaurants', 'query', 'isVerified'));
     }
 
@@ -40,16 +38,60 @@ class AdminController extends Controller
     public function users(Request $request)
     {
         $query = $request->input('search');
+        $role = $request->input('role');
         $perPage = 10;
 
-        $users = User::search($query)
-            ->orderBy('id', 'asc')
-            ->paginate($perPage);
-
-        if ($request->ajax()) {
-            return view('back.body.users-table', compact('users'))->render();
+        if (empty($role)) {
+            $users = User::search($query)->orderBy('id', 'asc')->paginate($perPage);
+        } else {
+            $users = User::search($query)
+                ->where('role', $role)->orderBy('id', 'asc')->paginate($perPage);
         }
 
-        return view('back.users', compact('users', 'query'));
+        return view('back.users', compact('users', 'query', 'role'));
+    }
+
+    public function reviews(Request $request)
+    {
+        $userSearch = $request->input('user');
+    $restaurantSearch = $request->input('restaurant');
+    $rating = $request->input('rating');
+    $perPage = 10;
+
+    $reviews = Review::with(['user', 'restaurant', 'response'])
+        ->when($userSearch, function ($query) use ($userSearch) {
+            $query->whereHas('user', function ($q) use ($userSearch) {
+                $q->where('name', 'like', "%{$userSearch}%")
+                  ->orWhere('email', 'like', "%{$userSearch}%")
+                  ->orWhere('id', $userSearch);
+            });
+        })
+        ->when($restaurantSearch, function ($query) use ($restaurantSearch) {
+            $query->whereHas('restaurant', function ($q) use ($restaurantSearch) {
+                $q->where('name', 'like', "%{$restaurantSearch}%")
+                ->orWhere('email', 'like', "%{$restaurantSearch}%")
+                ->orWhere('id', $restaurantSearch);
+            });
+        })
+        ->when($rating, function ($query) use ($rating) {
+            $query->where('rating', $rating);
+        })
+        ->orderBy('created_at', 'desc')
+        ->paginate($perPage)
+        ->appends($request->query());
+
+        return view('back.reviews', compact('reviews', 'userSearch', 'restaurantSearch', 'rating'));
+    }
+
+    public function destroyReview($id)
+    {
+        Review::findOrFail($id)->delete();
+        return back()->with('success', 'Review deleted');
+    }
+
+    public function destroyReply($id)
+    {
+        ReviewResponse::findOrFail($id)->delete();
+        return back()->with('success', 'Reply deleted');
     }
 }

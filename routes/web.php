@@ -110,9 +110,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['role:' . User::ROLE_ADMIN])->group(function () {
         Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             Route::get('/dashboard', [AdminController::class, 'index'])->name('index');
+
             Route::get('/restaurants', [AdminController::class, 'restaurants'])->name('restaurants');
+            Route::patch('/restaurants/{restaurant}/toggle-verification', [AdminController::class, 'toggleRestaurantVerification'])->name('toggleVerification');
+
             Route::get('/users', [AdminController::class, 'users'])->name('users');
-            Route::patch('/admin/restaurants/{restaurant}/toggle-verification', [AdminController::class, 'toggleRestaurantVerification'])->name('toggleVerification');
+
+            Route::get('/reviews', [AdminController::class, 'reviews'])->name('reviews');
+            Route::delete('/reviews/{id}', [AdminController::class, 'destroyReview'])->name('reviews.destroy');
+            Route::delete('/replies/{id}', [AdminController::class, 'destroyReply'])->name('replies.destroy');
         });
     });
 });
