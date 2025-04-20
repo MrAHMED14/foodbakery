@@ -64,12 +64,12 @@
         },
         "restaurant": {
             "name": "Vivanda Food",
-            "address": "135 Rue Didouche Mourad, Sidi M'Hamed 16000, Algeria",
-            "city": "Sidi M'Hamed",
-            "state": "Alger",
-            "phone": "0578 42 13 05",
-            "latitude": "35.36278",
-            "longitude": "1.328208",
+            "address": "Bd Kaid Med, Tiaret 14000",
+            "city": "Tiaret",
+            "state": "Tiaret",
+            "phone": "0778810184",
+            "latitude": "35.35008629963797",
+            "longitude": "1.3274279766906982",
             "cover_photo": "static/restaurant-2/covers/cover-1.png",
             "restaurant_logo": "static/restaurant-2/logos/logo-1.jpg",
             "is_verified": true,
@@ -88,25 +88,25 @@
                         "name": "CLASSIQUE",
                         "description": "Steak haché, cheddar, laitue, tomate, oignons cru, cornichons (sauce classique)",
                         "dish_image": "static/restaurant-2/dishes/burger-1.jpg",
-                        "price": 1999
+                        "price": 500
                     },
                     {
                         "name": "CHUCKY",
                         "description": "Filet de poulet grillé, mozzarella, laitue, tomates, tapenade d'olives (sauce curry / crème d'ail)",
                         "dish_image": "static/restaurant-2/dishes/burger-2.jpg",
-                        "price": 2999
+                        "price": 600
                     },
                     {
                         "name": "SPICY",
                         "description": "Steak assaisonné, aubergine & poivrons grillés, cornichons (sauce El Chapo)",
                         "dish_image": "static/restaurant-2/dishes/burger-3.jpg",
-                        "price": 3999
+                        "price": 450
                     },
                     {
                         "name": "SIGNATURE",
                         "description": "Double steak haché, Gouda x2, laitue, Ananas grillé aux sésame, avocats, œuf (sauce guacamole)",
                         "dish_image": "static/restaurant-2/dishes/burger-4.jpg",
-                        "price": 4999
+                        "price": 600
                     }
                 ]
             }
@@ -116,22 +116,22 @@
     },
     {
         "user": {
-            "name": "Yassine Bouchareb",
+            "name": "WASSI MUSTANG",
             "email": "",
             "password": "restaurant"
         },
         "restaurant": {
-            "name": "Havana Food | مطعم هفانا",
-            "address": "Rue Abane Ramdane, El Madania 16075, Tiaret",
+            "name": "Havana Food ",
+            "address": "L'AVENIR LA ROUTE DE TÉLÉCOM, Tiaret, Algeria",
             "city": "Tiaret",
-            "state": "Alger",
-            "phone": "0556 73 88 12",
-            "latitude": "36.752778",
-            "longitude": "3.042222",
+            "state": "Tiaret",
+            "phone": "0792 92 61 55",
+            "latitude": "35.360678106627255",
+            "longitude": "1.3228151147837375",
             "cover_photo": "static/restaurant-3/covers/cover-1.jpg",
             "restaurant_logo": "static/restaurant-3/logos/logo-1.jpg",
             "is_verified": true,
-            "capacity": 3
+            "capacity": 35
         },
         "cuisines": [
             4,
@@ -197,7 +197,7 @@
                         "name": "Pizza 4 Fromages",
                         "description": "Mozzarella, gorgonzola, parmesan, chèvre",
                         "dish_image": "static/restaurant-3/dishes/pizza-2.jpg",
-                        "price": 750
+                        "price": 650
                     },
                     {
                         "name": "Pizza Poulet",
@@ -208,96 +208,204 @@
                 ]
             }
         ],
-        "gallery_images": 25,
+        "gallery_images": 15,
         "gallery_path": "static/restaurant-3/gallery"
     },
     {
         "user": {
-            "name": "Walid Kacem",
-            "password": "restaurant"
+            "name": "Amine BELHADJ",
+            "password": "broastertiaret"
         },
         "restaurant": {
             "name": "Broaster Chicken Tiaret",
-            "address": "Route Nationale 1, Blida 09000, Algeria",
-            "city": "Blida",
-            "state": "Blida",
-            "phone": "0660 22 33 44",
-            "latitude": "36.470000",
-            "longitude": "2.830000",
+            "address": "Route de Frenda, Tiaret",
+            "city": "Tiaret",
+            "state": "Tiaret",
+            "phone": "0779890450",
+            "latitude": "35.362726809232015",
+            "longitude": "1.3228373269845934",
             "cover_photo": "static/restaurant-4/covers/cover-1.jpg",
             "restaurant_logo": "static/restaurant-4/logos/logo-1.jpg",
             "is_verified": true,
-            "capacity": 5
+            "capacity": 6
         },
         "cuisines": [
-            2,
-            3
+            1,
+            2
         ],
         "menus": [
             {
-                "name": "Grillades",
+                "name": "Menus Individuels",
                 "dishes": [
                     {
-                        "name": "Brochettes d'Agneau",
-                        "description": "Viande d'agneau marinée, grillée au feu de bois",
-                        "dish_image": "static/restaurant-4/dishes/Poulet Méchoui-1.jpg",
-                        "price": 3500
+                        "name": "Menu Broaster 2 pièces",
+                        "description": "2 pièces de poulet croustillant, frites, pain et boisson",
+                        "dish_image": "static/restaurant-4/dishes/menu-2pc.jpeg",
+                        "price": 750
                     },
                     {
-                        "name": "Poulet Méchoui",
-                        "description": "Poulet entier rôti façon traditionnelle",
-                        "dish_image": "static/restaurant-4/dishes/Poulet Méchoui-2.jpg",
-                        "price": 4200
+                        "name": "Menu Tenders",
+                        "description": "4 tenders de poulet, frites, sauce et boisson",
+                        "dish_image": "static/restaurant-4/dishes/menu-tenders.jpg",
+                        "price": 800
+                    }
+                ]
+            },
+            {
+                "name": "Menus Famille",
+                "dishes": [
+                    {
+                        "name": "Menu Family 6 pièces",
+                        "description": "6 pièces de poulet, grande portion de frites, 2 boissons, sauces",
+                        "dish_image": "static/restaurant-4/dishes/family-6pc.jpg",
+                        "price": 1600
+                    },
+                    {
+                        "name": "Mega Box",
+                        "description": "10 tenders, 6 ailes, frites XXL, sauces, 3 boissons",
+                        "dish_image": "static/restaurant-4/dishes/mega-box.jpg",
+                        "price": 2200
+                    }
+                ]
+            },
+            {
+                "name": "Accompagnements",
+                "dishes": [
+                    {
+                        "name": "Frites",
+                        "description": "Frites croustillantes portion moyenne",
+                        "dish_image": "static/restaurant-4/dishes/fries.jpg",
+                        "price": 250
+                    },
+                    {
+                        "name": "Salade Coleslaw",
+                        "description": "Petite portion de salade coleslaw maison",
+                        "dish_image": "static/restaurant-4/dishes/coleslaw.jpg",
+                        "price": 200
+                    }
+                ]
+            },
+            {
+                "name": "Boissons",
+                "dishes": [
+                    {
+                        "name": "Canette Pepsi",
+                        "description": "Canette 33cl de Pepsi",
+                        "dish_image": "static/restaurant-4/dishes/pepsi.jpg",
+                        "price": 120
+                    },
+                    {
+                        "name": "Eau Minérale",
+                        "description": "Bouteille 50cl",
+                        "dish_image": "static/restaurant-4/dishes/eau.webp",
+                        "price": 100
                     }
                 ]
             }
         ],
-        "gallery_images": 8,
+        "gallery_images": 12,
         "gallery_path": "static/restaurant-4/gallery"
     },
     {
         "user": {
-            "name": "Karim Benali",
-            "password": "restaurant"
+            "name": "Yacine TABOUNI",
+            "password": "steakhouse2025"
         },
         "restaurant": {
-            "name": "Tiaret Grill | مشاوي تيارت",
-            "address": "Boulevard Colonel Lotfi, Tiaret 14000, Algeria",
+            "name": "Tabouni Steak House",
+            "address": "Tiaret, Algeria, 14000",
             "city": "Tiaret",
             "state": "Tiaret",
-            "phone": "0550 12 34 56",
-            "latitude": "35.373889",
-            "longitude": "1.316111",
+            "phone": "0792 57 25 16",
+            "latitude": "35.376000",
+            "longitude": "1.323900",
             "cover_photo": "static/restaurant-5/covers/cover-1.jpg",
             "restaurant_logo": "static/restaurant-5/logos/logo-1.jpg",
             "is_verified": true,
-            "capacity": 4
+            "capacity": 40
         },
         "cuisines": [
             1,
             2,
-            3
+            5
         ],
         "menus": [
             {
-                "name": "Grillades",
+                "name": "Grillades & Steaks",
                 "dishes": [
                     {
-                        "name": "Côtelette d’agneau",
-                        "description": "Côtes d’agneau grillées servies avec frites et sauce piquante",
-                        "dish_image": "static/restaurant-5/dishes/grill-1.jpg",
+                        "name": "Steak Classique",
+                        "description": "Entrecôte grillée au feu de bois avec sauce au poivre, servie avec légumes sautés",
+                        "dish_image": "static/restaurant-5/dishes/steak-classique.jpg",
+                        "price": 1200
+                    },
+                    {
+                        "name": "T-Bone Steak",
+                        "description": "Côte de bœuf T-Bone grillée, pommes de terre sautées, sauce barbecue maison",
+                        "dish_image": "static/restaurant-5/dishes/tbone.jpg",
+                        "price": 2800
+                    }
+                ]
+            },
+            {
+                "name": "Plats Signature",
+                "dishes": [
+                    {
+                        "name": "Burger Tabouni",
+                        "description": "Burger gourmet au steak haché 200g, fromage fondant, oignons caramélisés",
+                        "dish_image": "static/restaurant-5/dishes/burger.jpg",
                         "price": 850
                     },
                     {
-                        "name": "Brochette Mixte",
-                        "description": "Mélange de viande hachée et poulet grillé",
-                        "dish_image": "static/restaurant-5/dishes/grill-2.jpg",
-                        "price": 750
+                        "name": "Poulet Grillé",
+                        "description": "Demi-poulet mariné et grillé, servi avec riz parfumé et salade verte",
+                        "dish_image": "static/restaurant-5/dishes/chicken-grill.jpg",
+                        "price": 950
+                    }
+                ]
+            },
+            {
+                "name": "Accompagnements & Entrées",
+                "dishes": [
+                    {
+                        "name": "Frites Maison",
+                        "description": "Frites dorées maison servies avec sauce piquante",
+                        "dish_image": "static/restaurant-5/dishes/fries.jpg",
+                        "price": 250
+                    },
+                    {
+                        "name": "H’rira",
+                        "description": "Soupe traditionnelle algérienne à base de tomates, pois chiches et viande. Servie avec ou sans bourek, au choix.",
+                        "dish_image": "static/restaurant-5/dishes/soup.jpg",
+                        "price": 200
+                    }
+                ]
+            },
+            {
+                "name": "Desserts & Boissons",
+                "dishes": [
+                    {
+                        "name": "Fondant au Chocolat",
+                        "description": "Gâteau cœur fondant chocolat noir, servi avec boule de glace vanille",
+                        "dish_image": "static/restaurant-5/dishes/fondant.jpg",
+                        "price": 500
+                    },
+                    {
+                        "name": "Cocktail Citron Menthe",
+                        "description": "Boisson fraîche à base de citron pressé et menthe fraîche",
+                        "dish_image": "static/restaurant-5/dishes/cocktail-menthe.jpg",
+                        "price": 350
+                    },
+                    {
+                        "name": "كعكة الجبنة (Cheesecake)",
+                        "description": "حلوى شهيرة مصنوعة من الجبن الكريمي ومغطاة بطبقة من الفواكه أو الشوكولاتة حسب الرغبة. Délicieux cheesecake à base de fromage frais, nappé de fruits rouges ou chocolat selon votre choix.",
+                        "dish_image": "static/restaurant-5/dishes/cheesecake.jpg",
+                        "price": 550
                     }
                 ]
             }
         ],
-        "gallery_images": 8,
+        "gallery_images": 41,
         "gallery_path": "static/restaurant-5/gallery"
     },
     {
@@ -306,17 +414,17 @@
             "password": "restaurant"
         },
         "restaurant": {
-            "name": "Pizza King | بيتزا كينغ",
-            "address": "Avenue Krim Belkacem, Tiaret 14000, Algeria",
+            "name": "Four Ten Pizzeria-Resto",
+            "address": "9859+MC5 Four Ten Pizzeria-Resto, Tiaret",
             "city": "Tiaret",
             "state": "Tiaret",
-            "phone": "0777 45 67 89",
-            "latitude": "35.375000",
-            "longitude": "1.315000",
+            "phone": "0561 62 52 58",
+            "latitude": "35.36005177715264",
+            "longitude": "1.318551469579131",
             "cover_photo": "static/restaurant-6/covers/cover-1.jpg",
             "restaurant_logo": "static/restaurant-6/logos/logo-1.jpg",
             "is_verified": true,
-            "capacity": 2
+            "capacity": 5
         },
         "cuisines": [
             1,
@@ -324,72 +432,216 @@
         ],
         "menus": [
             {
-                "name": "Pizzas",
+                "name": "Pizzas Classiques",
                 "dishes": [
                     {
-                        "name": "Pizza Fruits de Mer",
-                        "description": "Mozzarella, crevettes, calamars, sauce tomate maison",
-                        "dish_image": "static/restaurant-6/dishes/pizza-1.jpg",
-                        "price": 950
+                        "name": "Pizza Margherita",
+                        "description": "Base tomate, mozzarella, basilic frais",
+                        "dish_image": "static/restaurant-6/dishes/margherita.jpg",
+                        "price": 600
                     },
                     {
-                        "name": "Pizza Végétarienne",
-                        "description": "Champignons, poivrons, olives, tomates fraîches",
-                        "dish_image": "static/restaurant-6/dishes/pizza-2.jpg",
-                        "price": 650
+                        "name": "Pizza Quatre Fromages",
+                        "description": "Mozzarella, bleu, emmental, parmesan",
+                        "dish_image": "static/restaurant-6/dishes/quatre-fromages.jpg",
+                        "price": 850
+                    },
+                    {
+                        "name": "Pizza Pepperoni",
+                        "description": "Tomate, mozzarella, pepperoni épicé",
+                        "dish_image": "static/restaurant-6/dishes/pepperoni.jpg",
+                        "price": 950
+                    }
+                ]
+            },
+            {
+                "name": "Pizzas Spéciales",
+                "dishes": [
+                    {
+                        "name": "Pizza Poulet BBQ",
+                        "description": "Poulet grillé, sauce barbecue, oignons rouges, cheddar",
+                        "dish_image": "static/restaurant-6/dishes/poulet-bbq.jpg",
+                        "price": 1000
+                    },
+                    {
+                        "name": "Pizza Fruits de Mer",
+                        "description": "Crevettes, calamars, sauce tomate maison, persil frais",
+                        "dish_image": "static/restaurant-6/dishes/fruits-de-mer.jpg",
+                        "price": 1200
+                    }
+                ]
+            },
+            {
+                "name": "Burgers & Sandwichs",
+                "dishes": [
+                    {
+                        "name": "Burger Four Ten",
+                        "description": "Steak 180g, cheddar, crudités, sauce spéciale Four Ten",
+                        "dish_image": "static/restaurant-6/dishes/burger-special.jpg",
+                        "price": 750
+                    },
+                    {
+                        "name": "Sandwich Poulet Pané",
+                        "description": "Filet de poulet croustillant, salade, sauce mayo",
+                        "dish_image": "static/restaurant-6/dishes/sandwich-poulet.jpg",
+                        "price": 500
+                    }
+                ]
+            },
+            {
+                "name": "Entrées & Accompagnements",
+                "dishes": [
+                    {
+                        "name": "Salade César",
+                        "description": "Laitue, poulet grillé, croûtons, sauce césar, parmesan",
+                        "dish_image": "static/restaurant-6/dishes/cesar.jpg",
+                        "price": 550
+                    },
+                    {
+                        "name": "Frites Assaisonnées",
+                        "description": "Frites maison avec mélange d'épices",
+                        "dish_image": "static/restaurant-6/dishes/frites.jpg",
+                        "price": 250
+                    }
+                ]
+            },
+            {
+                "name": "Desserts & Boissons",
+                "dishes": [
+                    {
+                        "name": "Tiramisu",
+                        "description": "Dessert italien classique au café et mascarpone",
+                        "dish_image": "static/restaurant-6/dishes/tiramisu.jpg",
+                        "price": 400
+                    },
+                    {
+                        "name": "Milkshake Chocolat",
+                        "description": "Glace, lait frais, chocolat fondu",
+                        "dish_image": "static/restaurant-6/dishes/milkshake.jpg",
+                        "price": 350
+                    },
+                    {
+                        "name": "Jus Frais Orange Menthe",
+                        "description": "Jus d’orange pressé avec une touche de menthe",
+                        "dish_image": "static/restaurant-6/dishes/jus-orange.jpg",
+                        "price": 300
                     }
                 ]
             }
         ],
-        "gallery_images": 8,
+        "gallery_images": 19,
         "gallery_path": "static/restaurant-6/gallery"
     },
     {
         "user": {
-            "name": "Nesrine Amrani",
+            "name": "Aissa Arab",
             "password": "restaurant"
         },
         "restaurant": {
-            "name": "El Mexicano | تاكوس المكسيكي",
-            "address": "Rue Larbi Ben M'Hidi, Tiaret 14000, Algeria",
+            "name": "Monachy",
+            "address": "Rue Khouidmi Abdelkader N°15, Tiaret, Algeria",
             "city": "Tiaret",
             "state": "Tiaret",
-            "phone": "0666 88 77 22",
-            "latitude": "35.376111",
-            "longitude": "1.318888",
+            "phone": "0772 33 44 55",
+            "latitude": "35.36760122411396",
+            "longitude": "1.3146294101364568",
             "cover_photo": "static/restaurant-7/covers/cover-1.jpg",
             "restaurant_logo": "static/restaurant-7/logos/logo-1.jpg",
             "is_verified": true,
-            "capacity": 3
+            "capacity": 40
         },
         "cuisines": [
-            2
+            1,
+            3,
+            5
         ],
         "menus": [
             {
-                "name": "Tacos",
+                "name": "Plats Signature",
                 "dishes": [
                     {
-                        "name": "Tacos Bœuf",
-                        "description": "Tortilla garnie de bœuf, fromage, frites, sauce algérienne",
-                        "dish_image": "static/restaurant-7/dishes/tacos-1.jpg",
-                        "price": 700
+                        "name": "Filet de Bœuf Royal",
+                        "description": "Filet tendre de bœuf, sauce forestière, purée truffée",
+                        "dish_image": "static/restaurant-7/dishes/filet-boeuf.jpg",
+                        "price": 1200
+                    }
+                ]
+            },
+            {
+                "name": "Burgers & Sandwichs Premium",
+                "dishes": [
+                    {
+                        "name": "Monachy Burger",
+                        "description": "Steak 200g, cheddar affiné, oignons caramélisés, sauce maison",
+                        "dish_image": "static/restaurant-7/dishes/monachy-burger.jpg",
+                        "price": 650
                     },
                     {
-                        "name": "Tacos Mix Spécial",
-                        "description": "Poulet + viande hachée, cheddar, sauce fromagère",
-                        "dish_image": "static/restaurant-7/dishes/tacos-2.jpg",
-                        "price": 800
+                        "name": "Wrap Poulet Épicé",
+                        "description": "Poulet croustillant, sauce spicy, légumes frais",
+                        "dish_image": "static/restaurant-7/dishes/wrap-poulet.jpg",
+                        "price": 600
+                    }
+                ]
+            },
+            {
+                "name": "Salades & Bowls",
+                "dishes": [
+                    {
+                        "name": "Bowl Saumon Avocat",
+                        "description": "Saumon mariné, avocat, quinoa, mangue, sauce soja sucrée",
+                        "dish_image": "static/restaurant-7/dishes/bowl-saumon.jpg",
+                        "price": 1300
+                    },
+                    {
+                        "name": "Salade César Poulet",
+                        "description": "Poulet grillé, laitue, croûtons, parmesan, sauce César",
+                        "dish_image": "static/restaurant-7/dishes/salade-cesar.jpg",
+                        "price": 650
+                    }
+                ]
+            },
+            {
+                "name": "Desserts Gourmets",
+                "dishes": [
+                    {
+                        "name": "Tartelette Citron Meringuée",
+                        "description": "Base sablée, crème citron, meringue fondante",
+                        "dish_image": "static/restaurant-7/dishes/tarte-citron.jpg",
+                        "price": 450
+                    },
+                    {
+                        "name": "Cheesecake Oreo",
+                        "description": "Base Oreo, crème fromagère, coulis chocolat",
+                        "dish_image": "static/restaurant-7/dishes/cheesecake-oreo.jpg",
+                        "price": 500
+                    }
+                ]
+            },
+            {
+                "name": "Boissons & Mocktails",
+                "dishes": [
+                    {
+                        "name": "Virgin Mojito",
+                        "description": "Citron vert, menthe fraîche, eau gazeuse",
+                        "dish_image": "static/restaurant-7/dishes/mojito2.jpg",
+                        "price": 350
+                    },
+                    {
+                        "name": "Smoothie Fruits Rouges",
+                        "description": "Mix de fraises, framboises, myrtilles et yaourt",
+                        "dish_image": "static/restaurant-7/dishes/smoothie.jpg",
+                        "price": 400
                     }
                 ]
             }
         ],
-        "gallery_images": 10,
+        "gallery_images": 19,
         "gallery_path": "static/restaurant-7/gallery"
     },
     {
         "user": {
-            "name": "Yasmine Boudjemaa",
+            "name": "Haddou Amine",
             "password": "restaurant"
         },
         "restaurant": {
@@ -397,9 +649,9 @@
             "address": "l'avenir, Tiaret, Algeria, 14000",
             "city": "Tiaret",
             "state": "Tiaret",
-            "phone": "0555 44 33 22",
-            "latitude": "35.199400",
-            "longitude": "1.496300",
+            "phone": "0556 60 14 58",
+            "latitude": "35.361266258438064",
+            "longitude": "1.322556144179505",
             "cover_photo": "static/restaurant-8/covers/cover-1.jpg",
             "restaurant_logo": "static/restaurant-8/logos/logo-1.jpg",
             "is_verified": true,
@@ -477,17 +729,17 @@
     },
     {
         "user": {
-            "name": "Sara Djebari",
+            "name": "Seddik BENSALEM (SEDMAKER)",
             "password": "restaurant"
         },
         "restaurant": {
-            "name": "Sweet Corner | ركن الحلويات",
-            "address": "Centre Ville, Mahdia 14005, Algeria",
-            "city": "Mahdia",
+            "name": "Gino's Restaurant",
+            "address": "8, rue Boughlamallah Ahmed, Tiaret",
+            "city": "Tiaret",
             "state": "Tiaret",
-            "phone": "0778 55 66 77",
-            "latitude": "35.328700",
-            "longitude": "1.467800",
+            "phone": "0542476700",
+            "latitude": "35.37334182072147",
+            "longitude": "1.3228463318951766",
             "cover_photo": "static/restaurant-10/covers/cover-1.jpg",
             "restaurant_logo": "static/restaurant-10/logos/logo-1.jpg",
             "is_verified": true,
@@ -495,9 +747,38 @@
         },
         "cuisines": [
             1,
-            2
+            2,
+            5
         ],
         "menus": [
+            {
+                "name": "Plats Traditionnels",
+                "dishes": [
+                    {
+                        "name": "طاجين بالأرز",
+                        "description": "طبق تقليدي جزائري محضر بلحم الدجاج أو اللحم المفروم مع الأرز والخضر في صلصة لذيذة",
+                        "dish_image": "static/restaurant-10/dishes/tajine-riz.jpg",
+                        "price": 650
+                    }
+                ]
+            },
+            {
+                "name": "Spécialités Italiennes",
+                "dishes": [
+                    {
+                        "name": "Pizza Quatre Fromages",
+                        "description": "Base tomate, mozzarella, parmesan, gorgonzola et emmental",
+                        "dish_image": "static/restaurant-10/dishes/pizza4fromages.jpg",
+                        "price": 750
+                    },
+                    {
+                        "name": "Pâtes Carbonara",
+                        "description": "Spaghetti à la crème, œufs, parmesan et lardons de dinde",
+                        "dish_image": "static/restaurant-10/dishes/carbonara.jpg",
+                        "price": 60
+                    }
+                ]
+            },
             {
                 "name": "Pâtisserie et Boissons",
                 "dishes": [
@@ -509,14 +790,37 @@
                     },
                     {
                         "name": "Café Spécial",
-                        "description": "Café crème avec touche de caramel",
+                        "description": "Café crème avec une touche de caramel",
                         "dish_image": "static/restaurant-10/dishes/cafe.jpg",
+                        "price": 60
+                    }
+                ]
+            },
+            {
+                "name": "Boissons Rafraîchissantes",
+                "dishes": [
+                    {
+                        "name": "Jus d'Orange Frais",
+                        "description": "Jus d'orange pressé à la main, servi frais",
+                        "dish_image": "static/restaurant-10/dishes/jus-orange.jpg",
+                        "price": 140
+                    },
+                    {
+                        "name": "Cocktail Tropical",
+                        "description": "Mélange exotique d'ananas, mangue et banane",
+                        "dish_image": "static/restaurant-10/dishes/cocktail.jpg",
                         "price": 250
+                    },
+                    {
+                        "name": "Eau Minérale",
+                        "description": "Bouteille d'eau minérale 50cl",
+                        "dish_image": "static/restaurant-10/dishes/eau.jpg",
+                        "price": 50
                     }
                 ]
             }
         ],
-        "gallery_images": 5,
+        "gallery_images": 11,
         "gallery_path": "static/restaurant-10/gallery"
     },
     {
