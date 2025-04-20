@@ -53,7 +53,7 @@ class RestaurantController extends Controller
         }
 
         // TODO: Change orderBy to rating later
-        $restaurants = $restaurantsQuery->orderBy('id', 'desc')->paginate($maxRestaurants);
+        $restaurants = $restaurantsQuery->orderBy('id', 'asc')->paginate($maxRestaurants);
 
         $cuisineTypes = CuisineType::all();
 
