@@ -212,6 +212,8 @@ class RestaurantController extends Controller
 
         if (isset($request->cuisine_types)) {
             $restaurant->cuisines()->sync($request->cuisine_types);
+        }else{
+            $restaurant->cuisines()->sync([]);
         }
 
         $restaurant->save();

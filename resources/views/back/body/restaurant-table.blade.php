@@ -57,11 +57,11 @@
                                 <p><strong>Phone:</strong> {{ $restaurant->phone }}</p>
                                 <p><strong>Email:</strong> {{ $restaurant->email }}</p>
                                 <p><strong>Cuisine types:</strong>
+                                    @if ($restaurant->cuisines->isEmpty())
+                                        NULL
+                                    @endif
                                     @foreach ($restaurant->cuisines as $cuisine)
-                                        <span>{{ $cuisine->name }}@if (!$loop->last)
-                                                ,
-                                            @endif
-                                        </span>
+                                        <span>{{ $cuisine->name }}@if(!$loop->last), @endif</span>
                                     @endforeach
                                 </p>
                                 <p><strong>Created  At:</strong> {{ $restaurant->created_at->format('d M Y, H:i') }}</p>
@@ -160,7 +160,7 @@
 
                                 <div class="map-sec-holder">
                                     <div class="cs-map-section" style="border-radius: 10px;">
-                                        <div id="restaurantMap" style="width: 100%; height: 400px; border-radius: 10px; z-index: 10;"></div>
+                                        <div id="restaurantMap{{ $restaurant->id }}" style="width: 100%; height: 400px; border-radius: 10px; z-index: 10;"></div>
                                     </div>
                                 </div>
 
@@ -185,32 +185,27 @@
                 </div>
 
                 <script>
-                    // Coordinates from backend (Laravel Blade syntax)
-                    const lat = {{ $restaurant->latitude ?? 0 }};
-                    const lng = {{ $restaurant->longitude ?? 0 }};
+                    const lat{{ $restaurant->id }} = {{ $restaurant->latitude ?? 0 }};
+                    const lng{{ $restaurant->id }} = {{ $restaurant->longitude ?? 0 }};
 
-                    // Initialize Leaflet map
-                    let restaurantMap = L.map('restaurantMap', {
-                        center: [lat, lng],
+                    let restaurantMap{{ $restaurant->id }} = L.map('restaurantMap{{ $restaurant->id }}', {
+                        center: [lat{{ $restaurant->id }}, lng{{ $restaurant->id }}],
                         zoom: 17,
                         zoomControl: true,
                         dragging: true,
                     });
 
-                    // Add OpenStreetMap tiles
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: '&copy; OpenStreetMap contributors'
-                    }).addTo(restaurantMap);
+                    }).addTo(restaurantMap{{ $restaurant->id }});
 
-                    // Add a marker
-                    L.marker([lat, lng]).addTo(restaurantMap);
+                    L.marker([lat{{ $restaurant->id }}, lng{{ $restaurant->id }}]).addTo(restaurantMap{{ $restaurant->id }});
 
-                    // Handle Bootstrap 5 modal show event
-                    const mapModal = document.getElementById('viewModal{{ $restaurant->id }}');
-                    mapModal.addEventListener('shown.bs.modal', function() {
+                    const mapModal{{ $restaurant->id }} = document.getElementById('viewModal{{ $restaurant->id }}');
+                    mapModal{{ $restaurant->id }}.addEventListener('shown.bs.modal', function() {
                         setTimeout(() => {
-                            restaurantMap.invalidateSize();
-                            restaurantMap.setView([lat, lng]);
+                            restaurantMap{{ $restaurant->id }}.invalidateSize();
+                            restaurantMap{{ $restaurant->id }}.setView([lat{{ $restaurant->id }}, lng{{ $restaurant->id }}]);
                         }, 300);
                     });
                 </script>
