@@ -11,7 +11,15 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800">
     <!-- Google Font Family Link End -->
     <!-- Bootstrap Link Start-->
-    <link rel="shortcut icon" href="{{ asset('back/images/favicon.ico') }}">
+    <meta name="description" content="FoodBakery is a complete multi-restaurant platform offering online food ordering, table reservations, and delivery or pickup services. Browse diverse menus, discover top-rated local eateries, and book your table or meal with ease through a seamless, mobile-friendly experience.">
+    <meta name="google-site-verification" content="XvG5Rx8b8edoFGOMNPXyl4_uxRnxOBE61zbie70V_4Y" />
+    <meta name="keywords" content="foodbakery, algeria, tiaret, foodbakery tiaret, food, Bakery, restaurant, multi-restaurant, platform, ordering, reservations, booking, menus">
+    <link rel="icon" type="image/png" href="{{ asset('/favicon-96x96.png') }}" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="{{ asset('/favicon.svg') }}" />
+    <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/apple-touch-icon.png') }}" />
+    <meta name="apple-mobile-web-app-title" content="Food Bakery" />
+    <link rel="manifest" href="{{ asset('/site.webmanifest') }}" />
 
     <link href="{{ asset('front/css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ asset('front/css/bootstrap-theme.css') }}" rel="stylesheet">
