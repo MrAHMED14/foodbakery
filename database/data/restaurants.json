@@ -555,13 +555,13 @@
                     {
                         "name": "Poisson Grillé",
                         "description": "Dorade grillée avec légumes et riz",
-                        "dish_image": "static/restaurant-11/dishes/fish.avif",
+                        "dish_image": "static/restaurant-11/dishes/fish.jpg",
                         "price": 950
                     }
                 ]
             }
         ],
-        "gallery_images": 6,
+        "gallery_images": 8,
         "gallery_path": "static/restaurant-11/gallery"
     },
     {
@@ -614,7 +614,7 @@
             "password": "restaurant"
         },
         "restaurant": {
-            "name": "Burger Box | بوكس برجر",
+            "name": "Burger Box | برجر بوكس",
             "address": "Rue Emir Abdelkader, Tiaret 14000, Algeria",
             "city": "Tiaret",
             "state": "Tiaret",
@@ -652,7 +652,7 @@
             }
         ],
         "gallery_images": 10,
-        "gallery_path": "static/restaurant-burgerbox/gallery"
+        "gallery_path": "static/restaurant-13/gallery"
     },
     {
         "user": {
