@@ -240,7 +240,7 @@
                     {
                         "name": "Menu Broaster 2 pièces",
                         "description": "2 pièces de poulet croustillant, frites, pain et boisson",
-                        "dish_image": "static/restaurant-4/dishes/menu-2pc.jpeg",
+                        "dish_image": "static/restaurant-4/dishes/menu-2pc.jpg",
                         "price": 750
                     },
                     {
@@ -297,7 +297,7 @@
                     {
                         "name": "Eau Minérale",
                         "description": "Bouteille 50cl",
-                        "dish_image": "static/restaurant-4/dishes/eau.webp",
+                        "dish_image": "static/restaurant-4/dishes/eau.jpg",
                         "price": 100
                     }
                 ]
