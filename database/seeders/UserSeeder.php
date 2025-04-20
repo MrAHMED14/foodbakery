@@ -32,5 +32,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('client'),
             'role' => User::ROLE_USER,
         ]);
+
+        User::factory(40)->create(['role' => User::ROLE_USER]);
     }
 }
