@@ -14,7 +14,7 @@ class ReviewFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::inRandomOrder()->first()->id,
+            'user_id' => User::where('role', User::ROLE_USER)->inRandomOrder()->first()->id,
             'restaurant_id' => Restaurant::inRandomOrder()->first()->id,
             'comment' => $this->faker->sentence(15),
             'rating' => $this->faker->numberBetween(1, 5),
