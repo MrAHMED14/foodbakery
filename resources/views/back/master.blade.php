@@ -18,6 +18,9 @@
     <!-- App Css-->
     <link href="{{ asset('back/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
 
+    <!-- LightGallery CSS -->
+    <link href="{{ asset('back/css/lightgallery.css') }}" rel="stylesheet">
+
     <!-- Leaflet Core -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -177,6 +180,11 @@
     </div>
 
     <div class="rightbar-overlay"></div>
+
+    <!-- LightGallery JS -->
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/lightgallery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script>
 
     <!-- JAVASCRIPT -->
     <script src="{{ asset('back/libs/jquery/jquery.min.js') }}"></script>
