@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800">
     <!-- Google Font Family Link End -->
     <!-- Bootstrap Link Start-->
+    <meta name="robots" content="index, follow">
     <meta name="description" content="FoodBakery is a complete multi-restaurant platform offering online food ordering, table reservations, and delivery or pickup services. Browse diverse menus, discover top-rated local eateries, and book your table or meal with ease through a seamless, mobile-friendly experience.">
     <meta name="google-site-verification" content="XvG5Rx8b8edoFGOMNPXyl4_uxRnxOBE61zbie70V_4Y" />
     <meta name="keywords" content="foodbakery, algeria, tiaret, foodbakery tiaret, food, Bakery, restaurant, multi-restaurant, platform, ordering, reservations, booking, menus">
