@@ -336,8 +336,7 @@
                     @else
                         {{-- Login/Register --}}
                         <div class="login-option">
-                            <a class="cs-color cs-popup-joinus-btn login-popup" data-target="#sign-in"
-                                data-toggle="modal" href="#user-register">Login / Register</a><a class="get-start-btn"
+                            <a class="cs-color cs-popup-joinus-btn login-popup" href="{{ route('login') }}">Login / Register</a><a class="get-start-btn"
                                 href="{{ route('front.register_restaurant') }}">
                                 Register
                                 Restaurant </a>
