@@ -64,7 +64,7 @@
         </div>
 
         <div class="flex items-center justify-center">
-            <a  href="#google"
+            <a  href="{{ route('auth.google') }}"
                 class="font-medium w-full flex items-center justify-center text-muted rounded-md transition-colors"
                 style="gap: 10px; background-color: whitesmoke; padding: 8px 0;">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18">
