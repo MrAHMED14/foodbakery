@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>403 Access denied - FoodBakery</title>
+    <title>Something went wrong - FoodBakery</title>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800">
 
@@ -47,10 +47,10 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="page-not-found">
                                 <div class="cs-text">
-                                    <span class="cs-error">403</span>
+                                    <span class="cs-error">500</span>
                                     <br>
-                                    <span><strong>ERROR: </strong>Access denied</span>
-                                    <p> You do not have permission to access this page.</p>
+                                    <span><strong>ERROR: </strong>Server error</span>
+                                    <p>Something went wrong, and we're working on it. Please try again later. If the issue persists, let us know.</p>
                                 </div>
 
                                 <div>
