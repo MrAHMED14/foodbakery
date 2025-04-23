@@ -24,32 +24,23 @@
                                             <h5>My Orders</h5>
                                             <div class="right-filters row pull-right">
                                                 <div class="col-lg-6 col-md-6 col-xs-6">
-                                                    <div class="input-field">
-                                                        <select class="chosen-select-no-single">
-                                                            <option selected="selected" value="">Select Orders Status
-                                                            </option>
-                                                            <option value="Processing">Processing</option>
-                                                            <option value="Cancelled">Cancelled</option>
-                                                            <option value="Completed">Completed</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-6 col-xs-6">
-                                                    <div class="input-field">
-                                                        <i class="icon-angle-down"></i>
-                                                        <input type="text" data-id="daterange223" id="daterange"
-                                                            value="" placeholder="Select Date Range">
-                                                        <script>
-                                                            $(function() {
-                                                                $('input[data-id="daterange223"]').daterangepicker({
-                                                                    opens: 'left'
-                                                                }, function(start, end, label) {
-                                                                    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end
-                                                                        .format('YYYY-MM-DD'));
-                                                                });
-                                                            });
-                                                        </script>
-                                                    </div>
+                                                    <form method="GET" action="{{ route('buyer.orders') }}">
+                                                        <div class="input-field">
+                                                            <select class="chosen-select-no-single" name="status"
+                                                                onchange="this.form.submit()">
+                                                                <option value="">All Statuses</option>
+                                                                <option value="Processing"
+                                                                    {{ request('status') == 'Processing' ? 'selected' : '' }}>
+                                                                    Processing</option>
+                                                                <option value="Completed"
+                                                                    {{ request('status') == 'Completed' ? 'selected' : '' }}>
+                                                                    Completed</option>
+                                                                <option value="Cancelled"
+                                                                    {{ request('status') == 'Cancelled' ? 'selected' : '' }}>
+                                                                    Cancelled</option>
+                                                            </select>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
