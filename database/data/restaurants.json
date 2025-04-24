@@ -64,54 +64,92 @@
         },
         "restaurant": {
             "name": "Vivanda Food",
-            "address": "Bd Kaid Med, Tiaret 14000",
+            "address": "تعاونية لوماني د 124 رقم 33 تيارت , Tiaret, Algeria",
             "city": "Tiaret",
             "state": "Tiaret",
-            "phone": "0778810184",
-            "latitude": "35.35008629963797",
-            "longitude": "1.3274279766906982",
-            "cover_photo": "static/restaurant-2/covers/cover-1.png",
+            "phone": "0778 81 01 84",
+            "latitude": "35.350291642026335",
+            "longitude": "1.327496378282814",
+            "cover_photo": "static/restaurant-2/covers/cover-3.jpg",
             "restaurant_logo": "static/restaurant-2/logos/logo-1.jpg",
             "is_verified": true,
-            "capacity": 1
+            "capacity": 50
         },
         "cuisines": [
             1,
-            2,
-            3
+            2
         ],
         "menus": [
             {
                 "name": "Burgers",
                 "dishes": [
                     {
-                        "name": "CLASSIQUE",
-                        "description": "Steak haché, cheddar, laitue, tomate, oignons cru, cornichons (sauce classique)",
-                        "dish_image": "static/restaurant-2/dishes/burger-1.jpg",
-                        "price": 500
+                        "name": "Classic Burger",
+                        "description": "Steak, fromage, tomate, laitue, sauce maison",
+                        "dish_image": "static/restaurant-2/dishes/classic-burger.jpg",
+                        "price": 750
                     },
                     {
-                        "name": "CHUCKY",
-                        "description": "Filet de poulet grillé, mozzarella, laitue, tomates, tapenade d'olives (sauce curry / crème d'ail)",
-                        "dish_image": "static/restaurant-2/dishes/burger-2.jpg",
+                        "name": "Spicy Chicken Burger",
+                        "description": "Poulet croustillant épicé, salade, sauce piquante",
+                        "dish_image": "static/restaurant-2/dishes/spicy-chicken.jpg",
+                        "price": 800
+                    }
+                ]
+            },
+            {
+                "name": "Wraps & Sandwichs",
+                "dishes": [
+                    {
+                        "name": "Wrap Thon",
+                        "description": "Thon, salade, œuf, olives, mayonnaise",
+                        "dish_image": "static/restaurant-2/dishes/wrap-thon.jpg",
                         "price": 600
                     },
                     {
-                        "name": "SPICY",
-                        "description": "Steak assaisonné, aubergine & poivrons grillés, cornichons (sauce El Chapo)",
-                        "dish_image": "static/restaurant-2/dishes/burger-3.jpg",
-                        "price": 450
+                        "name": "Sandwich Escalope",
+                        "description": "Escalope grillée, crudités, fromage, sauces",
+                        "dish_image": "static/restaurant-2/dishes/sandwich-escalope.jpg",
+                        "price": 650
+                    }
+                ]
+            },
+            {
+                "name": "Accompagnements",
+                "dishes": [
+                    {
+                        "name": "Frites",
+                        "description": "Portion moyenne",
+                        "dish_image": "static/restaurant-2/dishes/frites.jpg",
+                        "price": 200
                     },
                     {
-                        "name": "SIGNATURE",
-                        "description": "Double steak haché, Gouda x2, laitue, Ananas grillé aux sésame, avocats, œuf (sauce guacamole)",
-                        "dish_image": "static/restaurant-2/dishes/burger-4.jpg",
-                        "price": 600
+                        "name": "Potatoes",
+                        "description": "Pommes de terre croustillantes épicées",
+                        "dish_image": "static/restaurant-2/dishes/potatoes.jpg",
+                        "price": 250
+                    }
+                ]
+            },
+            {
+                "name": "Boissons",
+                "dishes": [
+                    {
+                        "name": "Jus Frais",
+                        "description": "Jus d’orange ou cocktail maison",
+                        "dish_image": "static/restaurant-2/dishes/jus.jpg",
+                        "price": 300
+                    },
+                    {
+                        "name": "Soda",
+                        "description": "Canette Coca, Fanta ou Sprite",
+                        "dish_image": "static/restaurant-2/dishes/soda.jpg",
+                        "price": 100
                     }
                 ]
             }
         ],
-        "gallery_images": 25,
+        "gallery_images": 27,
         "gallery_path": "static/restaurant-2/gallery"
     },
     {
@@ -825,47 +863,81 @@
     },
     {
         "user": {
-            "name": "Mourad Hamidi",
+            "name": "Pizzeria Milano",
             "password": "restaurant"
         },
         "restaurant": {
-            "name": "El Andalus | الأندلس",
-            "address": "Avenue Colonel Lotfi, Tiaret 14000, Algeria",
+            "name": "Pizzeria Milano",
+            "address": "Tiaret, Rue Maarouf Ahmed",
             "city": "Tiaret",
             "state": "Tiaret",
-            "phone": "0551 11 22 33",
-            "latitude": "35.372400",
-            "longitude": "1.321900",
+            "phone": "0659 20 45 76",
+            "latitude": "35.36455455548101",
+            "longitude": "1.3202505741895105",
             "cover_photo": "static/restaurant-11/covers/cover-1.jpg",
             "restaurant_logo": "static/restaurant-11/logos/logo-1.jpg",
             "is_verified": true,
-            "capacity": 5
+            "capacity": 20
         },
         "cuisines": [
             1,
             2,
-            3
+            4
         ],
         "menus": [
             {
-                "name": "Menu Méditerranéen",
+                "name": "Pizzas Classiques",
                 "dishes": [
                     {
-                        "name": "Tajine Zitoune",
-                        "description": "Poulet, olives vertes, carottes, citron confit",
-                        "dish_image": "static/restaurant-11/dishes/tajine.jpg",
-                        "price": 750
+                        "name": "Pizza Reine",
+                        "description": "Tomate, jambon de dinde, champignons, fromage",
+                        "dish_image": "static/restaurant-11/dishes/reine.jpg",
+                        "price": 800
                     },
                     {
-                        "name": "Poisson Grillé",
-                        "description": "Dorade grillée avec légumes et riz",
-                        "dish_image": "static/restaurant-11/dishes/fish.jpg",
+                        "name": "Pizza 4 Fromages",
+                        "description": "Mozzarella, chèvre, bleu, emmental",
+                        "dish_image": "static/restaurant-11/dishes/4fromages.jpg",
                         "price": 950
+                    }
+                ]
+            },
+            {
+                "name": "Tacos",
+                "dishes": [
+                    {
+                        "name": "Tacos Poulet",
+                        "description": "Poulet grillé, frites, sauce fromagère",
+                        "dish_image": "static/restaurant-11/dishes/tacos-poulet.jpg",
+                        "price": 600
+                    },
+                    {
+                        "name": "Tacos Mixte",
+                        "description": "Viande hachée + poulet, crudités, sauce maison",
+                        "dish_image": "static/restaurant-11/dishes/tacos-mixte.jpg",
+                        "price": 700
+                    }
+                ]
+            },
+            {
+                "name": "Boissons",
+                "dishes": [
+                    {
+                        "name": "Canette Soda",
+                        "description": "Coca, Fanta, Sprite (33cl)",
+                        "dish_image": "static/restaurant-11/dishes/soda.jpg",
+                        "price": 100
+                    },
+                    {
+                        "name": "Eau Minérale",
+                        "description": "Eau fraîche 0.5L",
+                        "dish_image": "static/restaurant-11/dishes/eau.jpg",
+                        "price": 70
                     }
                 ]
             }
         ],
-        "gallery_images": 8,
+        "gallery_images": 6,
         "gallery_path": "static/restaurant-11/gallery"
     },
     {
@@ -1057,5 +1129,247 @@
         ],
         "gallery_images": 12,
         "gallery_path": "static/restaurant-15/gallery"
+    },
+    {
+        "user": {
+            "name": "Pizza Slices",
+            "password": "restaurant"
+        },
+        "restaurant": {
+            "name": "Pizza -Slices",
+            "address": "Tiaret, Algeria, 14000",
+            "city": "Tiaret",
+            "state": "Tiaret",
+            "phone": "0771 09 64 99",
+            "latitude": "35.376000",
+            "longitude": "1.323900",
+            "cover_photo": "static/restaurant-16/covers/cover-1.jpg",
+            "restaurant_logo": "static/restaurant-16/logos/logo-1.jpg",
+            "is_verified": true,
+            "capacity": 12
+        },
+        "cuisines": [
+            1,
+            4,
+            5
+        ],
+        "menus": [
+            {
+                "name": "Offres Spéciales",
+                "dishes": [
+                    {
+                        "name": "3 Tacos Gratinés",
+                        "description": "Trois tacos garnis, gratinés au fromage, servis avec frites et sauce maison",
+                        "dish_image": "static/restaurant-16/dishes/tacos-gratines.jpg",
+                        "price": 1000
+                    },
+                    {
+                        "name": "4 Sandwichs Marinés",
+                        "description": "Quatre sandwichs avec viande marinée maison, crudités, sauces au choix",
+                        "dish_image": "static/restaurant-16/dishes/sandwich-marines.jpg",
+                        "price": 1000
+                    }
+                ]
+            },
+            {
+                "name": "Pizzas",
+                "dishes": [
+                    {
+                        "name": "Pizza Margherita",
+                        "description": "Sauce tomate, mozzarella, origan",
+                        "dish_image": "static/restaurant-16/dishes/margherita.jpg",
+                        "price": 600
+                    },
+                    {
+                        "name": "Pizza Viande Hachée",
+                        "description": "Sauce tomate, viande hachée, poivrons, olives, fromage",
+                        "dish_image": "static/restaurant-16/dishes/viande-hachee.jpg",
+                        "price": 850
+                    }
+                ]
+            },
+            {
+                "name": "Boissons",
+                "dishes": [
+                    {
+                        "name": "Soda 33cl",
+                        "description": "Coca-Cola, Fanta, Sprite – bouteille individuelle",
+                        "dish_image": "static/restaurant-16/dishes/soda.jpg",
+                        "price": 100
+                    },
+                    {
+                        "name": "Eau Minérale",
+                        "description": "Bouteille d'eau fraîche 0.5L",
+                        "dish_image": "static/restaurant-16/dishes/eau.jpg",
+                        "price": 70
+                    }
+                ]
+            }
+        ],
+        "gallery_images": 24,
+        "gallery_path": "static/restaurant-16/gallery"
+    },
+    {
+        "user": {
+            "name": "Jacos Food",
+            "password": "restaurant"
+        },
+        "restaurant": {
+            "name": "Jacos Food",
+            "address": "Citée Mohamed Djahlen, Ilot D127 Bis, Tiaret 14000",
+            "city": "Tiaret",
+            "state": "Tiaret",
+            "phone": "0782724754",
+            "latitude": "35.35727654193281",
+            "longitude": "1.3171938507833234",
+            "cover_photo": "static/restaurant-17/covers/cover-1.jpg",
+            "restaurant_logo": "static/restaurant-17/logos/logo-1.jpg",
+            "is_verified": true,
+            "capacity": 35
+        },
+        "cuisines": [
+            1,
+            2
+        ],
+        "menus": [
+            {
+                "name": "Pizzas",
+                "dishes": [
+                    {
+                        "name": "Pizza Poulet Fromage",
+                        "description": "Poulet grillé, mozzarella, olives, sauce tomate",
+                        "dish_image": "static/restaurant-17/dishes/pizza-poulet.jpg",
+                        "price": 950
+                    },
+                    {
+                        "name": "Pizza Viande Hachée",
+                        "description": "Viande hachée, poivrons, fromage, sauce tomate",
+                        "dish_image": "static/restaurant-17/dishes/pizza-viande.jpg",
+                        "price": 1000
+                    }
+                ]
+            },
+            {
+                "name": "Tacos",
+                "dishes": [
+                    {
+                        "name": "Tacos Mixte",
+                        "description": "Viande + poulet, frites, fromage, sauce fromagère",
+                        "dish_image": "static/restaurant-17/dishes/tacos-mixte.jpg",
+                        "price": 850
+                    },
+                    {
+                        "name": "Tacos Escalope",
+                        "description": "Escalope grillée, fromage, sauces au choix",
+                        "dish_image": "static/restaurant-17/dishes/tacos-escalope.jpg",
+                        "price": 800
+                    }
+                ]
+            },
+            {
+                "name": "Boissons",
+                "dishes": [
+                    {
+                        "name": "Canette",
+                        "description": "Coca, Fanta, Sprite",
+                        "dish_image": "static/restaurant-17/dishes/canette.jpg",
+                        "price": 80
+                    },
+                    {
+                        "name": "Eau Minérale",
+                        "description": "Bouteille 0.5L",
+                        "dish_image": "static/restaurant-17/dishes/eau.jpg",
+                        "price": 50
+                    }
+                ]
+            }
+        ],
+        "gallery_images": 17,
+        "gallery_path": "static/restaurant-17/gallery"
+    },
+    {
+        "user": {
+            "name": "GR Space - La Familia",
+            "password": "restaurant"
+        },
+        "restaurant": {
+            "name": "GR Space - La Familia",
+            "address": "Cité Rousseau, en face de la pharmacie Talbi",
+            "city": "Tiaret",
+            "state": "Tiaret",
+            "phone": "0795121610",
+            "latitude": "35.377240",
+            "longitude": "1.315920",
+            "cover_photo": "static/restaurant-18/covers/cover-1.jpg",
+            "restaurant_logo": "static/restaurant-18/logos/logo-1.jpg",
+            "is_verified": true,
+            "capacity": 50
+        },
+        "cuisines": [
+            3,
+            4,
+            6
+        ],
+        "menus": [
+            {
+                "name": "Poissons",
+                "dishes": [
+                    {
+                        "name": "Poisson frit",
+                        "description": "Poisson pané croustillant, servi avec frites et citron",
+                        "dish_image": "static/restaurant-18/dishes/poisson-frit.jpg",
+                        "price": 1200
+                    },
+                    {
+                        "name": "Sardines grillées",
+                        "description": "Sardines fraîches grillées avec herbes",
+                        "dish_image": "static/restaurant-18/dishes/sardines.jpg",
+                        "price": 1000
+                    },
+                    {
+                        "name": "Filet de merlu",
+                        "description": "Filet tendre avec sauce citronnée",
+                        "dish_image": "static/restaurant-18/dishes/merlu.jpg",
+                        "price": 1300
+                    }
+                ]
+            },
+            {
+                "name": "Viandes",
+                "dishes": [
+                    {
+                        "name": "Escalope panée",
+                        "description": "Escalope croustillante servie avec riz ou frites",
+                        "dish_image": "static/restaurant-18/dishes/escalope.jpg",
+                        "price": 1100
+                    },
+                    {
+                        "name": "Brochettes de poulet",
+                        "description": "Poulet grillé aux épices maison",
+                        "dish_image": "static/restaurant-18/dishes/brochettes.jpg",
+                        "price": 950
+                    }
+                ]
+            },
+            {
+                "name": "Boissons",
+                "dishes": [
+                    {
+                        "name": "Eau minérale",
+                        "description": "Bouteille 0.5L",
+                        "dish_image": "static/restaurant-18/dishes/eau.jpg",
+                        "price": 50
+                    },
+                    {
+                        "name": "Jus naturel",
+                        "description": "Jus d’orange, citron, fraise, etc.",
+                        "dish_image": "static/restaurant-18/dishes/jus.jpg",
+                        "price": 100
+                    }
+                ]
+            }
+        ],
+        "gallery_images": 33,
+        "gallery_path": "static/restaurant-18/gallery"
     }
 ]
