@@ -44,6 +44,20 @@
 
         <div class="main-content">
             <div class="page-content">
+                @if (session('success'))
+                    <div style="border-radius: 5px; margin-bottom: 20px; z-index: 100; color: #008A2E; background-color: #ECFDF3; padding: 16px;">
+                        <i class="fa fa-check-circle" aria-hidden="true" style="padding-right: 5px;"></i>
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div style="border-radius: 5px; margin-bottom: 20px; z-index: 100; color: #E60000; background-color: #fff0f0; padding: 16px;">
+                        <i class="fa fa-exclamation-circle" aria-hidden="true" style="padding-right: 5px;"></i>
+                        {{ session('error') }}
+                    </div>
+                @endif
+
                 @yield('content')
             </div>
 
