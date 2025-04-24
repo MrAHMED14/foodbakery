@@ -126,6 +126,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/reviews', [AdminController::class, 'reviews'])->name('reviews');
             Route::delete('/reviews/{id}', [AdminController::class, 'destroyReview'])->name('reviews.destroy');
             Route::delete('/replies/{id}', [AdminController::class, 'destroyReply'])->name('replies.destroy');
+
+            Route::get('/profile', [AdminController::class, 'adminProfile'])->name('profile');
+            Route::put('/profile', [AdminController::class, 'adminProfileUpdate'])->name('profile.update');
+            Route::put('/profile/password', [AdminController::class, 'adminProfileUpdatePassword'])->name('profile.password.update');
         });
     });
 });

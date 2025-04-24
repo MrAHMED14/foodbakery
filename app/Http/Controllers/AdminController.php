@@ -7,6 +7,8 @@ use App\Models\Review;
 use App\Models\ReviewResponse;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -93,5 +95,55 @@ class AdminController extends Controller
     {
         ReviewResponse::findOrFail($id)->delete();
         return back()->with('success', 'Reply deleted');
+    }
+
+    public function adminProfile()
+    {
+        return view('back.admin-profile');
+    }
+
+    public function adminProfileUpdate(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . Auth::id(),
+            'profile_picture' => 'nullable|image|max:2048',
+        ]);
+
+        $user = User::findOrFail(Auth::id());
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->hasFile('profile_picture')) {
+            $path = $request->file('profile_picture')->store('users/', 'public');
+            $user->photo = $path;
+        }
+
+        $user->save();
+
+        return back()->with('success', 'Profile updated successfully!');
+    }
+
+    public function adminProfileUpdatePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        if (!Hash::check($request->current_password, Auth::user()->password)) {
+            return back()->withErrors(['current_password' => 'Current password does not match']);
+        }
+
+        $user = User::findOrFail(Auth::id());
+
+        if ($request->current_password === $request->new_password) {
+            return back()->withErrors(['new_password' => 'New password must be different from current password']);
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return back()->with('success', 'Password updated successfully!');
     }
 }

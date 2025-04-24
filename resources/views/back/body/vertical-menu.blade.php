@@ -39,7 +39,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
-                            <a href="#admin-profile">
+                            <a href="{{ route('admin.profile') }}">
                                 <span data-key="t-admin-profile">Admin Profile</span>
                             </a>
                         </li>

@@ -36,14 +36,14 @@
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item" id="page-header-user-dropdown" data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" style="width: 40px; height: 40px; padding: 2px;"
+                    <img class="rounded-circle header-profile-user" style="background-color: #ffffff; width: 40px; height: 40px; padding: 2px;"
                         src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('front/extra-images/user-placeholder.png') }}">
                     <span class="d-none d-xl-inline-block ms-1 fw-medium">{{ $user->name }}</span>
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
-                    <a class="dropdown-item" href="#apps-contacts-profile.html"><i
+                    <a class="dropdown-item" href="{{ route('admin.profile') }}"><i
                             class="mdi mdi mdi-face-man font-size-16 align-middle me-1"></i> Profile</a>
                     <div class="dropdown-divider"></div>
                     <form action="{{ route('logout') }}" class="dropdown-item w-100" method="POST">
