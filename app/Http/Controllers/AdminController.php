@@ -54,31 +54,31 @@ class AdminController extends Controller
     public function reviews(Request $request)
     {
         $userSearch = $request->input('user');
-    $restaurantSearch = $request->input('restaurant');
-    $rating = $request->input('rating');
-    $perPage = 10;
+        $restaurantSearch = $request->input('restaurant');
+        $rating = $request->input('rating');
+        $perPage = 10;
 
-    $reviews = Review::with(['user', 'restaurant', 'response'])
-        ->when($userSearch, function ($query) use ($userSearch) {
-            $query->whereHas('user', function ($q) use ($userSearch) {
-                $q->where('name', 'like', "%{$userSearch}%")
-                  ->orWhere('email', 'like', "%{$userSearch}%")
-                  ->orWhere('id', $userSearch);
-            });
-        })
-        ->when($restaurantSearch, function ($query) use ($restaurantSearch) {
-            $query->whereHas('restaurant', function ($q) use ($restaurantSearch) {
-                $q->where('name', 'like', "%{$restaurantSearch}%")
-                ->orWhere('email', 'like', "%{$restaurantSearch}%")
-                ->orWhere('id', $restaurantSearch);
-            });
-        })
-        ->when($rating, function ($query) use ($rating) {
-            $query->where('rating', $rating);
-        })
-        ->orderBy('created_at', 'desc')
-        ->paginate($perPage)
-        ->appends($request->query());
+        $reviews = Review::with(['user', 'restaurant', 'response'])
+            ->when($userSearch, function ($query) use ($userSearch) {
+                $query->whereHas('user', function ($q) use ($userSearch) {
+                    $q->where('name', 'like', "%{$userSearch}%")
+                        ->orWhere('email', 'like', "%{$userSearch}%")
+                        ->orWhere('id', $userSearch);
+                });
+            })
+            ->when($restaurantSearch, function ($query) use ($restaurantSearch) {
+                $query->whereHas('restaurant', function ($q) use ($restaurantSearch) {
+                    $q->where('name', 'like', "%{$restaurantSearch}%")
+                        ->orWhere('email', 'like', "%{$restaurantSearch}%")
+                        ->orWhere('id', $restaurantSearch);
+                });
+            })
+            ->when($rating, function ($query) use ($rating) {
+                $query->where('rating', $rating);
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage)
+            ->appends($request->query());
 
         return view('back.reviews', compact('reviews', 'userSearch', 'restaurantSearch', 'rating'));
     }
