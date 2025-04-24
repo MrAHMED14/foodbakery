@@ -18,15 +18,35 @@ class OrderController extends Controller
         $this->cartService = $cartService;
     }
 
-    public function userOrders()
+    public function userOrders(Request $request)
     {
-        $orders = Order::where('user_id', Auth::user()->id)->paginate(10);
+        $query = Order::where('user_id', Auth::id());
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $orders = $query->latest()->paginate(10);
+
         return view('front.buyer.orders', compact('orders'));
     }
 
-    public function restaurantOrders()
+
+    public function restaurantOrders(Request $request)
     {
-        $orders = Auth::user()->restaurant->orders()->paginate(10);
+        $query = Auth::user()->restaurant->orders();
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        } else {
+            $query->orderByRaw("CASE
+                WHEN status = 'Processing' THEN 1
+                WHEN status = 'Completed' THEN 2
+                WHEN status = 'Cancelled' THEN 3
+                ELSE 4 END");
+        }
+        $orders = $query->paginate(10);
+
         return view('front.restaurant.orders', compact('orders'));
     }
 
@@ -74,14 +94,13 @@ class OrderController extends Controller
                 'user_id' => Auth::user()->id,
                 'restaurant_id' => $restaurant->id,
                 'order_date' => now(),
-                'status' => 'pending',
                 'total' => 0,
                 'address' => $request->address,
                 'city' => $request->city,
                 'state' => $request->state,
                 'order_type' => $request->order_type,
                 'payment_method' => $request->payment_method,
-                'payment_status' => 'FIX IT LATER',
+                'payment_status' => 'Pending',
                 'payment_date' => now(),
             ]);
 
@@ -105,5 +124,38 @@ class OrderController extends Controller
         session()->forget('cart');
 
         return redirect()->route('front.index')->with('success', 'Order placed successfully!');
+    }
+
+    public function receipt(Order $order)
+    {
+        $order->load('user', 'orderLines.dish', 'restaurant');
+
+        $user = Auth::user();
+
+        if (!$user) {
+            abort(404, 'Unauthorized');
+        }
+
+        if ($user->id !== $order->user_id && $user->id !== $order->restaurant->user_id) {
+            abort(404, 'Unauthorized');
+        }
+
+        return view('front.receipt', compact('order'));
+    }
+
+    public function updateStatus(Request $request, Order $order)
+    {
+        $request->validate([
+            'status' => 'required|in:Processing,Cancelled,Completed',
+        ]);
+
+        if ($order->restaurant->user_id !== Auth::user()->id) {
+            return back()->with('error', 'You are not authorized to update this order.');
+        }
+
+        $order->status = $request->status;
+        $order->save();
+
+        return back()->with('success', 'Order status updated successfully.');
     }
 }

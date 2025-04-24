@@ -24,32 +24,23 @@
                                             <h5>ORDERS</h5>
                                             <div class="right-filters row pull-right">
                                                 <div class="col-lg-6 col-md-6 col-xs-6">
-                                                    <div class="input-field">
-                                                        <select class="chosen-select-no-single">
-                                                            <option selected="selected" value="">Select Orders Status
-                                                            </option>
-                                                            <option value="Processing">Processing</option>
-                                                            <option value="Cancelled">Cancelled</option>
-                                                            <option value="Completed">Completed</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-6 col-xs-6">
-                                                    <div class="input-field">
-                                                        <i class="icon-angle-down"></i>
-                                                        <input type="text" data-id="daterange223" id="daterange"
-                                                            value="" placeholder="Select Date Range">
-                                                        <script>
-                                                            $(function() {
-                                                                $('input[data-id="daterange223"]').daterangepicker({
-                                                                    opens: 'left'
-                                                                }, function(start, end, label) {
-                                                                    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end
-                                                                        .format('YYYY-MM-DD'));
-                                                                });
-                                                            });
-                                                        </script>
-                                                    </div>
+                                                    <form method="GET" action="{{ route('restaurant.orders') }}">
+                                                        <div class="input-field">
+                                                            <select class="chosen-select-no-single" name="status"
+                                                                onchange="this.form.submit()">
+                                                                <option value="">All Statuses</option>
+                                                                <option value="Processing"
+                                                                    {{ request('status') == 'Processing' ? 'selected' : '' }}>
+                                                                    Processing</option>
+                                                                <option value="Completed"
+                                                                    {{ request('status') == 'Completed' ? 'selected' : '' }}>
+                                                                    Completed</option>
+                                                                <option value="Cancelled"
+                                                                    {{ request('status') == 'Cancelled' ? 'selected' : '' }}>
+                                                                    Cancelled</option>
+                                                            </select>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -80,15 +71,25 @@
                                                         @foreach ($orders as $order)
                                                             <li class="order-heading-titles">
                                                                 <div><a href="#" data-toggle="modal"
-                                                                        data-target={{ '#order_detail_' . $order->id }}>FB{{ sprintf('%05d', $order->id) }}</a>
+                                                                        data-target={{ '#order_detail_' . $order->id }}>
+                                                                        #{{ $order->id }}</a>
                                                                 </div>
                                                                 <div>{{ $order->user->name }}</div>
                                                                 <div>
                                                                     {{ \Carbon\Carbon::parse($order->order_date)->format('M j, Y h:i A') }}
                                                                 </div>
                                                                 <div>£ {{ $order->total }}</div>
-                                                                <div><span class="order-status"
-                                                                        style="background-color: #1e73be;">Processing</span>
+                                                                <div>
+                                                                    @if ($order->status == 'Processing')
+                                                                        <span class="order-status"
+                                                                            style="background-color: #1e73be;">{{ $order->status }}</span>
+                                                                    @elseif ($order->status == 'Cancelled')
+                                                                        <span class="order-status"
+                                                                            style="background-color: #dd3333;">{{ $order->status }}</span>
+                                                                    @elseif ($order->status == 'Completed')
+                                                                        <span class="order-status"
+                                                                            style="background-color: #047a06;">{{ $order->status }}</span>
+                                                                    @endif
                                                                 </div>
                                                                 <div><a href="#" data-toggle="modal"
                                                                         data-target={{ '#order_detail_' . $order->id }}><i
@@ -107,8 +108,11 @@
                                                                                 aria-label="Close"><span
                                                                                     aria-hidden="true">×</span></button>
                                                                             <h2>Order Detail</h2>
-                                                                            <button class="btn-print"><i
-                                                                                    class="icon-printer"></i><span>Receipt</span></button>
+                                                                            <a href="{{ route('orders.receipt', $order->id) }}"
+                                                                                target="_blank" class="btn-print">
+                                                                                <i class="icon-printer"></i>
+                                                                                <span>Receipt</span>
+                                                                            </a>
                                                                         </div>
                                                                         <div class="modal-body">
                                                                             <div class="order-detail-inner">
@@ -125,7 +129,7 @@
                                                                                                         class="order-number">
                                                                                                         <strong>Order
                                                                                                             ID:</strong>
-                                                                                                        <span>{{ sprintf('%05d', $order->id) }}</span>
+                                                                                                        <span>#{{ $order->id }}</span>
                                                                                                     </li>
                                                                                                     <li>
                                                                                                         <strong>Name
@@ -133,9 +137,9 @@
                                                                                                         <span>{{ $order->user->name }}</span>
                                                                                                     </li>
                                                                                                     <li>
-                                                                                                        <strong>Phone Number
+                                                                                                        <strong>Phone
                                                                                                             :</strong>
-                                                                                                        <span>{{ $order->user->phone }}</span>
+                                                                                                        <span>{{ $order->user->phone ?? 'NULL' }}</span>
                                                                                                     </li>
                                                                                                     <li>
                                                                                                         <strong>Email
@@ -159,7 +163,7 @@
                                                                                                     </li>
                                                                                                     <li
                                                                                                         class="created-date">
-                                                                                                        <strong>Delivery
+                                                                                                        <strong>Order
                                                                                                             Date:</strong>
                                                                                                         <span>
                                                                                                             {{ \Carbon\Carbon::parse($order->order_date)->format('M j, Y h:i A') }}
@@ -169,11 +173,6 @@
                                                                                                         <strong>Type:</strong>
                                                                                                         <span>{{ $order->order_type }}</span>
                                                                                                     </li>
-                                                                                                    <li class="order-type">
-                                                                                                        <strong>Payment
-                                                                                                            Status:</strong>
-                                                                                                        <span>{{ $order->payment_status }}</span>
-                                                                                                    </li>
                                                                                                 </ul>
                                                                                             </div>
                                                                                         </div>
@@ -182,36 +181,47 @@
                                                                                             class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                                             <div
                                                                                                 class="order-status-holder">
-                                                                                                <div class="row">
-                                                                                                    <div
-                                                                                                        class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                                                                                                        <h3>Order
-                                                                                                            Status
-                                                                                                        </h3>
-                                                                                                    </div>
-                                                                                                    <div
-                                                                                                        class="col-lg-9 col-md-8 col-sm-8 col-xs-12">
+                                                                                                <form
+                                                                                                    action="{{ route('restaurant.orders.updateStatus', $order->id) }}"
+                                                                                                    method="POST">
+                                                                                                    @csrf
+                                                                                                    @method('PUT')
+
+                                                                                                    <div class="row">
                                                                                                         <div
-                                                                                                            class="input-field">
-                                                                                                            <select
-                                                                                                                class="chosen-select-no-single">
-                                                                                                                <option
-                                                                                                                    value="Processing">
-                                                                                                                    Processing
-                                                                                                                </option>
-                                                                                                                <option
-                                                                                                                    value="Cancelled">
-                                                                                                                    Cancelled
-                                                                                                                </option>
-                                                                                                                <option
-                                                                                                                    selected="selected"
-                                                                                                                    value="Completed">
-                                                                                                                    Completed
-                                                                                                                </option>
-                                                                                                            </select>
+                                                                                                            class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                                                                                            <h3>Order Status
+                                                                                                            </h3>
+                                                                                                        </div>
+                                                                                                        <div
+                                                                                                            class="col-lg-9 col-md-8 col-sm-8 col-xs-12">
+                                                                                                            <div
+                                                                                                                class="input-field">
+                                                                                                                <select
+                                                                                                                    name="status"
+                                                                                                                    class="chosen-select-no-single"
+                                                                                                                    onchange="this.form.submit()">
+                                                                                                                    <option
+                                                                                                                        value="Processing"
+                                                                                                                        {{ $order->status == 'Processing' ? 'selected' : '' }}>
+                                                                                                                        Processing
+                                                                                                                    </option>
+                                                                                                                    <option
+                                                                                                                        value="Cancelled"
+                                                                                                                        {{ $order->status == 'Cancelled' ? 'selected' : '' }}>
+                                                                                                                        Cancelled
+                                                                                                                    </option>
+                                                                                                                    <option
+                                                                                                                        value="Completed"
+                                                                                                                        {{ $order->status == 'Completed' ? 'selected' : '' }}>
+                                                                                                                        Completed
+                                                                                                                    </option>
+                                                                                                                </select>
+                                                                                                            </div>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                </div>
+                                                                                                </form>
+
                                                                                             </div>
                                                                                         </div>
 
@@ -228,7 +238,6 @@
                                                                                                             Products
                                                                                                         </div>
                                                                                                         <div>Price
-                                                                                                            per
                                                                                                         </div>
                                                                                                     </li>
 
@@ -241,8 +250,11 @@
                                                                                                                 <h5>{{ $orderLine->dish->description }}
                                                                                                                 </h5>
                                                                                                             </div>
-                                                                                                            <div><span
-                                                                                                                    class="category-price">£{{ $orderLine->dish->price }}</span>
+                                                                                                            <div>
+                                                                                                                <span
+                                                                                                                    class="category-price"
+                                                                                                                    style="display: inline-block;">£{{ $orderLine->dish->price }}
+                                                                                                                    x{{ $orderLine->quantity }}</span>
                                                                                                             </div>
                                                                                                         </li>
                                                                                                     @endforeach

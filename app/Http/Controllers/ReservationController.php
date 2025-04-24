@@ -45,25 +45,61 @@ class ReservationController extends Controller
         }
     }
 
-    public function showUserReservations()
+    public function updateStatus(Request $request, Reservation $reservation)
+    {
+        $request->validate([
+            'status' => 'required|in:Processing,Cancelled,Completed',
+        ]);
+
+        if ($reservation->restaurant->user_id !== Auth::user()->id) {
+            return back()->with('error', 'You are not authorized to update this reservation.');
+        }
+
+        $reservation->status = $request->status;
+        $reservation->save();
+
+        return back()->with('success', 'Booking status updated successfully.');
+    }
+
+    public function showUserReservations(Request $request)
     {
         $user = Auth::id();
-        $reservations = Reservation::where('user_id', $user)
-            ->orderByRaw('reservation_date >= ? desc', [now()])
-            ->orderBy('reservation_date', 'asc')
-            ->paginate(10);
+        $query = Reservation::where('user_id', $user);
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        } else {
+            $query->orderByRaw("CASE
+                WHEN status = 'Processing' THEN 1
+                WHEN status = 'Completed' THEN 2
+                WHEN status = 'Cancelled' THEN 3
+                ELSE 4 END")
+                ->orderByRaw('reservation_date >= ? desc', [now()])
+                ->orderBy('reservation_date', 'asc');
+        }
+
+        $reservations = $query->paginate(10);
 
         return view('front.buyer.bookings', compact('reservations'));
     }
 
-    public function showRestaurantReservations()
+    public function showRestaurantReservations(Request $request)
     {
-        $restaurant = Auth::user()->restaurant->id;
+        $query = Auth::user()->restaurant->reservations();
 
-        $reservations = Reservation::where('restaurant_id', $restaurant)
-            ->orderByRaw('reservation_date >= ? desc', [now()])
-            ->orderBy('reservation_date', 'asc')
-            ->paginate(10);
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        } else {
+            $query->orderByRaw("CASE
+                WHEN status = 'Processing' THEN 1
+                WHEN status = 'Completed' THEN 2
+                WHEN status = 'Cancelled' THEN 3
+                ELSE 4 END")
+                ->orderByRaw('reservation_date >= ? desc', [now()])
+                ->orderBy('reservation_date', 'asc');
+        }
+
+        $reservations = $query->paginate(10);
 
         return view('front.restaurant.bookings', compact('reservations'));
     }

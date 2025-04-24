@@ -13,17 +13,16 @@ class ReservationService
     {
         $restaurant = Restaurant::findOrFail($restaurantId);
 
-        if ($restaurant->is_verified == 0) {
+        if (!$restaurant->is_verified) {
             throw new Exception('Restaurant is not verified.');
         }
 
-        if($restaurant->accepts_reservations == 0){
-            throw new \Exception('Restaurant is not accepting reservations at the moment.');
+        if (!$restaurant->accepts_reservations) {
+            throw new Exception('Restaurant is not accepting reservations at the moment.');
         }
 
         $reservationDateTime = Carbon::parse($reservationDate);
         $startTime = $reservationDateTime->copy();
-        //TODO: Make session duration dynamic (come from restaurant)
         $endTime = $startTime->copy()->addMinutes($sessionDuration);
 
         $dayName = $reservationDateTime->format('l');
@@ -33,25 +32,26 @@ class ReservationService
             throw new Exception("The restaurant is closed on {$dayName}.");
         }
 
+        $startFormatted = $startTime->format('H:i:s');
+        $endFormatted = $endTime->format('H:i:s');
+
         if (
-            $startTime->format('H:i:s') < $openingHour->opening_time ||
-            $endTime->format('H:i:s') > $openingHour->closing_time
+            $startFormatted < $openingHour->opening_time ||
+            $endFormatted > $openingHour->closing_time
         ) {
             throw new Exception("The restaurant is not open at this time.");
         }
 
-        //TODO: Check if resarvation was cancelled
         $overlappingReservations = Reservation::where('restaurant_id', $restaurant->id)
             ->whereDate('reservation_date', $reservationDateTime->toDateString())
-            ->where(function ($query) use ($startTime, $endTime) {
-                $query->where(function ($q) use ($startTime, $endTime) {
-                    $q->whereBetween('start_time', [$startTime->format('H:i:s'), $endTime->format('H:i:s')])
-                      ->orWhereBetween('end_time', [$startTime->format('H:i:s'), $endTime->format('H:i:s')])
-                      ->orWhere(function ($q2) use ($startTime, $endTime) {
-                          $q2->where('start_time', '<', $startTime->format('H:i:s'))
-                             ->where('end_time', '>', $endTime->format('H:i:s'));
-                      });
-                });
+            ->where('status', '!=', 'Cancelled')
+            ->where(function ($query) use ($startFormatted, $endFormatted) {
+                $query->whereBetween('start_time', [$startFormatted, $endFormatted])
+                    ->orWhereBetween('end_time', [$startFormatted, $endFormatted])
+                    ->orWhere(function ($q) use ($startFormatted, $endFormatted) {
+                        $q->where('start_time', '<', $startFormatted)
+                            ->where('end_time', '>', $endFormatted);
+                    });
             })
             ->sum('nbr_table');
 
@@ -63,13 +63,12 @@ class ReservationService
             'user_id'          => $user->id,
             'restaurant_id'    => $restaurant->id,
             'reservation_date' => $reservationDateTime,
-            'start_time'       => $startTime->format('H:i:s'),
-            'end_time'         => $endTime->format('H:i:s'),
+            'start_time'       => $startFormatted,
+            'end_time'         => $endFormatted,
             'session_duration' => $sessionDuration,
             'first_name'       => $firstName,
             'last_name'        => $lastName,
             'nbr_table'        => $nbrTables,
-            'status'           => 'pending',
         ]);
     }
 }

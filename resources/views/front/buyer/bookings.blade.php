@@ -23,32 +23,23 @@
                                             <h5>My Bookings</h5>
                                             <div class="right-filters row pull-right">
                                                 <div class="col-lg-6 col-md-6 col-xs-6">
-                                                    <div class="input-field">
-                                                        <select class="chosen-select-no-single">
-                                                            <option selected="selected" value="">Select Booking Status
-                                                            </option>
-                                                            <option value="Processing">Processing</option>
-                                                            <option value="Cancelled">Cancelled</option>
-                                                            <option value="Completed">Completed</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-6 col-xs-6">
-                                                    <div class="input-field">
-                                                        <i class="icon-angle-down"></i>
-                                                        <input type="text" data-id="daterange223" id="daterange"
-                                                            value="" placeholder="Select Date Range">
-                                                        <script>
-                                                            $(function() {
-                                                                $('input[data-id="daterange223"]').daterangepicker({
-                                                                    opens: 'left'
-                                                                }, function(start, end, label) {
-                                                                    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end
-                                                                        .format('YYYY-MM-DD'));
-                                                                });
-                                                            });
-                                                        </script>
-                                                    </div>
+                                                    <form method="GET" action="{{ route('buyer.bookings') }}">
+                                                        <div class="input-field">
+                                                            <select class="chosen-select-no-single" name="status"
+                                                                onchange="this.form.submit()">
+                                                                <option value="">All Statuses</option>
+                                                                <option value="Processing"
+                                                                    {{ request('status') == 'Processing' ? 'selected' : '' }}>
+                                                                    Processing</option>
+                                                                <option value="Completed"
+                                                                    {{ request('status') == 'Completed' ? 'selected' : '' }}>
+                                                                    Completed</option>
+                                                                <option value="Cancelled"
+                                                                    {{ request('status') == 'Cancelled' ? 'selected' : '' }}>
+                                                                    Cancelled</option>
+                                                            </select>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -78,7 +69,7 @@
                                                             <div class="orders-title">
                                                                 <h6 class="order-title">
                                                                     <span>
-                                                                        (#{{ sprintf('%05d', $reservation->id) }})
+                                                                        (#{{ $reservation->id }})
                                                                     </span>
 
                                                                     <a href="#" data-toggle="modal"
@@ -89,8 +80,16 @@
                                                                 <span>{{ $reservation->reservation_date->format('M j, Y \a\t h:i A') }}</span>
                                                             </div>
                                                             <div class="orders-status">
-                                                                <span class="booking-status"
-                                                                    style="background-color: #1e73be;">Processing</span>
+                                                                @if ($reservation->status == 'Processing')
+                                                                    <span class="order-status"
+                                                                        style="background-color: #1e73be;">{{ $reservation->status }}</span>
+                                                                @elseif ($reservation->status == 'Cancelled')
+                                                                    <span class="order-status"
+                                                                        style="background-color: #dd3333;">{{ $reservation->status }}</span>
+                                                                @elseif ($reservation->status == 'Completed')
+                                                                    <span class="order-status"
+                                                                        style="background-color: #047a06;">{{ $reservation->status }}</span>
+                                                                @endif
                                                             </div>
                                                             <div class="orders-price">
                                                                 <a href="#" data-toggle="modal"
@@ -118,7 +117,7 @@
                                                                             <ul class="order-detail-options">
                                                                                 <li>
                                                                                     <strong>Booking ID :</strong>
-                                                                                    <span>{{ sprintf('%05d', $reservation->id) }}</span>
+                                                                                    <span>#{{ $reservation->id }}</span>
                                                                                 </li>
                                                                                 <li>
                                                                                     <strong>Booking Date :</strong>
@@ -129,33 +128,41 @@
                                                                             <ul class="order-detail-options">
                                                                                 <li>
                                                                                     <strong>First Name:</strong>
-                                                                                    <span>Mark</span>
+                                                                                    <span>{{ $reservation->first_name }}</span>
                                                                                 </li>
                                                                                 <li>
                                                                                     <strong>Last Name:</strong>
-                                                                                    <span>Jose</span>
+                                                                                    <span>{{ $reservation->last_name }}</span>
                                                                                 </li>
                                                                                 <li>
                                                                                     <strong>Email:</strong>
-                                                                                    <span>markjose@gmail.com</span>
+                                                                                    <span>{{ $reservation->user->email }}</span>
                                                                                 </li>
                                                                                 <li>
                                                                                     <strong>Number of Tables:</strong>
                                                                                     <span>{{ $reservation->nbr_table }}
-                                                                                        tables</span>
-                                                                                </li>
-                                                                                <li class="order-detail-message">
-                                                                                    <strong>Instructions:</strong>
-                                                                                    <span>I need to book a special table for
-                                                                                        my friends. Make it some
-                                                                                        special.!</span>
+                                                                                        table{{ $reservation->nbr_table > 1 ? 's' : '' }}</span>
                                                                                 </li>
                                                                             </ul>
                                                                             <div class="booking-status-holder">
                                                                                 <div
                                                                                     class="booking-status-process booking-status">
-                                                                                    <p style="background:#1e73be;">Your
-                                                                                        booking is Processing.</p>
+                                                                                    @if ($reservation->status == 'Processing')
+                                                                                        <p style="background:#1e73be;">Your
+                                                                                            booking is <span
+                                                                                                style="text-transform: lowercase;">{{ $reservation->status }}</span>
+                                                                                        </p>
+                                                                                    @elseif($reservation->status == 'Cancelled')
+                                                                                        <p style="background:#dd3333;">Your
+                                                                                            booking is <span
+                                                                                                style="text-transform: lowercase;">{{ $reservation->status }}</span>
+                                                                                        </p>
+                                                                                    @elseif($reservation->status == 'Completed')
+                                                                                        <p style="background:#047a06;">Your
+                                                                                            booking is <span
+                                                                                                style="text-transform: lowercase;">{{ $reservation->status }}</span>
+                                                                                        </p>
+                                                                                    @endif
                                                                                 </div>
                                                                             </div>
                                                                         </div>

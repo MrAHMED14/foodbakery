@@ -347,45 +347,10 @@
                                             <div class="review-listing">
                                                 <div class="elements-title">
                                                     <h5>Customer Reviews For {{ $restaurant->name }}</h5>
-                                                    <div class="sort-by">
-                                                        <span class="ajax-loader-sorty-by" style="display: none;">
-                                                            <img src="{{ asset('front/images/ajax-loader.gif') }}"
-                                                                alt=""></span>
-                                                        <ul class="reviews-sortby">
-                                                            <li>
-                                                                <span class="active-sort">Newest Reviews</span>
-                                                                <div class="reviews-sort-dropdown">
-                                                                    <form>
-                                                                        <div class="input-reviews">
-                                                                            <div class="radio-field">
-                                                                                <input name="review" id="check-1"
-                                                                                    type="radio" value="newest"
-                                                                                    checked="checked">
-                                                                                <label for="check-1">Newest
-                                                                                    Reviews</label>
-                                                                            </div>
-                                                                            <div class="radio-field">
-                                                                                <input name="review" id="check-2"
-                                                                                    type="radio" value="highest">
-                                                                                <label for="check-2">Highest
-                                                                                    Rating</label>
-                                                                            </div>
-                                                                            <div class="radio-field">
-                                                                                <input name="review" id="check-3"
-                                                                                    type="radio" value="lowest">
-                                                                                <label for="check-3">Lowest
-                                                                                    Rating</label>
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
                                                 </div>
 
                                                 {{-- Reviews --}}
-                                                <ul class="review-restaurant">
+                                                <ul class="review-restaurant" id="review-list">
                                                     @if ($restaurant->reviews->isEmpty())
                                                         <li class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div class="reviews-alert">
@@ -404,7 +369,7 @@
                                                     @endif
 
                                                     @foreach ($restaurant->reviews as $review)
-                                                        <li class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                                        <li class="review-item col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                                             <div class="list-holder ">
                                                                 <div class="review-text">
                                                                     <div class="review-title">
@@ -432,8 +397,7 @@
                                                         </li>
 
                                                         @if ($review->response)
-                                                            <li
-                                                                class="col-lg-12 col-md-12 col-sm-12 col-xs-12 review_reply">
+                                                            <li class="reply-item col-lg-12 col-md-12 col-sm-12 col-xs-12 review_reply">
                                                                 <div class="list-holder ">
                                                                     <div class="review-text">
                                                                         <div class="review-title">
@@ -472,6 +436,8 @@
                                                         @endif
                                                     @endforeach
                                                 </ul>
+
+                                                <div id="pagination-controls" style="text-align: center; margin-top: 15px;"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -828,4 +794,72 @@
             }
         });
     </script>
+
+    <script>
+        $(document).ready(function () {
+            const pageSize = 5;
+            const reviewElements = [];
+
+            function refreshReviewGroups() {
+                reviewElements.length = 0;
+                let $allItems = $("#review-list > li");
+
+                for (let i = 0; i < $allItems.length; i++) {
+                    let $item = $($allItems[i]);
+
+                    if ($item.hasClass('review-item')) {
+                        let group = [$item];
+                        let $next = $item.next();
+
+                        if ($next.length && $next.hasClass('reply-item')) {
+                            group.push($next);
+                        }
+
+                        reviewElements.push(group);
+                    }
+                }
+            }
+
+            let currentPage = 1;
+
+            function renderReviews() {
+                $("#review-list").empty();
+
+                let start = (currentPage - 1) * pageSize;
+                let paginated = reviewElements.slice(start, start + pageSize);
+
+                paginated.forEach(group => {
+                    group.forEach($el => $("#review-list").append($el));
+                });
+
+                renderPagination(reviewElements.length);
+            }
+
+            function renderPagination(total) {
+                const totalPages = Math.ceil(total / pageSize);
+                let html = '<ul class="pagination">';
+
+                for (let i = 1; i <= totalPages; i++) {
+                    let activeClass = i === currentPage ? 'active' : '';
+                    html += `
+                        <li class="page-item ${activeClass}">
+                            <a href="javascript:void(0);" class="page-link page-btn" data-page="${i}">${i}</a>
+                        </li>`;
+                }
+
+                html += '</ul>';
+                $("#pagination-controls").html(html);
+            }
+
+            refreshReviewGroups();
+            renderReviews();
+
+            $("#pagination-controls").on("click", ".page-btn", function () {
+                currentPage = parseInt($(this).data("page"));
+                renderReviews();
+            });
+        });
+    </script>
+
+
 @endsection

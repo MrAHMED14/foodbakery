@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('restaurant_id')->constrained()->onDelete('cascade');
             $table->date('order_date');
-            $table->string('status');
+            $table->enum('status', ['Processing', 'Cancelled', 'Completed'])->default('Processing');
             $table->decimal('total', 8, 2);
             $table->string('address');
             $table->string('city');
