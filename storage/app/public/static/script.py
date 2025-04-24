@@ -38,6 +38,6 @@ def rename_jpg_images(folder_name):
     print(f"Renaming completed. Total images renamed: {len(temp_names)}")
 
 # Example usage
-rename_jpg_images("restaurant-9/gallery")
+rename_jpg_images("restaurant-18/gallery")
 
 
