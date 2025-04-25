@@ -72,6 +72,7 @@ class DeploymentSeeder extends Seeder
                         PhotoGallery::create([
                             'restaurant_id' => $restaurant->id,
                             'image_url'     => "{$entry['gallery_path']}/gallery-image-$i.jpg",
+                            'is_thumbnail' => !empty($entry['thambnail']) && ($i == $entry['thambnail']) ? true : false,
                         ]);
                     }
                 }

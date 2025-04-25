@@ -9,6 +9,7 @@ return new class extends Migration {
         Schema::create('photo_galleries', function (Blueprint $table) {
             $table->id();
             $table->foreignId('restaurant_id')->constrained('restaurants')->onDelete('cascade');
+            $table->boolean('is_thumbnail')->default(false);
             $table->string('image_url');
             $table->text('description')->nullable();
             $table->timestamps();

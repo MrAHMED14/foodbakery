@@ -212,7 +212,7 @@ class RestaurantController extends Controller
 
         if (isset($request->cuisine_types)) {
             $restaurant->cuisines()->sync($request->cuisine_types);
-        }else{
+        } else {
             $restaurant->cuisines()->sync([]);
         }
 
@@ -478,15 +478,29 @@ class RestaurantController extends Controller
     public function uploadPhotos(Request $request)
     {
         $request->validate([
-            'photos.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'photos' => 'required|array',
+            'photos.*' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'is_thumbnail' => 'nullable|boolean',
         ]);
 
         $restaurant = Auth::user()->restaurant;
+        $photos = $request->file('photos');
+        $setAsThumbnail = $request->input('is_thumbnail', false);
 
-        foreach ($request->file('photos') as $photo) {
+        if ($setAsThumbnail && count($photos) < 1) {
+            return back()->withErrors(['photos' => 'You must upload at least one photo to set as thumbnail.']);
+        }
+
+        if ($setAsThumbnail) {
+            $restaurant->photoGallery()->update(['is_thumbnail' => false]);
+        }
+
+        foreach ($photos as $index => $photo) {
             $path = $photo->store('restaurants/gallery', 'public');
+
             $restaurant->photoGallery()->create([
-                'image_url' => $path
+                'image_url' => $path,
+                'is_thumbnail' => $setAsThumbnail && $index === 0, // Set only for the first image
             ]);
         }
 

@@ -13,6 +13,7 @@ class PhotoGallery extends Model
         'restaurant_id',
         'image_url',
         'description',
+        'is_thumbnail'
     ];
 
     public function restaurant()
