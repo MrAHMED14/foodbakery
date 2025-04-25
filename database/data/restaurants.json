@@ -163,6 +163,7 @@
             "address": "L'AVENIR LA ROUTE DE TÉLÉCOM, Tiaret, Algeria",
             "city": "Tiaret",
             "state": "Tiaret",
+            "is_popular": true,
             "phone": "0792 92 61 55",
             "latitude": "35.360678106627255",
             "longitude": "1.3228151147837375",
@@ -247,7 +248,8 @@
             }
         ],
         "gallery_images": 15,
-        "gallery_path": "static/restaurant-3/gallery"
+        "gallery_path": "static/restaurant-3/gallery",
+        "thambnail": 9
     },
     {
         "user": {
@@ -259,7 +261,8 @@
             "address": "Route de Frenda, Tiaret",
             "city": "Tiaret",
             "state": "Tiaret",
-            "phone": "0779890450",
+            "is_featured": true,
+            "phone": "0779 89 04 50",
             "latitude": "35.362726809232015",
             "longitude": "1.3228373269845934",
             "cover_photo": "static/restaurant-4/covers/cover-1.jpg",
@@ -341,7 +344,7 @@
                 ]
             }
         ],
-        "gallery_images": 12,
+        "gallery_images": 13,
         "gallery_path": "static/restaurant-4/gallery"
     },
     {
@@ -356,6 +359,7 @@
             "state": "Tiaret",
             "phone": "0792 57 25 16",
             "latitude": "35.376000",
+            "is_featured": true,
             "longitude": "1.323900",
             "cover_photo": "static/restaurant-5/covers/cover-1.jpg",
             "restaurant_logo": "static/restaurant-5/logos/logo-1.jpg",
@@ -456,6 +460,7 @@
             "address": "9859+MC5 Four Ten Pizzeria-Resto, Tiaret",
             "city": "Tiaret",
             "state": "Tiaret",
+            "is_popular": true,
             "phone": "0561 62 52 58",
             "latitude": "35.36005177715264",
             "longitude": "1.318551469579131",
@@ -568,7 +573,8 @@
             }
         ],
         "gallery_images": 19,
-        "gallery_path": "static/restaurant-6/gallery"
+        "gallery_path": "static/restaurant-6/gallery",
+        "thambnail": 8
     },
     {
         "user": {
@@ -580,6 +586,7 @@
             "address": "Rue Khouidmi Abdelkader N°15, Tiaret, Algeria",
             "city": "Tiaret",
             "state": "Tiaret",
+            "is_featured": true,
             "phone": "0772 33 44 55",
             "latitude": "35.36760122411396",
             "longitude": "1.3146294101364568",
@@ -687,6 +694,7 @@
             "address": "l'avenir, Tiaret, Algeria, 14000",
             "city": "Tiaret",
             "state": "Tiaret",
+            "is_featured": true,
             "phone": "0556 60 14 58",
             "latitude": "35.361266258438064",
             "longitude": "1.322556144179505",
@@ -775,7 +783,8 @@
             "address": "8, rue Boughlamallah Ahmed, Tiaret",
             "city": "Tiaret",
             "state": "Tiaret",
-            "phone": "0542476700",
+            "is_popular": true,
+            "phone": "0542 47 67 00",
             "latitude": "35.37334182072147",
             "longitude": "1.3228463318951766",
             "cover_photo": "static/restaurant-10/covers/cover-1.jpg",
@@ -858,8 +867,9 @@
                 ]
             }
         ],
-        "gallery_images": 11,
-        "gallery_path": "static/restaurant-10/gallery"
+        "gallery_images": 12,
+        "gallery_path": "static/restaurant-10/gallery",
+        "thambnail": 8
     },
     {
         "user": {
@@ -871,6 +881,7 @@
             "address": "Tiaret, Rue Maarouf Ahmed",
             "city": "Tiaret",
             "state": "Tiaret",
+            "is_popular": true,
             "phone": "0659 20 45 76",
             "latitude": "35.36455455548101",
             "longitude": "1.3202505741895105",
@@ -938,7 +949,8 @@
             }
         ],
         "gallery_images": 6,
-        "gallery_path": "static/restaurant-11/gallery"
+        "gallery_path": "static/restaurant-11/gallery",
+        "thambnail": 2
     },
     {
         "user": {
@@ -950,11 +962,12 @@
             "address": "Route de Sougueur, Tiaret 14000, Algeria",
             "city": "Tiaret",
             "state": "Tiaret",
+            "is_popular": true,
             "phone": "0770 33 55 77",
             "latitude": "35.380100",
             "longitude": "1.329800",
             "cover_photo": "static/restaurant-12/covers/cover-1.jpg",
-            "restaurant_logo": "static/restaurant-12/logos/logo-1.jpg",
+            "restaurant_logo": "static/restaurant-12/logos/logo-1.png",
             "is_verified": true,
             "capacity": 4
         },
@@ -981,8 +994,9 @@
                 ]
             }
         ],
-        "gallery_images": 5,
-        "gallery_path": "static/restaurant-12/gallery"
+        "gallery_images": 8,
+        "gallery_path": "static/restaurant-12/gallery",
+        "thambnail": 8
     },
     {
         "user": {
@@ -1140,6 +1154,7 @@
             "address": "Tiaret, Algeria, 14000",
             "city": "Tiaret",
             "state": "Tiaret",
+            "is_featured": true,
             "phone": "0771 09 64 99",
             "latitude": "35.376000",
             "longitude": "1.323900",
@@ -1219,7 +1234,8 @@
             "address": "Citée Mohamed Djahlen, Ilot D127 Bis, Tiaret 14000",
             "city": "Tiaret",
             "state": "Tiaret",
-            "phone": "0782724754",
+            "is_featured": true,
+            "phone": "0782 72 47 54",
             "latitude": "35.35727654193281",
             "longitude": "1.3171938507833234",
             "cover_photo": "static/restaurant-17/covers/cover-1.jpg",
@@ -1297,7 +1313,8 @@
             "address": "Cité Rousseau, en face de la pharmacie Talbi",
             "city": "Tiaret",
             "state": "Tiaret",
-            "phone": "0795121610",
+            "is_popular": true,
+            "phone": "0795 12 16 10",
             "latitude": "35.377240",
             "longitude": "1.315920",
             "cover_photo": "static/restaurant-18/covers/cover-1.jpg",
@@ -1370,6 +1387,7 @@
             }
         ],
         "gallery_images": 33,
-        "gallery_path": "static/restaurant-18/gallery"
+        "gallery_path": "static/restaurant-18/gallery",
+        "thambnail": 2
     }
 ]
