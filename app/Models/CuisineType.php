@@ -4,14 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class CuisineType extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $fillable = [
         'name',
         'description',
+        'is_popular',
+    ];
+
+    protected $casts = [
+        'is_popular' => 'boolean',
     ];
 
     /**
@@ -20,7 +26,15 @@ class CuisineType extends Model
     public function restaurants()
     {
         return $this->belongsToMany(Restaurant::class, 'restaurant_cuisine')
-                    ->withPivot('is_specialty')
                     ->withTimestamps();
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'id'          => $this->id,
+            'name'        => $this->name,
+            'description' => $this->description,
+        ];
     }
 }

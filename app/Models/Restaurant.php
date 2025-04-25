@@ -90,7 +90,6 @@ class Restaurant extends Model
     public function cuisines()
     {
         return $this->belongsToMany(CuisineType::class, 'restaurant_cuisine')
-                    ->withPivot('is_specialty')
                     ->withTimestamps();
     }
 

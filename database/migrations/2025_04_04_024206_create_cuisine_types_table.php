@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->boolean('is_popular')->default(false);
             $table->timestamps();
         });
 
@@ -22,7 +23,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('restaurant_id');
             $table->unsignedBigInteger('cuisine_type_id');
-            $table->boolean('is_specialty')->default(false);
             $table->timestamps();
 
             // Foreign key constraints
