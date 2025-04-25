@@ -130,6 +130,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/profile', [AdminController::class, 'adminProfile'])->name('profile');
             Route::put('/profile', [AdminController::class, 'adminProfileUpdate'])->name('profile.update');
             Route::put('/profile/password', [AdminController::class, 'adminProfileUpdatePassword'])->name('profile.password.update');
+
+            Route::get('/cuisines-types', [AdminController::class, 'cuisinesTypes'])->name('cuisines');
+            Route::post('/cuisines-types', [AdminController::class, 'createCuisineType'])->name('cuisines.create');
+            Route::put('/cuisines-types/{cuisineType}/update', [AdminController::class, 'updateCuisineType'])->name('cuisines.update');
+            Route::delete('/cuisines-types/{cuisineType}', [AdminController::class, 'destroyCuisineType'])->name('cuisines.destroy');
         });
     });
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CuisineType;
 use App\Models\Restaurant;
 use App\Models\Review;
 use App\Models\ReviewResponse;
@@ -145,5 +146,63 @@ class AdminController extends Controller
         $user->save();
 
         return back()->with('success', 'Password updated successfully!');
+    }
+
+    public function cuisinesTypes(Request $request)
+    {
+        $query = $request->input('search');
+        $perPage = 10;
+
+        $cusineTypes = CuisineType::search($query)
+            ->orderBy('id', 'asc')
+            ->paginate($perPage);
+
+        return view('back.cuisine-types', compact('cusineTypes', 'query'));
+    }
+
+    public function updateCuisineType(Request $request, CuisineType $cuisineType)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'is_popular' => 'required|boolean',
+        ]);
+
+        if ($cuisineType->name !== $request->name) {
+            $request->validate([
+                'name' => 'unique:cuisine_types,name',
+            ]);
+        }
+
+        $cuisineType->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'is_popular' => $request->is_popular,
+        ]);
+
+        return back()->with('success', 'Cuisine type updated successfully!');
+    }
+
+    public function createCuisineType(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255|unique:cuisine_types,name',
+            'description' => 'nullable|string',
+            'is_popular' => 'required|boolean',
+        ]);
+
+        CuisineType::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'is_popular' => $request->is_popular,
+        ]);
+
+        return back()->with('success', 'Cuisine type created successfully!');
+    }
+
+    public function destroyCuisineType(CuisineType $cuisineType)
+    {
+        $cuisineType->delete();
+        return back()->with('success', 'Cuisine type deleted successfully!');
     }
 }

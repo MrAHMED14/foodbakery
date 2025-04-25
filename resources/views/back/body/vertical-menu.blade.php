@@ -45,7 +45,7 @@
                         </li>
 
                         <li>
-                            <a href="#cuisine-types">
+                            <a href="{{ route('admin.cuisines') }}">
                                 <span data-key="t-cuisine-types">Cuisine Types</span>
                             </a>
                         </li>
