@@ -7,7 +7,8 @@
 @section('content')
     {{-- 7 Sections --}}
     <div class="main-section">
-        <div class="page-section nopadding cs-nomargin" style="padding-top: 100px; padding-bottom: 100px; margin-bottom: 0px; background: url({{ asset('front/extra-images/cover-image-2.png') }}) no-repeat center / cover;">
+        <div class="page-section nopadding cs-nomargin"
+            style="padding-top: 100px; padding-bottom: 100px; margin-bottom: 0px; background: url({{ asset('front/extra-images/cover-image-2.png') }}) no-repeat center / cover;">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -222,6 +223,7 @@
             </div>
         </div>
 
+        {{-- Popular Restaurants --}}
         <div class="page-section nopadding cs-nomargin"
             style="margin-top: 0px;padding-top: 45px;padding-bottom: 60px;margin-bottom: 0px;background: #ffffff;">
             <div class="container">
@@ -237,55 +239,84 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="row">
                             <div class="listing grid-listing three-cols">
-                                @for ($i = 0; $i < 6; $i++)
-                                    <div class="col-md-4 col-xs-6 grid-listing-col ">
+                                @foreach ($popularRestaurants as $popularRestaurant)
+                                    <div class="col-md-4 col-xs-6 grid-listing-col">
                                         <div class="img-holder">
                                             <figure>
-                                                <a href="#"><img
+                                                <a href="{{ route('front.listing_details', $popularRestaurant->id) }}"><img
                                                         style="border-top-left-radius: 5px; border-top-right-radius: 5px; height: 240px; width: 100%; object-fit: cover;"
-                                                        src="{{ asset('front/extra-images/cover-photo20-359x212.jpg') }}"
+                                                        src="{{ $popularRestaurant->getThumbnail() ? asset('storage/' . $popularRestaurant->getThumbnail()) : asset('front/extra-images/cover-photo20-359x212.jpg') }}"
                                                         alt=""></a>
                                                 <figcaption class="listing-meta">
                                                     <div class="listing-inner clearfix" style="left: 1;">
-                                                        <div class="list-rating" style="text-align: left;">
-                                                            <div class="rating-star">
-                                                                <span class="rating-box" style="width: 100%;"></span>
+                                                        <div class="list-rating">
+                                                            <div
+                                                                style="display: flex; align-items: center; width: 100%; gap: 5px;">
+                                                                @for ($i = 1; $i <= 5; $i++)
+                                                                    @if ($i <= floor($popularRestaurant->averageRating()))
+                                                                        <span class="icon-star-full"
+                                                                            style="color: #ff981a;"></span>
+                                                                    @elseif ($i - $popularRestaurant->averageRating() <= 0.5)
+                                                                        <span class="icon-star-half-empty"
+                                                                            style="color: #ff981a;"></span>
+                                                                    @else
+                                                                        <span class="icon-star-outlined"
+                                                                            style="color: #ff981a;"></span>
+                                                                    @endif
+                                                                @endfor
+                                                                <span
+                                                                    class="reviews">({{ $popularRestaurant->reviewsCount() }})</span>
                                                             </div>
-                                                            <span class="reviews">(321)</span>
                                                         </div>
                                                     </div>
                                                 </figcaption>
                                             </figure>
-                                            <span class="restaurant-status close"><em
-                                                    class="bookmarkRibbon"></em>Close</span>
+                                            @if ($popularRestaurant->isOpenNow())
+                                                <span class="restaurant-status open"><em
+                                                        class="bookmarkRibbon"></em>Open</span>
+                                            @else
+                                                <span class="restaurant-status close"><em
+                                                        class="bookmarkRibbon"></em>Close</span>
+                                            @endif
                                         </div>
                                         <div class="text-holder">
                                             <div class="listing-inner">
-                                                <h4><a href="#">Nature Healthy Food</a></h4>
-                                                <p>Apple Juice, Beef Roast, Cheese Burger</p>
+                                                <h4><a
+                                                        href="{{ route('front.listing_details', $popularRestaurant->id) }}">{{ $popularRestaurant->name }}</a>
+                                                </h4>
+                                                <p>
+                                                    @foreach ($popularRestaurant->cuisines as $cuisine)
+                                                        <span>{{ $cuisine->name }}
+                                                            @if (!$loop->last)
+                                                                ,
+                                                            @endif
+                                                        </span>
+                                                    @endforeach
+                                                </p>
                                                 <div class="min-order">Min Order <span class="price">£15.00</span></div>
                                             </div>
                                             <div class="listing-footer">
                                                 <div class="listing-inner clearfix" style="background-color: #ffffff;">
                                                     <div class="img-holder">
                                                         <a href="#"><img
-                                                                src="{{ asset('front/extra-images/restaurant-placeholder.png') }}"
-                                                                alt=""></a>
+                                                                src="{{ $popularRestaurant->restaurant_logo ? asset('storage/' . $popularRestaurant->restaurant_logo) : asset('front/extra-images/restaurant-placeholder.png') }}"
+                                                                style="aspect-ratio: 1 / 1; object-fit: cover; object-position: center;"></a>
                                                     </div>
                                                     <div class="text-holder">
-                                                        <p>Bristol, Bristol</p>
+                                                        <p>{{ $popularRestaurant->state }}, {{ $popularRestaurant->city }}
+                                                        </p>
                                                         <p class="deliver-time"><span class="icon-motorcycle2"></span>10
                                                             min</p>
                                                         <p class="pickup-time"><span class="icon-clock4"></span>15 min
                                                         </p>
-                                                        <a href="#" class="ordernow-btn bgcolor">Order Now</a>
+                                                        <a href="{{ route('front.listing_details', $popularRestaurant->id) }}"
+                                                            class="ordernow-btn bgcolor">Order Now</a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                @endfor
-
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -340,6 +371,7 @@
             <!-- End Container Start -->
         </div>
 
+        {{-- Featured Restaurants --}}
         <div class="page-section nopadding cs-nomargin"
             style="margin-top: 0px;padding-top: 90px;padding-bottom: 10px;margin-bottom: 0px; background: #ffffff;">
             <div class="container">
@@ -355,37 +387,68 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="listing fancy fancy-simple">
                             <ul class="row">
-                                @for ($i = 0; $i < 6 ; $i++)
+                                @foreach ($featuredRestaurants as $featuredRestaurant)
                                     <li class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="list-post" style="border-radius: 10px; box-shadow: none;">
                                             <div class="img-holder">
                                                 <figure style="height: 120px; width: 120px; border-radius: 5px;">
-                                                    <a href="#"><img
-                                                            src="{{ asset('front/extra-images/restaurant-placeholder.png') }}"
+                                                    <a
+                                                        href="{{ route('front.listing_details', $featuredRestaurant->id) }}"><img
+                                                            src="{{ $featuredRestaurant->restaurant_logo ? asset('storage/' . $featuredRestaurant->restaurant_logo) : asset('front/extra-images/restaurant-placeholder.png') }}"
                                                             alt=""></a>
                                                 </figure>
                                             </div>
-                                            <span class="restaurant-status close"><em class="bookmarkRibbon"></em>Close</span>
+                                            @if ($featuredRestaurant->isOpenNow())
+                                                <span class="restaurant-status open"><em
+                                                        class="bookmarkRibbon"></em>Open</span>
+                                            @else
+                                                <span class="restaurant-status close"><em
+                                                        class="bookmarkRibbon"></em>Close</span>
+                                            @endif
                                             <div class="text-holder" style="padding: 0;">
                                                 <div class="post-title">
-                                                    <h5><a href="#">Nature Healthy Food</a></h5>
+                                                    <h5><a
+                                                            href="{{ route('front.listing_details', $featuredRestaurant->id) }}">{{ $featuredRestaurant->name }}</a>
+                                                    </h5>
                                                 </div>
-                                                <address>Apple Juice, Beef Roast, Cheese Burger</address>
+                                                <address>
+                                                    @foreach ($featuredRestaurant->cuisines as $cuisine)
+                                                        <span>{{ $cuisine->name }}
+                                                            @if (!$loop->last)
+                                                                ,
+                                                            @endif
+                                                        </span>
+                                                    @endforeach
+                                                </address>
                                                 <div class="list-rating">
-                                                    <div class="rating-star">
-                                                        <span class="rating-box" style="width: 100%;"></span>
+                                                    <div
+                                                        style="display: flex; align-items: center; width: 100%; gap: 5px;">
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= floor($featuredRestaurant->averageRating()))
+                                                                <span class="icon-star-full"
+                                                                    style="color: #ff981a;"></span>
+                                                            @elseif ($i - $featuredRestaurant->averageRating() <= 0.5)
+                                                                <span class="icon-star-half-empty"
+                                                                    style="color: #ff981a;"></span>
+                                                            @else
+                                                                <span class="icon-star-outlined"
+                                                                    style="color: #ff981a;"></span>
+                                                            @endif
+                                                        @endfor
+                                                        <span
+                                                            class="reviews">({{ $featuredRestaurant->reviewsCount() }})</span>
                                                     </div>
-                                                    <span class="reviews">(1)</span>
                                                 </div>
                                                 <div class="delivery-potions">
-                                                    <div class="post-time"><i class="icon-check_circle"></i>Min £15.00</div>
+                                                    <div class="post-time"><i class="icon-check_circle"></i>Min £15.00
+                                                    </div>
                                                     <div class="post-time"><i class="icon-motorcycle"></i>10 min</div>
                                                     <div class="post-time"><i class="icon-clock4"></i>15 min</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </li>
-                                @endfor
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -459,9 +522,11 @@
                                         style="height: 50px; width: 100%;" alt=""></a>
                                 <form>
                                     <div class="field-holder">
-                                        <input class="field-input" type="email" placeholder="YOUR EMAIL" style="border-radius: 5px;">
+                                        <input class="field-input" type="email" placeholder="YOUR EMAIL"
+                                            style="border-radius: 5px;">
                                         <label class="field-label-btn">
-                                            <input class="field-btn" type="button" value="Send Link" style="border-bottom-right-radius: 4px; border-top-right-radius: 4px;">
+                                            <input class="field-btn" type="button" value="Send Link"
+                                                style="border-bottom-right-radius: 4px; border-top-right-radius: 4px;">
                                         </label>
                                     </div>
                                 </form>
