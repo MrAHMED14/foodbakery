@@ -24,7 +24,7 @@
         </div>
         {{-- Page content --}}
         <div class="row">
-            <div class="container mt-4">
+            <div class="mt-4">
                 <div class="mb-3">
                     <form method="GET" id="reviewFilterForm" class="d-flex flex-column flex-md-row col align-center gap-2">
                         <div class="w-100">
