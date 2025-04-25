@@ -23,6 +23,8 @@ return new class extends Migration {
             $table->text('services')->nullable();
             $table->text('payment_options')->nullable();
             $table->boolean('is_verified')->default(false);
+            $table->boolean('is_popular')->default(false);
+            $table->boolean('is_featured')->default(false);
             $table->boolean('accepts_reservations')->default(false);
             $table->boolean('accepts_orders')->default(false);
             $table->string('cover_photo')->nullable();

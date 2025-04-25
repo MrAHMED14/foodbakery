@@ -27,6 +27,8 @@ class Restaurant extends Model
         'services',
         'payment_option',
         'is_verified',
+        'is_popular',
+        'is_featured',
         'accepts_orders',
         'accepts_reservations',
         'restaurant_logo',
@@ -43,6 +45,8 @@ class Restaurant extends Model
         'is_verified' => 'boolean',
         'accepts_orders' => 'boolean',
         'accepts_reservations' => 'boolean',
+        'is_popular' => 'boolean',
+        'is_featured' => 'boolean',
         'minimum_order' => 'integer',
         'maximum_order' => 'integer',
     ];
@@ -65,6 +69,13 @@ class Restaurant extends Model
     public function photoGallery()
     {
         return $this->hasMany(PhotoGallery::class);
+    }
+
+    public function getThumbnail()
+    {
+        $thumbnail = $this->photoGallery()->where('is_thumbnail', true)->first();
+
+        return $thumbnail ? $thumbnail->image_url : null;
     }
 
     public function reviews()

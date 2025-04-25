@@ -39,6 +39,8 @@ class DeploymentSeeder extends Seeder
                 $user = User::factory()->create($userData);
 
                 $restaurant = Restaurant::factory()->create(array_merge($entry['restaurant'], [
+                    'is_popular' => $entry['restaurant']['is_popular'] ?? false,
+                    'is_featured' => $entry['restaurant']['is_featured'] ?? false,
                     'user_id' => $user->id,
                 ]));
 
