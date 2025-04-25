@@ -1,4 +1,6 @@
-
+@php
+    $cuisineTypes = \App\Models\CuisineType::where('is_popular', 1)->take(6)->get();
+@endphp
 
 <footer id="footer" class="footer-style-1">
     <div class="footer-widget" style="background-color: #121418 !important;">
@@ -25,12 +27,13 @@
                                     <h5 style="color: #ffffff !important;">Popular Cuisnies</h5>
                                 </div>
                                 <ul>
-                                    <li><a href="#">Apple Juice</a></li>
-                                    <li><a href="#">BB.Q</a></li>
-                                    <li><a href="#">Chicken Roast</a></li>
-                                    <li><a href="#">Hot Dogs</a></li>
-                                    <li><a href="#">Prawns</a></li>
-                                    <li><a href="#">Steam Roast</a></li>
+                                    @foreach ($cuisineTypes as $cuisineType)
+                                        <li>
+                                            <a href="{{ route('front.listings', ['cuisine_types' => [$cuisineType->id]]) }}">
+                                                {{ $cuisineType->name }}
+                                            </a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>

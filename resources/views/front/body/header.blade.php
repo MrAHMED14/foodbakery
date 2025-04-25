@@ -1,4 +1,7 @@
-<!-- Header Start -->
+@php
+    $cuisineTypes = \App\Models\CuisineType::all();
+@endphp
+
 <header id="header">
     <div class="main-header">
         <div class="container">
@@ -34,99 +37,13 @@
                             <li class="location-has-children">
                                 <a href="#"><i class="icon-compass-with-white-needles"></i>Feel Like Eating</a>
                                 <ul>
-
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-05-1.png') }}">Apple
-                                            Juice</a> <span></span> </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-19-1.png') }}">BB.Q</a><span></span>
-                                    </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-22-1.png') }}">Beef
-                                            Roast</a> <span></span> </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-10-1.png') }}">Carrot
-                                            Juice</a> <span></span> </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-03-1.png') }}">Cheese
-                                            Burger</a> <span></span> </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-07-1.png') }}">Chicken
-                                            Roast</a> <span></span> </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-01-1.png') }}">Chines
-                                            Soup</a> <span></span> </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-18-1.png') }}">Cold
-                                            Coffee</a> <span></span> </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-23-1.png') }}">Cold
-                                            Drink</a> <span></span> </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-28-1.png') }}">Cupcake</a><span></span>
-                                    </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-21-1.png') }}">Doughnut</a><span></span>
-                                    </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-25-1.png') }}">Drum
-                                            Stick</a> <span></span> </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-11-1.png') }}">Egg
-                                            Fry</a> <span></span> </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-12-1.png') }}">Fish
-                                            Fry</a> <span></span> </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-13-1.png') }}">Fresh
-                                            Juice</a> <span></span> </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-30-1.png') }}">Hot
-                                            Dogs</a> <span></span> </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-26-1.png') }}">Ice
-                                            Cream</a> <span></span> </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-15-1.png') }}">Magi</a>
-                                        <span></span>
-                                    </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-09-1.png') }}">Noodles</a>
-                                        <span></span>
-                                    </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-14-1.png') }}">Pastry</a><span></span>
-                                    </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-29-1.png') }}">Pizza</a><span></span>
-                                    </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-06-1.png') }}">Potato
-                                            Fries</a> <span></span> </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-24-1.png') }}">Prawns</a>
-                                        <span></span>
-                                    </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-17-1.png') }}">Sham
-                                            pane</a> <span></span> </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-27-1.png') }}">Shawarma</a><span></span>
-                                    </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-04-1.png') }}">Soda
-                                            water</a> <span></span> </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-16-1.png') }}">Stakes</a>
-                                        <span></span>
-                                    </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-22-1.png') }}">Steam
-                                            Roast</a> <span></span> </li>
-                                    <li><a href="{{ route('front.listings') }}"><img alt=""
-                                                src="{{ asset('front/extra-images/food-icon-02-1.png') }}">Tea</a><span></span>
-                                    </li>
-
+                                    @foreach ($cuisineTypes as $cuisineType)
+                                        <li>
+                                            <a href="{{ route('front.listings', ['cuisine_types' => [$cuisineType->id]]) }}">
+                                                {{ $cuisineType->name }}
+                                            </a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </li>
                             <li class="location-has-children choose-location">
