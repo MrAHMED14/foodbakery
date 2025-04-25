@@ -132,7 +132,7 @@
                     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-24">
                         <div class="tabs-holder horizontal">
                             {{-- Navigation --}}
-                            <ul class="stickynav-tabs nav nav-tabs" style="z-index: 99;">
+                            <ul class="sticky nav nav-tabs" style="z-index: 2;">
                                 <li class="active"><a data-toggle="tab" href="#home"><i
                                             class="icon- icon-room_service"></i>Menu</a></li>
                                 <li><a data-toggle="tab" href="#menu1"><i class="icon- icon-textsms"></i>Reviews
