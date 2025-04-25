@@ -38,6 +38,24 @@ class AdminController extends Controller
         return back()->with('success', 'Verification status updated!');
     }
 
+    public function toggleRestaurantPopularity(Request $request, Restaurant $restaurant)
+    {
+        $request->validate([
+            'is_popular' => 'required|boolean',
+            'is_featured' => 'required|boolean',
+        ]);
+
+        if(!$restaurant->is_verified) {
+            return back()->with('error', 'Restaurant must be verified first');
+        }
+
+        $restaurant->is_popular = $request->input('is_popular', false);
+        $restaurant->is_featured = $request->input('is_featured', false);
+        $restaurant->save();
+
+        return back()->with('success', 'Popularity status updated!');
+    }
+
     public function users(Request $request)
     {
         $query = $request->input('search');

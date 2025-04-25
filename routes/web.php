@@ -120,6 +120,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             Route::get('/restaurants', [AdminController::class, 'restaurants'])->name('restaurants');
             Route::patch('/restaurants/{restaurant}/toggle-verification', [AdminController::class, 'toggleRestaurantVerification'])->name('toggleVerification');
+            Route::patch('/restaurants/{restaurant}/toggle-popularity', [AdminController::class, 'toggleRestaurantPopularity'])->name('togglePopularity');
 
             Route::get('/users', [AdminController::class, 'users'])->name('users');
 

@@ -39,6 +39,7 @@
                                 <h5 class="modal-title" id="modalLabel{{ $restaurant->id }}">Restaurant Details</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
+
                             <div class="modal-body">
                                 <div class="w-100" style="position: relative;">
                                     <img src="{{ $restaurant->cover_photo ? asset('storage/' . $restaurant->cover_photo) : asset('front/extra-images/cover-placeholder.png') }}"
@@ -61,10 +62,13 @@
                                         NULL
                                     @endif
                                     @foreach ($restaurant->cuisines as $cuisine)
-                                        <span>{{ $cuisine->name }}@if(!$loop->last), @endif</span>
+                                        <span>{{ $cuisine->name }}@if (!$loop->last)
+                                                ,
+                                            @endif
+                                        </span>
                                     @endforeach
                                 </p>
-                                <p><strong>Created  At:</strong> {{ $restaurant->created_at->format('d M Y, H:i') }}</p>
+                                <p><strong>Created At:</strong> {{ $restaurant->created_at->format('d M Y, H:i') }}</p>
                                 <p><strong>Verified:</strong> {{ $restaurant->is_verified ? 'Yes' : 'No' }}</p>
 
                                 <div class="mt-3 w-100">
@@ -160,11 +164,43 @@
 
                                 <div class="map-sec-holder">
                                     <div class="cs-map-section" style="border-radius: 10px;">
-                                        <div id="restaurantMap{{ $restaurant->id }}" style="width: 100%; height: 400px; border-radius: 10px; z-index: 10;"></div>
+                                        <div id="restaurantMap{{ $restaurant->id }}"
+                                            style="width: 100%; height: 400px; border-radius: 10px; z-index: 10;"></div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <form style="margin-top: 20px;" method="POST" action="{{ route('admin.toggleVerification', $restaurant->id) }}"
+                            <div class="modal-footer justify-content-start align-items-end">
+                                <form id="popularFilterForm" class="d-flex gap-2" action="{{ route('admin.togglePopularity', $restaurant->id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <div style="min-width: 150px;">
+                                        <label for="is_popular">Popular</label>
+                                        <select name="is_popular" id="popularFilter" class="form-select">
+                                            <option value="1" {{ $restaurant->is_popular ? 'selected' : '' }}>Yes
+                                            </option>
+                                            <option value="0" {{ !$restaurant->is_popular ? 'selected' : '' }}>No
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div style="min-width: 150px;">
+                                        <label for="is_featured">Featured</label>
+                                        <select name="is_featured" id="featuredFilter" class="form-select">
+                                            <option value="1" {{ $restaurant->is_featured ? 'selected' : '' }}>
+                                                Yes
+                                            </option>
+                                            <option value="0" {{ !$restaurant->is_featured ? 'selected' : '' }}>
+                                                No
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <button type="submit" class="btn bg-info text-white">Submit</button>
+                                </form>
+
+                                <form method="POST"
+                                    action="{{ route('admin.toggleVerification', $restaurant->id) }}"
                                     onsubmit="return confirm('Are you sure you want to {{ $restaurant->is_verified ? 'unverify' : 'verify' }} this restaurant?');">
                                     @csrf
                                     @method('PATCH')
@@ -205,7 +241,9 @@
                     mapModal{{ $restaurant->id }}.addEventListener('shown.bs.modal', function() {
                         setTimeout(() => {
                             restaurantMap{{ $restaurant->id }}.invalidateSize();
-                            restaurantMap{{ $restaurant->id }}.setView([lat{{ $restaurant->id }}, lng{{ $restaurant->id }}]);
+                            restaurantMap{{ $restaurant->id }}.setView([lat{{ $restaurant->id }},
+                                lng{{ $restaurant->id }}
+                            ]);
                         }, 300);
                     });
                 </script>
