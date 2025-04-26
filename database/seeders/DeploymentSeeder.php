@@ -28,7 +28,7 @@ class DeploymentSeeder extends Seeder
             foreach ($restaurants as $entry) {
                 $userData = [
                     'name'     => $entry['user']['name'],
-                    'password' => Hash::make($entry['user']['password']),
+                    'password' => Hash::make($entry['user']['password'] ?? 'user'),
                     'role'     => User::ROLE_RESTAURANT,
                 ];
 
