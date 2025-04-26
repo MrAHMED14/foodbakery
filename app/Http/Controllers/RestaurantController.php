@@ -65,6 +65,10 @@ class RestaurantController extends Controller
     */
     public function show(Restaurant $restaurant)
     {
+        if(!$restaurant->is_verified) {
+            abort(404);
+        }
+
         $cart = $this->cartService->getCart();
         $totalPrice = $this->cartService->getTotalPrice();
         return view('front.details', compact('restaurant', 'cart', 'totalPrice'));
@@ -131,15 +135,15 @@ class RestaurantController extends Controller
                 'latitude' => $validatedData['restaurant_latitude'],
                 'longitude' => $validatedData['restaurant_longitude'],
                 'description' => $validatedData['restaurant_description'],
-                'capacity' => $validatedData['restaurant_capacity'],
+                'capacity' => $validatedData['restaurant_capacity'] ?? 0,
                 'payment_options' => $validatedData['restaurant_payment_options'],
                 'accepts_orders' => $validatedData['restaurant_accepts_orders'] ?? false,
                 'accepts_reservations' => $validatedData['restaurant_accepts_reservations'] ?? false,
                 'restaurant_logo' => $logoPath,
                 'cover_photo' => $coverPhotoPath,
-                'minimum_order' => $validatedData['restaurant_minimum_order'],
-                'maximum_order' => $validatedData['restaurant_maximum_order'],
-                'delivery_fee' => $validatedData['restaurant_delivery_fee'],
+                'minimum_order' => $validatedData['restaurant_minimum_order'] ?? 0,
+                'maximum_order' => $validatedData['restaurant_maximum_order'] ?? 0,
+                'delivery_fee' => $validatedData['restaurant_delivery_fee'] ?? 0,
                 'user_id' => $user->id,
 
                 //TODO: REMOVE THIS
@@ -156,7 +160,7 @@ class RestaurantController extends Controller
             return redirect()->route('login');
         } catch (\Exception $e) {
             DB::rollBack();
-            session()->flash('error', 'Failed to register restaurant. Please try again. -' /*. $e->getMessage()*/);
+        session()->flash('error', 'Failed to register restaurant. Please try again.' /*. $e->getMessage()*/);
             return back();
         }
     }
