@@ -52,11 +52,14 @@
                                 </div>
                                 <h3 style="margin-top: 2rem;">{{ $restaurant->name }}</h3>
                                 <p><strong>Description:</strong> {{ $restaurant->description }}</p>
+                                <p><strong>Manager Name:</strong> {{ $restaurant->user->name }}</p>
+                                <p><strong>Manager Email:</strong> {{ $restaurant->user->email }}</p>
+                                <p><strong>Manager Phone:</strong> {{ $restaurant->user->phone ?? 'NULL' }}</p>
                                 <p><strong>State:</strong> {{ $restaurant->state }}</p>
                                 <p><strong>City:</strong> {{ $restaurant->city }}</p>
                                 <p><strong>Address:</strong> {{ $restaurant->address }}</p>
-                                <p><strong>Phone:</strong> {{ $restaurant->phone }}</p>
-                                <p><strong>Email:</strong> {{ $restaurant->email }}</p>
+                                <p><strong>Contact Phone:</strong> {{ $restaurant->phone }}</p>
+                                <p><strong>Contact Email:</strong> {{ $restaurant->email }}</p>
                                 <p><strong>Cuisine types:</strong>
                                     @if ($restaurant->cuisines->isEmpty())
                                         NULL
@@ -70,6 +73,7 @@
                                 </p>
                                 <p><strong>Created At:</strong> {{ $restaurant->created_at->format('d M Y, H:i') }}</p>
                                 <p><strong>Verified:</strong> {{ $restaurant->is_verified ? 'Yes' : 'No' }}</p>
+                                <a style="margin-bottom: 1rem;" target="_blank" rel="noopener noreferrer" href="{{ route('front.listing_details', $restaurant->id) }}">View restaurant page</a>
 
                                 <div class="mt-3 w-100">
                                     @if ($restaurant->photoGallery->isNotEmpty())

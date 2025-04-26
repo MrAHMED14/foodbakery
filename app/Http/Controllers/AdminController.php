@@ -26,7 +26,7 @@ class AdminController extends Controller
 
         $restaurants = Restaurant::search($query)
             ->when($isVerified !== null && $isVerified !== '', fn($q) => $q->where('is_verified', $isVerified))
-            ->orderBy('id', 'asc')
+            ->latest()
             ->paginate($perPage);
 
         return view('back.restaurants', compact('restaurants', 'query', 'isVerified'));
