@@ -1,3 +1,8 @@
+@php
+    $wilayas = json_decode(file_get_contents(storage_path('app/wilaya.json')));
+    $communes = json_decode(file_get_contents(storage_path('app/communes.json')));
+@endphp
+
 @extends('front.master')
 
 @section('title')
@@ -54,7 +59,33 @@
                                                     @csrf
                                                     <h4>Order Details</h4>
                                                     <div class="field-holder">
-                                                        <label for="address">Address:</label>
+                                                        <label for="wilaya">Wilaya *</label>
+                                                        <select id="wilayaSelect" name="wilaya" class="form-control" required>
+                                                            <option value="">Select Wilaya</option>
+                                                        </select>
+
+                                                        @error('wilaya')
+                                                            <div class="text-danger" style="font-size: 12px;">
+                                                                {{ $message }}
+                                                            </div>
+                                                        @enderror
+                                                    </div>
+
+                                                    <div class="field-holder">
+                                                        <label for="commune">Commune *</label>
+                                                        <select id="communeSelect" name="commune" class="form-control">
+                                                            <option value="">Select Commune</option>
+                                                        </select>
+
+                                                        @error('commune')
+                                                            <div class="text-danger" style="font-size: 12px;">
+                                                                {{ $message }}
+                                                            </div>
+                                                        @enderror
+                                                    </div>
+
+                                                    <div class="field-holder">
+                                                        <label for="address">Address *</label>
                                                         <input type="text" name="address" id="address"
                                                             placeholder="Enter your address" required>
 
@@ -66,32 +97,7 @@
                                                     </div>
 
                                                     <div class="field-holder">
-                                                        <label for="city">City:</label>
-                                                        <input type="text" name="city" id="city"
-                                                            placeholder="Enter your city" required>
-
-                                                        @error('city')
-                                                            <div class="text-danger" style="font-size: 12px;">
-                                                                {{ $message }}
-                                                            </div>
-                                                        @enderror
-                                                    </div>
-
-                                                    <div class="field-holder">
-                                                        <label for="state">State:</label>
-                                                        <input type="text" name="state" id="state"
-                                                            placeholder="Enter your state" required>
-
-                                                        @error('state')
-                                                            <div class="text-danger" style="font-size: 12px;">
-                                                                {{ $message }}
-                                                            </div>
-                                                        @enderror
-
-                                                    </div>
-
-                                                    <div class="field-holder">
-                                                        <label for="order_type">Order Type:</label>
+                                                        <label for="order_type">Order Type *</label>
                                                         <select name="order_type" id="order_type" required>
                                                             <option value="delivery">Delivery</option>
                                                             <option value="pickup">Pickup</option>
@@ -105,7 +111,7 @@
                                                     </div>
 
                                                     <div class="field-holder">
-                                                        <label for="payment_method">Payment Method:</label>
+                                                        <label for="payment_method">Payment Method *</label>
                                                         <select name="payment_method" id="payment_method" required>
                                                             <option value="credit_card">Credit Card</option>
                                                             <option value="paypal">PayPal</option>
@@ -133,4 +139,26 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const wilayas = @json($wilayas);
+        const communes = @json($communes);
+
+        $(document).ready(function () {
+            wilayas.forEach(function (wilaya) {
+                $('#wilayaSelect').append(`<option value="${wilaya.name}" data-id="${wilaya.id}">${wilaya.name}</option>`);
+            });
+
+            $('#wilayaSelect').on('change', function () {
+                let wilayaId = $(this).find(':selected').data('id');
+                $('#communeSelect').empty().append('<option value="">Select Commune</option>');
+
+                communes.forEach(function (commune) {
+                    if (commune.wilaya_id == wilayaId) {
+                        $('#communeSelect').append(`<option value="${commune.name}">${commune.name}</option>`);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

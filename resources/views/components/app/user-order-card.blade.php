@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="post-time">
-            <span>{{ $order->address }}, {{ $order->city }}, {{ $order->state }}</span>
+            <span>{{ $order->address }}, {{ $order->commune }}, {{ $order->wilaya }}</span>
             <span style="color: #c33333;"><strong>Total: £ {{ $order->total }}</strong></span>
         </div>
         <span class="date-time">{{ \Carbon\Carbon::parse($order->order_date)->format('M j, Y h:i A') }}</span>
@@ -94,8 +94,8 @@
                                                 </li>
                                                 <li>
                                                     <strong>Address :</strong>
-                                                    <span>{{ $order->address }}, {{ $order->city }},
-                                                        {{ $order->state }}</span>
+                                                    <span>{{ $order->address }}, {{ $order->commune }},
+                                                        {{ $order->wilaya }}</span>
                                                 </li>
                                             </ul>
                                         </div>

@@ -303,7 +303,7 @@
                                                                 style="aspect-ratio: 1 / 1; object-fit: cover; object-position: center;"></a>
                                                     </div>
                                                     <div class="text-holder">
-                                                        <p>{{ $popularRestaurant->state }}, {{ $popularRestaurant->city }}
+                                                        <p>{{ $popularRestaurant->wilaya }}, {{ $popularRestaurant->commune }}
                                                         </p>
                                                         <p class="deliver-time"><span class="icon-motorcycle2"></span>10
                                                             min</p>

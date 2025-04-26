@@ -581,7 +581,7 @@
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <div class="contact-info">
                                                     <h5>Contact details</h5>
-                                                    <p>{{ $restaurant->address }}, {{ $restaurant->state }}</p>
+                                                    <p>{{ $restaurant->address }}, {{ $restaurant->wilaya }}</p>
                                                     <p>
                                                         <span><strong>Manager email:</strong>
                                                             {{ $restaurant->user->email }}</span>

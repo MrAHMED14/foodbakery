@@ -3,7 +3,7 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>City</th>
+                <th>Commune</th>
                 <th>Phone</th>
                 <th>Status</th>
                 <th>Actions</th>
@@ -14,7 +14,7 @@
                 <tr data-name="{{ strtolower($restaurant->name) }}"
                     data-verified="{{ $restaurant->is_verified ? '1' : '0' }}">
                     <td>{{ $restaurant->name }}</td>
-                    <td>{{ $restaurant->city }}</td>
+                    <td>{{ $restaurant->commune }}</td>
                     <td>{{ $restaurant->phone }}</td>
                     <td>
                         <span class="badge py-1 px-1 {{ $restaurant->is_verified ? 'bg-success' : 'bg-danger' }}"
@@ -55,8 +55,8 @@
                                 <p><strong>Manager Name:</strong> {{ $restaurant->user->name }}</p>
                                 <p><strong>Manager Email:</strong> {{ $restaurant->user->email }}</p>
                                 <p><strong>Manager Phone:</strong> {{ $restaurant->user->phone ?? 'NULL' }}</p>
-                                <p><strong>State:</strong> {{ $restaurant->state }}</p>
-                                <p><strong>City:</strong> {{ $restaurant->city }}</p>
+                                <p><strong>Wilaya:</strong> {{ $restaurant->wilaya }}</p>
+                                <p><strong>Commune:</strong> {{ $restaurant->commune }}</p>
                                 <p><strong>Address:</strong> {{ $restaurant->address }}</p>
                                 <p><strong>Contact Phone:</strong> {{ $restaurant->phone }}</p>
                                 <p><strong>Contact Email:</strong> {{ $restaurant->email }}</p>
@@ -73,7 +73,9 @@
                                 </p>
                                 <p><strong>Created At:</strong> {{ $restaurant->created_at->format('d M Y, H:i') }}</p>
                                 <p><strong>Verified:</strong> {{ $restaurant->is_verified ? 'Yes' : 'No' }}</p>
-                                <a style="margin-bottom: 1rem;" target="_blank" rel="noopener noreferrer" href="{{ route('front.listing_details', $restaurant->id) }}">View restaurant page</a>
+                                @if ($restaurant->is_verified)
+                                    <a style="margin-bottom: 1rem;" target="_blank" rel="noopener noreferrer" href="{{ route('front.listing_details', $restaurant->id) }}">View restaurant page</a>
+                                @endif
 
                                 <div class="mt-3 w-100">
                                     @if ($restaurant->photoGallery->isNotEmpty())

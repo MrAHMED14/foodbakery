@@ -19,8 +19,8 @@ return new class extends Migration
             $table->enum('status', ['Processing', 'Cancelled', 'Completed'])->default('Processing');
             $table->decimal('total', 8, 2);
             $table->string('address');
-            $table->string('city');
-            $table->string('state');
+            $table->string('commune');
+            $table->string('wilaya');
             $table->string('order_type');
             $table->string('payment_method');
             $table->string('payment_status');

@@ -12,8 +12,8 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained('users');
             $table->string('name');
             $table->string('address');
-            $table->string('city');
-            $table->string('state');
+            $table->string('commune');
+            $table->string('wilaya');
             $table->string('phone');
             $table->string('email')->unique();
             $table->decimal('latitude', 10, 7)->nullable();

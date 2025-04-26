@@ -71,7 +71,7 @@
                 </div>
             @endif
 
-            <span>{{ $restaurant->city }}</span>
+            <span>{{ $restaurant->commune }}</span>
         </div>
     </div>
     <div class="list-option">

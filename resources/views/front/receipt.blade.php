@@ -90,7 +90,7 @@
             <strong>Billed To:</strong><br>
             {{ $order->user->name }}<br>
             {{ $order->user->phone ?? '-' }}<br>
-            {{ $order->address }}, {{ $order->city }}, {{ $order->state }}
+            {{ $order->address }}, {{ $order->commune }}, {{ $order->wilaya }}
             <br>
             <strong>Payment method:</strong> {{ $order->payment_method }}
         </div>
@@ -135,7 +135,7 @@
 
     <div class="footer-info">
         <strong>{{ $order->restaurant->name }}</strong><br>
-        {{ $order->restaurant->address ?? '123 Restaurant St, City, State' }}<br>
+        {{ $order->restaurant->address ?? '123 Restaurant St, commune, wilaya' }}<br>
         {{ $order->restaurant->phone ?? '(123) 456-7890' }}
     </div>
 

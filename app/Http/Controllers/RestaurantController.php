@@ -128,8 +128,8 @@ class RestaurantController extends Controller
             $restaurant = Restaurant::create([
                 'name' => $validatedData['restaurant_name'],
                 'address' => $validatedData['restaurant_address'],
-                'city' => $validatedData['restaurant_city'],
-                'state' => $validatedData['restaurant_state'],
+                'commune' => $validatedData['restaurant_city'],
+                'wilaya' => $validatedData['restaurant_state'],
                 'phone' => $validatedData['restaurant_phone'],
                 'email' => $validatedData['restaurant_email'],
                 'latitude' => $validatedData['restaurant_latitude'],
@@ -240,16 +240,16 @@ class RestaurantController extends Controller
 
         $request->validate([
             'address' => 'required|string|max:255',
-            'state' => 'required|string|max:100',
-            'city' => 'required|string|max:100',
+            'wilaya' => 'required|string|max:100',
+            'commune' => 'required|string|max:100',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
         ]);
 
         $restaurant->update([
             'address' => $request->address,
-            'state' => $request->state,
-            'city' => $request->city,
+            'wilaya' => $request->wilaya,
+            'commune' => $request->commune,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
         ]);

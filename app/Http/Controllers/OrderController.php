@@ -73,8 +73,8 @@ class OrderController extends Controller
 
         $request->validate([
             'address' => 'required|string',
-            'city' => 'required|string',
-            'state' => 'required|string',
+            'commune' => 'required|string',
+            'wilaya' => 'required|string',
             'order_type' => 'required|string',
             'payment_method' => 'required|string',
         ]);
@@ -96,8 +96,8 @@ class OrderController extends Controller
                 'order_date' => now(),
                 'total' => 0,
                 'address' => $request->address,
-                'city' => $request->city,
-                'state' => $request->state,
+                'commune' => $request->commune,
+                'wilaya' => $request->wilaya,
                 'order_type' => $request->order_type,
                 'payment_method' => $request->payment_method,
                 'payment_status' => 'Pending',

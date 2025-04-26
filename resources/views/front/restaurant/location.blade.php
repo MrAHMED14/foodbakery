@@ -1,5 +1,7 @@
 @php
     $user = Auth::user();
+    $wilayas = json_decode(file_get_contents(storage_path('app/wilaya.json')));
+    $communes = json_decode(file_get_contents(storage_path('app/communes.json')));
 @endphp
 
 @extends('front.restaurant.master')
@@ -62,29 +64,32 @@
                                                         </div>
                                                     </div>
 
-                                                    {{-- State --}}
+                                                    {{-- Wilaya --}}
                                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                         <div class="field-holder">
-                                                            <label>State *</label>
-                                                            <input type="text" name="state" placeholder="State"
-                                                                required
-                                                                value="{{ old('state', $user->restaurant->state) }}">
+                                                            <label>Wilaya *</label>
+                                                            <select id="wilayaSelect" name="state" class="form-control"
+                                                                required>
+                                                                <option value="">Select Wilaya</option>
+                                                            </select>
 
-                                                            @error('state')
+                                                            @error('wilaya')
                                                                 <div class="text-danger" style="font-size: 12px;">
                                                                     {{ $message }}</div>
                                                             @enderror
                                                         </div>
                                                     </div>
 
-                                                    {{-- City --}}
+                                                    {{-- Commune --}}
                                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                         <div class="field-holder">
-                                                            <label>City *</label>
-                                                            <input type="text" name="city" placeholder="City" required
-                                                                value="{{ old('city', $user->restaurant->city) }}">
+                                                            <label>Commune *</label>
+                                                            <select id="communeSelect" name="city" class="form-control"
+                                                                required>
+                                                                <option value="">Select Commune</option>
+                                                            </select>
 
-                                                            @error('city')
+                                                            @error('commune')
                                                                 <div class="text-danger" style="font-size: 12px;">
                                                                     {{ $message }}</div>
                                                             @enderror
@@ -95,8 +100,9 @@
                                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                         <div class="field-holder">
                                                             <label>Latitude</label>
-                                                            <input id="latitude" type="number" name="latitude" min="-90"
-                                                                max="90" step="0.000001" placeholder="Latitude"
+                                                            <input id="latitude" type="number" name="latitude"
+                                                                min="-90" max="90" step="0.000001"
+                                                                placeholder="Latitude"
                                                                 value="{{ old('latitude', $user->restaurant->latitude) }}">
 
                                                             @error('latitude')
@@ -110,8 +116,9 @@
                                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                         <div class="field-holder">
                                                             <label>Longitude</label>
-                                                            <input id="longitude" type="number" name="longitude" min="-180"
-                                                                max="180" step="0.000001" placeholder="Longitude"
+                                                            <input id="longitude" type="number" name="longitude"
+                                                                min="-180" max="180" step="0.000001"
+                                                                placeholder="Longitude"
                                                                 value="{{ old('longitude', $user->restaurant->longitude) }}">
 
                                                             @error('longitude')
@@ -124,7 +131,9 @@
                                                     {{-- Map Section --}}
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="cs-map-section" style="border-radius: 10px;">
-                                                            <div id="map" style="width: 100%; height: 400px; border-radius: 10px;"></div>
+                                                            <div id="map"
+                                                                style="width: 100%; height: 400px; border-radius: 10px;">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -146,7 +155,46 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        const wilayas = @json($wilayas);
+        const communes = @json($communes);
+
+        const selectedWilaya = "{{ old('wilaya', $user->restaurant->wilaya) }}";
+        const selectedCommune = "{{ old('commune', $user->restaurant->commune) }}";
+
+        $(document).ready(function() {
+            wilayas.forEach(function(wilaya) {
+                let isSelected = wilaya.name === selectedWilaya ? 'selected' : '';
+                $('#wilayaSelect').append(
+                    `<option value="${wilaya.name}" data-id="${wilaya.id}" ${isSelected}>${wilaya.name}</option>`
+                    );
+            });
+
+            if (selectedWilaya) {
+                const selectedWilayaId = $('#wilayaSelect option:selected').data('id');
+                loadCommunes(selectedWilayaId);
+            }
+
+            $('#wilayaSelect').on('change', function() {
+                const wilayaId = $(this).find(':selected').data('id');
+                loadCommunes(wilayaId);
+            });
+
+            function loadCommunes(wilayaId) {
+                $('#communeSelect').empty().append('<option value="">Select Commune</option>');
+
+                communes.forEach(function(commune) {
+                    if (commune.wilaya_id == wilayaId) {
+                        let isSelected = commune.name === selectedCommune ? 'selected' : '';
+                        $('#communeSelect').append(
+                            `<option value="${commune.name}" ${isSelected}>${commune.name}</option>`);
+                    }
+                });
+            }
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
             const latInput = document.getElementById('latitude');
             const lngInput = document.getElementById('longitude');
 
@@ -160,12 +208,14 @@
                     attribution: '© OpenStreetMap contributors'
                 }).addTo(map);
 
-                const marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+                const marker = L.marker([lat, lng], {
+                    draggable: true
+                }).addTo(map);
 
                 latInput.value = lat.toFixed(6);
                 lngInput.value = lng.toFixed(6);
 
-                marker.on('dragend', function () {
+                marker.on('dragend', function() {
                     const pos = marker.getLatLng();
                     latInput.value = pos.lat.toFixed(6);
                     lngInput.value = pos.lng.toFixed(6);
@@ -186,7 +236,7 @@
 
                 L.Control.geocoder({
                     defaultMarkGeocode: false
-                }).on('markgeocode', function (e) {
+                }).on('markgeocode', function(e) {
                     const latlng = e.geocode.center;
                     marker.setLatLng(latlng);
                     map.setView(latlng, 15);
@@ -195,15 +245,11 @@
                 }).addTo(map);
             }
 
-            // Try to get user location
-            navigator.geolocation.getCurrentPosition(
-                function (position) {
-                    initLeafletMap(position.coords.latitude, position.coords.longitude);
-                },
-                function () {
-                    initLeafletMap(fallbackLat, fallbackLng);
-                }
-            );
+            if (!latInput.value || !lngInput.value) {
+                initLeafletMap(fallbackLat, fallbackLng);
+            } else {
+                initLeafletMap(parseFloat(latInput.value), parseFloat(lngInput.value));
+            }
         });
     </script>
 @endsection

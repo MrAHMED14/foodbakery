@@ -14,8 +14,8 @@ class Restaurant extends Model
     protected $fillable = [
         'name',
         'address',
-        'city',
-        'state',
+        'commune',
+        'wilaya',
         'phone',
         'email',
         'latitude',
@@ -162,8 +162,8 @@ class Restaurant extends Model
             'description' => $this->description,
             'email'       => $this->email,
             'phone'       => $this->phone,
-            'city'        => $this->city,
-            'state'       => $this->state,
+            'commune'        => $this->commune,
+            'wilaya'       => $this->wilaya,
             'address'     => $this->address,
         ];
     }

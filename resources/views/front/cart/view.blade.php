@@ -31,13 +31,13 @@
             </div>
 
             <div>
-                <label for="city">City:</label>
-                <input type="text" name="city" id="city" value="{{ old('city') }}" required>
+                <label for="commune">Commune:</label>
+                <input type="text" name="commune" id="commune" value="{{ old('commune') }}" required>
             </div>
 
             <div>
-                <label for="state">State:</label>
-                <input type="text" name="state" id="state" value="{{ old('state') }}" required>
+                <label for="wilaya">Wilaya:</label>
+                <input type="text" name="wilaya" id="wilaya" value="{{ old('wilaya') }}" required>
             </div>
 
             <div>

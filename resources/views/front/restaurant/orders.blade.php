@@ -147,14 +147,14 @@
                                                                                                         <span>{{ $order->user->email }}</span>
                                                                                                     </li>
                                                                                                     <li>
-                                                                                                        <strong>State
+                                                                                                        <strong>Wilaya
                                                                                                             :</strong>
-                                                                                                        <span>{{ $order->state }}</span>
+                                                                                                        <span>{{ $order->wilaya }}</span>
                                                                                                     </li>
                                                                                                     <li>
-                                                                                                        <strong>city
+                                                                                                        <strong>Commune
                                                                                                             :</strong>
-                                                                                                        <span>{{ $order->city }}</span>
+                                                                                                        <span>{{ $order->commune }}</span>
                                                                                                     </li>
                                                                                                     <li>
                                                                                                         <strong>Address

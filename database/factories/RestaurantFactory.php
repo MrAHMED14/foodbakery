@@ -18,8 +18,8 @@ class RestaurantFactory extends Factory
         return [
             'name' => $this->faker->company(),
             'address' => $this->faker->address(),
-            'city' => $this->faker->city(),
-            'state' => $this->faker->state(),
+            'commune' => $this->faker->city(),
+            'wilaya' => $this->faker->state(),
             'phone' => $this->faker->phoneNumber(),
             'email' => $this->faker->unique()->safeEmail(),
             'latitude' => $this->faker->latitude(),
