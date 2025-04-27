@@ -5,16 +5,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'FOOD BAKERY')</title>
+    <title>@yield('title', 'FoodBakery') - {{ $siteConfig->site_name }}</title>
     <!-- Google Font Family Link Start -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800">
     <!-- Google Font Family Link End -->
     <!-- Bootstrap Link Start-->
     <meta name="robots" content="index, follow">
-    <meta name="description" content="FoodBakery is a complete multi-restaurant platform offering online food ordering, table reservations, and delivery or pickup services. Browse diverse menus, discover top-rated local eateries, and book your table or meal with ease through a seamless, mobile-friendly experience.">
+    <meta name="description" content="{{ $siteConfig->meta_description }}">
+    <meta name="keywords" content="{{ $siteConfig->meta_keywords }}">
     <meta name="google-site-verification" content="XvG5Rx8b8edoFGOMNPXyl4_uxRnxOBE61zbie70V_4Y" />
-    <meta name="keywords" content="foodbakery, algeria, tiaret, foodbakery tiaret, food, Bakery, restaurant, multi-restaurant, platform, ordering, reservations, booking, menus">
     <link rel="icon" type="image/png" href="{{ asset('/favicon-96x96.png') }}" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="{{ asset('/favicon.svg') }}" />
     <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}" />

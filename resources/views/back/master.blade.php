@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title> @yield('title', 'FoodBakery | Dashboard')</title>
+    <title> @yield('title', 'FoodBakery | Dashboard') - {{ $siteConfig->site_name }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- App favicon -->
     <link rel="icon" type="image/png" href="{{ asset('/favicon-96x96.png') }}" sizes="96x96" />
@@ -13,6 +13,8 @@
     <meta name="apple-mobile-web-app-title" content="Food Bakery" />
     <link rel="manifest" href="{{ asset('/site.webmanifest') }}" />
     <!-- plugin css -->
+    <meta name="description" content="{{ $siteConfig->meta_description }}">
+    <meta name="keywords" content="{{ $siteConfig->meta_keywords }}">
     <link href="{{ asset('back/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css') }}" rel="stylesheet"
         type="text/css" />
     <!-- Bootstrap Css -->
