@@ -1,7 +1,7 @@
 @extends('front.restaurant.master')
 
 @section('title')
-    Booking - FoodBakery
+    Booking
 @endsection
 
 @section('content')

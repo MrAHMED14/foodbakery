@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Order Receipt - FoodBakery</title>
+    <title>Order Receipt  </title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -115,8 +115,8 @@
                 <tr>
                     <td>{{ $line->dish->name }}</td>
                     <td>{{ $line->quantity }}</td>
-                    <td>${{ number_format($line->dish->price, 2) }}</td>
-                    <td>${{ number_format($line->dish->price * $line->quantity, 2) }}</td>
+                    <td>@currency($line->dish->price)</td>
+                    <td>@currency($line->dish->price * $line->quantity)</td>
                 </tr>
             @endforeach
         </tbody>
@@ -129,7 +129,7 @@
             <td></td>
             <td></td>
             <td>Total</td>
-            <td>${{ number_format($order->total, 2) }}</td>
+            <td>@currency($order->total)</td>
         </tr>
     </table>
 
@@ -148,7 +148,7 @@
 
                 setTimeout(function () {
                     if (!window.closed) {
-                        window.location.href = "{{ url('/') }}"; // change to your desired route
+                        window.location.href = "{{ url('/') }}";
                     }
                 }, 1000);
             };

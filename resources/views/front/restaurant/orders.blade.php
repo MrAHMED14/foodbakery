@@ -1,7 +1,7 @@
 @extends('front.restaurant.master')
 
 @section('title')
-    Orders - FoodBakery
+    Orders
 @endsection
 
 @section('content')
@@ -78,7 +78,7 @@
                                                                 <div>
                                                                     {{ \Carbon\Carbon::parse($order->order_date)->format('M j, Y h:i A') }}
                                                                 </div>
-                                                                <div>£ {{ $order->total }}</div>
+                                                                <div>@currency($order->total)</div>
                                                                 <div>
                                                                     @if ($order->status == 'Processing')
                                                                         <span class="order-status"
@@ -253,7 +253,7 @@
                                                                                                             <div>
                                                                                                                 <span
                                                                                                                     class="category-price"
-                                                                                                                    style="display: inline-block;">£{{ $orderLine->dish->price }}
+                                                                                                                    style="display: inline-block;">@currency($orderLine->dish->price)
                                                                                                                     x{{ $orderLine->quantity }}</span>
                                                                                                             </div>
                                                                                                         </li>
@@ -272,7 +272,7 @@
                                                                                                         <li
                                                                                                             class="order-type total-price">
                                                                                                             <strong>Total:</strong>
-                                                                                                            <span>£{{ $order->total }}</span>
+                                                                                                            <span>@currency($order->total)</span>
                                                                                                         </li>
                                                                                                     </ul>
                                                                                                 </div>

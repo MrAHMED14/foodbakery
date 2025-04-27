@@ -5,7 +5,7 @@
 @extends('front.restaurant.master')
 
 @section('title')
-    Gallery - FoodBakery
+    Gallery
 @endsection
 
 @section('content')

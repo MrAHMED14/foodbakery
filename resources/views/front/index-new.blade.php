@@ -1,7 +1,7 @@
 @extends('front.master')
 
 @section('title')
-    Home - FoodBakery
+    Home
 @endsection
 
 @section('content')
@@ -293,7 +293,7 @@
                                                         </span>
                                                     @endforeach
                                                 </p>
-                                                <div class="min-order">Min Order <span class="price">£15.00</span></div>
+                                                <div class="min-order">Min Order <span class="price">@currency(550)</span></div>
                                             </div>
                                             <div class="listing-footer">
                                                 <div class="listing-inner clearfix" style="background-color: #ffffff;">
@@ -440,7 +440,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="delivery-potions">
-                                                    <div class="post-time"><i class="icon-check_circle"></i>Min £15.00
+                                                    <div class="post-time"><i class="icon-check_circle"></i>Min @currency(550)
                                                     </div>
                                                     <div class="post-time"><i class="icon-motorcycle"></i>10 min</div>
                                                     <div class="post-time"><i class="icon-clock4"></i>15 min</div>

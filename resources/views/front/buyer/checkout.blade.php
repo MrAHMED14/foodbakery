@@ -6,7 +6,7 @@
 @extends('front.master')
 
 @section('title')
-    Checkout - FoodBakery
+    Checkout
 @endsection
 
 @section('content')
@@ -42,7 +42,7 @@
                                                                             {{ $dish['quantity'] }}</small>
                                                                     </div>
                                                                     <div style="color: #000; font-weight: bold;">
-                                                                        ${{ number_format($dish['price'] * $dish['quantity'], 2) }}
+                                                                        @currency($dish['price'] * $dish['quantity'])
                                                                     </div>
                                                                 </li>
                                                             @endforeach
@@ -51,7 +51,7 @@
                                                 @endforeach
                                                 <h5
                                                     style="margin-bottom: 40px; padding: 4px; background-color: rgba(255, 238, 0, 0.384);">
-                                                    Total: ${{ $totalPrice }}
+                                                    Total: @currency($totalPrice)
                                                 </h5>
 
                                                 <form action="{{ route('order.checkout.store') }}" method="POST"

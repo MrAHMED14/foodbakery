@@ -5,7 +5,7 @@
 @extends('front.restaurant.master')
 
 @section('title')
-    Opening / closing status - FoodBakery
+    Opening / closing status
 @endsection
 
 @section('content')

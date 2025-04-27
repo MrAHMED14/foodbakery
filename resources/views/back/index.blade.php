@@ -1,7 +1,7 @@
 @extends('back.master')
 
 @section('title')
-    Dashboard - FoodBakery
+    Dashboard
 @endsection
 
 @section('content')

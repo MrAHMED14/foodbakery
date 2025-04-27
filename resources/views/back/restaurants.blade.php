@@ -1,7 +1,7 @@
 @extends('back.master')
 
 @section('title')
-    Restaurants - FoodBakery
+    Restaurants
 @endsection
 
 @section('content')

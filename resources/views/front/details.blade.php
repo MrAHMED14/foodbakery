@@ -1,7 +1,7 @@
 @extends('front.master')
 
 @section('title')
-    {{ $restaurant->name }} - FoodBakery
+    {{ $restaurant->name }}
 @endsection
 
 @section('content')
@@ -56,14 +56,14 @@
                                         <span style="display: flex; align-items: center; justify-content: center;">
                                             <i class="icon-motorcycle"></i>
                                             @if ($restaurant->delivery_fee)
-                                                Delivery fee: £{{ $restaurant->delivery_fee }}
+                                                Delivery fee: @currency($restaurant->delivery_fee)
                                             @else
                                                 Delivery fee: Free
                                             @endif
                                         </span>
                                         @if ($restaurant->minimum_order && $restaurant->maximum_order)
-                                            <span>Min Order : £{{ $restaurant->minimum_order }} Max Order :
-                                                £{{ $restaurant->maximum_order }}</span>
+                                            @currency($restaurant->minimum_order) Max Order :
+                                            @currency($restaurant->maximum_order)</span>
                                         @endif
                                     </p>
                                 </div>
@@ -195,7 +195,7 @@
                                                             </div>
                                                             <div class="price-holder"
                                                                 style="display: flex; align-items: center; gap: 10px;">
-                                                                <span class="price">£{{ $dish->price }}</span>
+                                                                <span class="price">@currency($dish->price)</span>
 
                                                                 @if (Auth::check() && Auth::user()->isUser() && $restaurant->accepts_orders)
                                                                     <form action="{{ route('cart.add') }}" method="POST">
@@ -713,7 +713,7 @@
                                                             </form>
                                                             <a>{{ $dish['name'] }}</a>
                                                             <span class="category-price">x{{ $dish['quantity'] }} -
-                                                                £{{ $dish['price'] }}</span>
+                                                                @currency($dish['price'])</span>
                                                         </div>
                                                     </li>
                                                 @endforeach
@@ -723,11 +723,11 @@
 
                                     <div class="price-area dev-menu-price-con">
                                         {{-- <ul>
-                                            <li>Subtotal <span class="price">£<em
-                                                        class="dev-menu-subtotal">20.00</em></span></li>
+                                            <li>Subtotal <span class="price"><em
+                                                        class="dev-menu-subtotal">@currency(1500)</em></span></li>
                                         </ul> --}}
                                         <p class="total-price">Total <span
-                                                class="price dev-menu-grtotal">£{{ $totalPrice }}</span></p>
+                                                class="price dev-menu-grtotal">@currency($totalPrice)</span></p>
                                     </div>
                                 </div>
 

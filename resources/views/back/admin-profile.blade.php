@@ -1,7 +1,7 @@
 @extends('back.master')
 
 @section('title')
-    Profile - FoodBakery
+    Profile
 @endsection
 
 @section('content')

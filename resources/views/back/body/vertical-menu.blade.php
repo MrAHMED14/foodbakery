@@ -63,7 +63,7 @@
                         </li>
 
                         <li>
-                            <a href="#site-configuration">
+                            <a href="{{ route('admin.site_configuration') }}">
                                 <span data-key="t-site-configuration">Site Configuration</span>
                             </a>
                         </li>

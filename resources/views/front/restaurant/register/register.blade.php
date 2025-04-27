@@ -6,7 +6,7 @@
 @extends('front.master')
 
 @section('title')
-    Register Restaurant - FoodBakery
+    Register Restaurant
 @endsection
 
 @section('content')

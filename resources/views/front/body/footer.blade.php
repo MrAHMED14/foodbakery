@@ -73,13 +73,13 @@
 
                                 <ul>
                                     <li><span class="bgcolor" style="color: #ffffff !important; height: 36px;"><i class="icon-ring_volume" style="color: #ffffff !important;"></i></span>
-                                        <p>+1 (321) 828 6662</p>
+                                        <p>{{ $siteConfig->site_phone }}</p>
                                     </li>
                                     <li><span class="bgcolor" style="color: #ffffff !important; height: 36px;"><i class="icon-envelope-o" style="color: #ffffff !important;"></i></span>
-                                        <p><a href="#">support@chimpstudio.com</a></p>
+                                        <p><a href="#">{{ $siteConfig->site_email }}</a></p>
                                     </li>
                                     <li><span class="bgcolor" style="color: #ffffff !important; height: 36px;"><i class="icon-location-pin2" style="color: #ffffff !important;"></i></span>
-                                        <p><a href="#">33 - B, 2nd Floor, Saint Jhon Doe Appartments, Sussex, UK.26AL565C.</a></p>
+                                        <p><a href="#">{{ $siteConfig->site_address }}</a></p>
                                     </li>
                                 </ul>
                             </div>
@@ -96,7 +96,7 @@
                     <div class="copyright-inner">
                         <div class="copy-right" style="background-color: #121418 !important;">
                             <p>
-                                © 2025 Foodbakery. All Rights Reserved.
+                                © <script>document.write(new Date().getFullYear())</script> {{ $siteConfig->site_name }}. All Rights Reserved.
                             </p>
                         </div>
                         <div class="right-logos">

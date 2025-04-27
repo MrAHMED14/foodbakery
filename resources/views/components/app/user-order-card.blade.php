@@ -18,7 +18,7 @@
         </div>
         <div class="post-time">
             <span>{{ $order->address }}, {{ $order->commune }}, {{ $order->wilaya }}</span>
-            <span style="color: #c33333;"><strong>Total: £ {{ $order->total }}</strong></span>
+            <span style="color: #c33333;"><strong>Total: @currency($order->total)</strong></span>
         </div>
         <span class="date-time">{{ \Carbon\Carbon::parse($order->order_date)->format('M j, Y h:i A') }}</span>
 
@@ -134,7 +134,7 @@
                                                             <h4>{{ $orderItem->dish->name }}</h4>
                                                         </div>
                                                         <div><span
-                                                                class="category-price">${{ $orderItem->dish->price }} ×
+                                                                class="category-price">@currency($orderItem->dish->price) ×
                                                                 {{ $orderItem->quantity }}</span></div>
                                                     </li>
                                                 @endforeach
@@ -146,7 +146,7 @@
                                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                 <h3 class="order-type total-price">
                                                     <strong>Total:</strong>
-                                                    <span>£ {{ $order->total }}</span>
+                                                    <span>@currency($order->total)</span>
                                                 </h3>
                                             </div>
                                         </div>

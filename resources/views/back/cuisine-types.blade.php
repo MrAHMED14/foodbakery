@@ -1,7 +1,7 @@
 @extends('back.master')
 
 @section('title')
-    Cuisines Types - FoodBakery
+    Cuisines Types
 @endsection
 
 @section('content')

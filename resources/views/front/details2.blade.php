@@ -65,7 +65,7 @@
                                 <li style="width: 100%; display: flex; gap: 10px; align-items: center;">
                                     <span><strong>-</strong> {{ $dish->name }}</span>
                                     -
-                                    <strong>${{ $dish->price }}</strong>
+                                    <strong>@currency($dish->price)</strong>
                                     <form action="{{ route('cart.add') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="dish_id" value="{{ $dish->id }}">

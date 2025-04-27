@@ -1,7 +1,7 @@
 @extends('front.restaurant.master')
 
 @section('title')
-    Menu Builder - FoodBakery
+    Menu Builder
 @endsection
 
 @section('content')
@@ -262,7 +262,7 @@
 
                                                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                                         <div class="field-holder">
-                                                                            <label>Price * (£)</label>
+                                                                            <label>Price *</label>
                                                                             <input class="menu-item-price" type="number"
                                                                                 min="0" step="0.01"
                                                                                 name="dish_price"
@@ -409,7 +409,7 @@
                                                                                             </div>
 
                                                                                             <div class="list-price">
-                                                                                                <span><b>£</b><b>{{ $dish->price }}</b></span>
+                                                                                                <span><b>@currency($dish->price)</b></span>
                                                                                             </div>
 
                                                                                             <div class="list-option"
@@ -513,7 +513,6 @@
                                                                                                                 class="field-holder">
                                                                                                                 <label>Price
                                                                                                                     *
-                                                                                                                    (£)
                                                                                                                 </label>
                                                                                                                 <input
                                                                                                                     class="menu-item-price"

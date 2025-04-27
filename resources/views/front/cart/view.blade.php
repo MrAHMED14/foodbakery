@@ -14,14 +14,14 @@
                 <ul>
                     @foreach ($dishes as $dish)
                         <li>
-                            {{ $dish['name'] }} - ${{ $dish['price'] }} x {{ $dish['quantity'] }}
+                            {{ $dish['name'] }} - @currency($dish['price']) x {{ $dish['quantity'] }}
                         </li>
                     @endforeach
                 </ul>
             @endforeach
         </ul>
 
-        <h4 style="margin-bottom: 40px;">Total: ${{ $totalPrice }}</h4>
+        <h4 style="margin-bottom: 40px;">Total: @currency($totalPrice)</h4>
 
         <form action="{{ route('checkout') }}" method="POST" style="margin-top: 20px;">
             @csrf

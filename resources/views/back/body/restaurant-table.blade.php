@@ -159,7 +159,7 @@
                                                                     {{ $dish->description }}</p>
                                                             </div>
                                                             <span class="fw-bold"
-                                                                style="color: #c33333;">£{{ $dish->price }}</span>
+                                                                style="color: #c33333;">@currency($dish->price)</span>
                                                         </div>
                                                     </div>
                                                 @endforeach
