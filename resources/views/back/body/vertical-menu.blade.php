@@ -50,7 +50,7 @@
                             </a>
                         </li>
 
-                        <li>
+                        {{-- <li>
                             <a href="#stats">
                                 <span data-key="t-stats">States</span>
                             </a>
@@ -60,7 +60,7 @@
                             <a href="javascript: void(0);">
                                 <span data-key="t-contacts">Contacts</span>
                             </a>
-                        </li>
+                        </li> --}}
 
                         <li>
                             <a href="{{ route('admin.site_configuration') }}">
