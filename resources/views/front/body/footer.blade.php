@@ -63,7 +63,7 @@
                                     </li>
                                     <li><a href="#" data-original-title="pinterest" style="background-color: #ffffff; color: #121418;"><i class="icon-pinterest"></i></a>
                                     </li>
-                                    <li><a href="#" data-original-title="google" style="background-color: #ffffff; color: #121418;"><i class="icon-google"></i></a>
+                                    <li><a href="https://github.com/MrAHMED14/foodbakery" target="_blank" rel="noopener noreferrer" data-original-title="github" style="background-color: #ffffff; color: #121418;"><i class="icon-github"></i></a>
                                     </li>
                                     <li><a href="#" data-original-title="instagram" style="background-color: #ffffff; color: #121418;"><i class="icon-instagram"></i></a>
                                     </li>
