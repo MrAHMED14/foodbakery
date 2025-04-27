@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SiteConfigurationController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -136,6 +137,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/cuisines-types', [AdminController::class, 'createCuisineType'])->name('cuisines.create');
             Route::put('/cuisines-types/{cuisineType}/update', [AdminController::class, 'updateCuisineType'])->name('cuisines.update');
             Route::delete('/cuisines-types/{cuisineType}', [AdminController::class, 'destroyCuisineType'])->name('cuisines.destroy');
+
+            Route::get('/admin/site-configuration', [SiteConfigurationController::class, 'edit'])->name('site_configuration');
+            Route::post('/admin/site-configuration', [SiteConfigurationController::class, 'update'])->name('site_configuration.update');
         });
     });
 });
