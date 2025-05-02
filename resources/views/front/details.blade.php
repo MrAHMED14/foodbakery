@@ -722,17 +722,14 @@
                                     </ul>
 
                                     <div class="price-area dev-menu-price-con">
-                                        {{-- <ul>
-                                            <li>Subtotal <span class="price"><em
-                                                        class="dev-menu-subtotal">@currency(1500)</em></span></li>
-                                        </ul> --}}
-                                        <p class="total-price">Total <span
-                                                class="price dev-menu-grtotal">@currency($totalPrice)</span></p>
+                                        <p class="total-price">Total <span class="price dev-menu-grtotal">@currency($totalPrice)</span></p>
                                     </div>
                                 </div>
 
-                                <a href="{{ route('order.checkout') }}" class="menu-order-confirm">Confirm Order</a>
-                                <span class="menu-loader"></span>
+                                @if ($totalPrice > 0)
+                                    <a href="{{ route('order.checkout') }}" class="menu-order-confirm">Confirm Order</a>
+                                    <span class="menu-loader"></span>
+                                @endif
                             </div>
                         </div>
                     </div>
