@@ -14,6 +14,7 @@
             <span class="restaurant-status close"><em class="bookmarkRibbon"></em>Close</span>
         @endif
     </div>
+
     <div class="text-holder">
         <div class="list-rating">
             <div style="display: flex; align-items: center; width: 100%; gap: 5px;">
@@ -29,23 +30,23 @@
                 <span class="reviews">( {{ $restaurant->reviewsCount() }} )</span>
             </div>
         </div>
+
         <div class="post-title">
             <h5>
-                <a href="{{ route('front.listing_details', $restaurant->id) }}" wire:navigate>
+                <a href="{{ route('front.listing_details', $restaurant->id) }}">
                     {{ $restaurant->name }}
                 </a>
-                <span class="sponsored text-color">Sponsored</span>
+                @if ($restaurant->is_featured)
+                    <span class="sponsored text-color">Sponsored</span>
+                @endif
             </h5>
         </div>
+
         <span class="post-categories">
             <span>Cuisines: </span>
-            @foreach ($restaurant->cuisines as $cuisine)
-                {{ $cuisine->name }}
-                @if (!$loop->last)
-                    ,
-                @endif
-            @endforeach
+            @foreach ($restaurant->cuisines as $cuisine){{ $cuisine->name }}@if (!$loop->last), @endif @endforeach
         </span>
+
         <div class="delivery-potions">
             @if ($restaurant->accepts_orders)
                 <div class="post-time">
@@ -61,21 +62,22 @@
 
             @if ($restaurant->accepts_reservations)
                 <div class="post-time">
-                    <i class="icon-table"></i>
+                    <i class="icon-table22"></i>
                     <div class="time-tooltip">
                         <div class="time-tooltip-holder">
-                            <b class="tooltip-label">Reservation</b>
-                            <b class="tooltip-info">This restaurant allows Reservation.</b>
+                            <b class="tooltip-label">Booking</b>
+                            <b class="tooltip-info">This restaurant allows Booking.</b>
                         </div>
                     </div>
                 </div>
             @endif
 
-            <span>{{ $restaurant->commune }}</span>
+            <span>{{ $restaurant->commune }}, {{ $restaurant->wilaya }}</span>
         </div>
     </div>
+
     <div class="list-option">
-        <a href="{{ route('front.listing_details', $restaurant->id) }}" class="viewmenu-btn text-color">
+        <a href="{{ route('front.listing_details', $restaurant->id) }}" class="btn-hover viewmenu-btn text-color">
             View Menu
         </a>
     </div>
