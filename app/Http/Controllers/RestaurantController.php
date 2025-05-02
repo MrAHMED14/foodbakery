@@ -28,16 +28,13 @@ class RestaurantController extends Controller
     */
     public function index(Request $request)
     {
-        /*
-        * display only verified restaurants
-        * paginate the results
-        * search the results
-        * filter by multiple cuisine types
-        */
-
         $maxRestaurants = 10;
         $query = $request->input('search');
         $cuisineTypesInput = $request->input('cuisine_types');
+        $openStatus = $request->input('open_status');
+        $preOrder = $request->input('pre_order');
+        $booking = $request->input('booking');
+        $sortBy = $request->input('sort_by', 'best_match');
 
         $restaurantsQuery = Restaurant::where('is_verified', 1);
 
@@ -45,19 +42,77 @@ class RestaurantController extends Controller
             $restaurantsQuery = Restaurant::search($query)->where('is_verified', 1);
         }
 
-        // Filter by multiple cuisine
         if ($cuisineTypesInput) {
             $restaurantsQuery = $restaurantsQuery->whereHas('cuisines', function ($query) use ($cuisineTypesInput) {
                 $query->whereIn('cuisine_types.id', $cuisineTypesInput);
             });
         }
 
-        // TODO: Change orderBy to rating later
-        $restaurants = $restaurantsQuery->orderBy('id', 'asc')->paginate($maxRestaurants);
+        if ($openStatus === 'open') {
+            $restaurantsQuery->whereHas('openingHours', function ($q) {
+                $now = Carbon::now()->timezone('+01:00');
+                $currentDay = $now->format('l');
+                $currentTime = $now->format('H:i:s');
+
+                $q->where('day', $currentDay)
+                    ->where('is_closed', false)
+                    ->whereTime('opening_time', '<=', $currentTime)
+                    ->whereTime('closing_time', '>=', $currentTime);
+            });
+        } elseif ($openStatus === 'closed') {
+            $restaurantsQuery->where(function ($q) {
+                $now = Carbon::now()->timezone('+01:00');
+                $currentDay = $now->format('l');
+                $currentTime = $now->format('H:i:s');
+
+                $q->whereDoesntHave('openingHours', function ($subQ) use ($currentDay, $currentTime) {
+                    $subQ->where('day', $currentDay)
+                        ->where('is_closed', false)
+                        ->whereTime('opening_time', '<=', $currentTime)
+                        ->whereTime('closing_time', '>=', $currentTime);
+                });
+            });
+        }
+
+        if ($preOrder === 'yes') {
+            $restaurantsQuery->where('accepts_orders', true);
+        } elseif ($preOrder === 'no') {
+            $restaurantsQuery->where('accepts_orders', false);
+        }
+
+        if ($booking === 'yes') {
+            $restaurantsQuery->where('accepts_reservations', true);
+        } elseif ($booking === 'no') {
+            $restaurantsQuery->where('accepts_reservations', false);
+        }
+
+        switch ($sortBy) {
+            case 'alphabetical':
+                $restaurantsQuery->orderBy('name', 'asc');
+                break;
+
+            case 'ratings':
+                $restaurantsQuery->withAvg('reviews', 'rating')->orderByDesc('reviews_avg_rating');
+                break;
+
+            default:
+                $restaurantsQuery->orderBy('id', 'asc');
+        }
+
+        $restaurants = $restaurantsQuery->paginate($maxRestaurants)->withQueryString();
 
         $cuisineTypes = CuisineType::all();
 
-        return view('front.listings', compact('restaurants', 'query', 'cuisineTypes', 'cuisineTypesInput'));
+        return view('front.listings', compact(
+            'restaurants',
+            'query',
+            'cuisineTypes',
+            'cuisineTypesInput',
+            'openStatus',
+            'preOrder',
+            'booking',
+            'sortBy'
+        ));
     }
 
     /*
@@ -65,7 +120,7 @@ class RestaurantController extends Controller
     */
     public function show(Restaurant $restaurant)
     {
-        if(!$restaurant->is_verified) {
+        if (!$restaurant->is_verified) {
             abort(404);
         }
 
@@ -160,7 +215,7 @@ class RestaurantController extends Controller
             return redirect()->route('login');
         } catch (\Exception $e) {
             DB::rollBack();
-        session()->flash('error', 'Failed to register restaurant. Please try again.' /*. $e->getMessage()*/);
+            session()->flash('error', 'Failed to register restaurant. Please try again.' /*. $e->getMessage()*/);
             return back();
         }
     }
