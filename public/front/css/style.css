@@ -1887,3 +1887,20 @@ span.list-feature-item { background: #00a79d; color: #ffffff; font-size: 12px; t
 /*Contact Area Style End*/
 .main-section:after { display: block; content: ""; clear: both; }
 textarea#comment_mes { display: none; }
+
+.cuisines-custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #c33333 transparent;
+}
+
+.cuisines-custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.cuisines-custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #c33333;
+}
+
+.cuisines-custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
