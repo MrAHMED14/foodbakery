@@ -225,7 +225,7 @@
                                         <li class="user-dashboard-menu-children">
                                             <a href="javascript:void(0);" class="">
                                                 <figure class="profile-image">
-                                                    <img src="{{ asset('front/extra-images/user-placeholder.png') }}"
+                                                    <img src="{{ Auth::user()->photo ? asset('storage/' . Auth::user()->photo) : asset('front/extra-images/user-placeholder.png') }}"
                                                         alt="" style="aspect-ratio: 1 / 1; object-fit: cover; object-position: center;">
                                                 </figure>
                                                 {{ Auth::user()->name }}
