@@ -152,8 +152,6 @@
                                                             class="icon-comment2"></i>My Reviews</a></li>
                                                 <li><a href="{{ route('buyer.orders') }}" class="btn-edit-profile"><i
                                                             class="icon-add_shopping_cart"></i>My Orders</a></li>
-                                                <li><a href="{{ route('buyer.statement') }}"><i
-                                                            class="icon-file-text22"></i>Statement</a></li>
                                                 <li><a href="{{ route('buyer.account_setting') }}"><i
                                                             class="icon-build"></i>Account Settings</a></li>
                                                 <li>

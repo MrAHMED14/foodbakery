@@ -17,17 +17,8 @@
                     <a href="{{ route('buyer.orders') }}" class="btn-edit-profile"><i
                             class="icon-add_shopping_cart"></i>My Orders</a>
                 </li>
-                {{-- <li class="{{ request()->routeIs('buyer.shortlists') ? 'active' : '' }}">
-                    <a href="{{ route('buyer.shortlists') }}"><i class="icon-heart"></i>Shortlists</a>
-                </li> --}}
-                <li class="{{ request()->routeIs('buyer.statement') ? 'active' : '' }}">
-                    <a href="{{ route('buyer.statement') }}"><i class="icon-file-text22"></i>Statement</a>
-                </li>
                 <li class="{{ request()->routeIs('buyer.account_setting') ? 'active' : '' }}">
                     <a href="{{ route('buyer.account_setting') }}"><i class="icon-build"></i>Account Settings</a>
-                </li>
-                <li>
-                    <a id="profile_delete" href="#"><i class="icon-delete"></i>Delete Profile</a>
                 </li>
             </ul>
         </div>
