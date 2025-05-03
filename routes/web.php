@@ -67,6 +67,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             Route::get('/dashboard', [RestaurantController::class, 'restaurantDashboard'])->name('dashboard');
             Route::get('/profile', [RestaurantController::class, 'restaurant'])->name('restaurant');
+            Route::post('/profile/change-password', [BuyerController::class, 'changePassword'])->name('changePassword');
             Route::get('/location', [RestaurantController::class, 'location'])->name('location');
             Route::get('/open-close', [RestaurantController::class, 'openClose'])->name('open_close');
             Route::get('/menu-builder', [RestaurantController::class, 'menuBuilder'])->name('menu_builder');

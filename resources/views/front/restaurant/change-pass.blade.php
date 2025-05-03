@@ -19,33 +19,54 @@
                     <div class="user-dashboard loader-holder">
                         <div class="user-holder">
                             <div class="row">
-                                <form>
+                                <form method="POST" action="{{ route('restaurant.changePassword') }}" id="publisher_profile" autocomplete="off">
+                                    @csrf
+
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="element-title has-border">
-                                            <h5>Change Password (static)</h5>
+                                            <h5>Change Password</h5>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="field-holder">
-                                            <label> Current Password*</label>
-                                            <input type="password" class="foodbakery-dev-req-field">
+                                            <label> Current Password *</label>
+                                            <input autocomplete="off" type="password" name="current_password"
+                                                class="foodbakery-dev-req-field">
+
+                                            @error('current_password')
+                                                <div class="text-danger" style="font-size: 12px;">
+                                                    {{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="field-holder">
-                                            <label> New Password*</label>
-                                            <input type="password" class="foodbakery-dev-req-field">
+                                            <label> New Password *</label>
+                                            <input type="password" name="new_password"
+                                                class="foodbakery-dev-req-field">
+
+                                            @error('new_password')
+                                                <div class="text-danger" style="font-size: 12px;">
+                                                    {{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="field-holder">
-                                            <label> Confirm New Password* </label>
-                                            <input type="password" class="foodbakery-dev-req-field">
+                                            <label> Confirm New Password *</label>
+                                            <input type="password" name="new_password_confirmation"
+                                                class="foodbakery-dev-req-field">
+
+                                            @error('new_password_confirmation')
+                                                <div class="text-danger" style="font-size: 12px;">
+                                                    {{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="field-holder">
-                                            <button name="button" type="button" class="btn-submit">Save</button>
+                                            <button type="submit" class="btn-submit">Change
+                                                Password</button>
                                         </div>
                                     </div>
                                 </form>
