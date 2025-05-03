@@ -193,12 +193,6 @@
                                                             class="icon-add_shopping_cart"></i>Orders</a></li>
                                                 <li><a href="{{ route('restaurant.bookings') }}"><i
                                                             class="icon-file-text2 "></i>Bookings</a></li>
-                                                <li><a href="{{ route('restaurant.reviews') }}"><i
-                                                            class="icon-comment2"></i>Reviews</a></li>
-                                                <li><a href="{{ route('restaurant.memberships') }}"><i
-                                                            class="icon-card_membership"></i>Memberships</a></li>
-                                                <li><a href="{{ route('restaurant.statement') }}"><i
-                                                                class="icon-file-text22"></i>Statement</a></li>
                                                 <li>
                                                     <form method="POST" action="{{ route('logout') }}">
                                                         @csrf
