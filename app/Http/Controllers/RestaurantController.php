@@ -34,12 +34,15 @@ class RestaurantController extends Controller
         $openStatus = $request->input('open_status');
         $preOrder = $request->input('pre_order');
         $booking = $request->input('booking');
+        $location = $request->input('location');
         $sortBy = $request->input('sort_by', 'best_match');
 
         $restaurantsQuery = Restaurant::where('is_verified', 1);
 
         if ($query) {
-            $restaurantsQuery = Restaurant::search($query)->where('is_verified', 1);
+            $searchIds = Restaurant::search($query)->get()->pluck('id');
+            $restaurantsQuery = Restaurant::where('is_verified', 1)
+                                          ->whereIn('id', $searchIds);
         }
 
         if ($cuisineTypesInput) {
@@ -86,6 +89,14 @@ class RestaurantController extends Controller
             $restaurantsQuery->where('accepts_reservations', false);
         }
 
+        if ($location) {
+            $restaurantsQuery->where(function ($q) use ($location) {
+                $q->where('address', 'like', "%{$location}%")
+                  ->orWhere('commune', 'like', "%{$location}%")
+                  ->orWhere('wilaya', 'like', "%{$location}%");
+            });
+        }
+
         switch ($sortBy) {
             case 'alphabetical':
                 $restaurantsQuery->orderBy('name', 'asc');
@@ -111,6 +122,7 @@ class RestaurantController extends Controller
             'openStatus',
             'preOrder',
             'booking',
+            'location',
             'sortBy'
         ));
     }

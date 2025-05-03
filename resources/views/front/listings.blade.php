@@ -24,16 +24,6 @@
                                             {{-- Search --}}
                                             <form action="{{ route('front.listings') }}" method="GET" id="searchForm">
                                                 <div class="restaurant-search-element-container row">
-                                                    {{-- <div class="col-lg-12 col-md-12 col-sm-24 col-xs-24">
-                                                        <div class="field-holder">
-                                                            <span class="restaurant-element-search-btn">
-                                                                <i class="icon-search5"></i>
-                                                            </span>
-
-                                                            <input type="text" name="search" placeholder="Search restaurants..." value="{{ request('search') }}" id="searchInput">
-                                                        </div>
-                                                    </div> --}}
-
                                                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                         <div class="field-holder">
                                                             <span class="restaurant-element-search-btn">
@@ -53,7 +43,7 @@
                                                             <ul>
                                                                 <li class="select-location">
                                                                     <div class="foodbakery-locations-fields-group foodbakery-focus-out">
-                                                                        <input type="text" class="location-field-text filter" placeholder="All Locations">
+                                                                        <input id="locationSearchInput" type="text" class="location-field-text filter" name="location" placeholder="All Locations" value="{{ request('location') }}">
                                                                     </div>
                                                                 </li>
                                                             </ul>
@@ -64,6 +54,13 @@
 
                                             <script>
                                                 document.getElementById('searchInput').addEventListener('keypress', function(event) {
+                                                    if (event.key === 'Enter') {
+                                                        event.preventDefault();
+                                                        document.getElementById('searchForm').submit();
+                                                    }
+                                                });
+
+                                                document.getElementById('locationSearchInput').addEventListener('keypress', function(event) {
                                                     if (event.key === 'Enter') {
                                                         event.preventDefault();
                                                         document.getElementById('searchForm').submit();
