@@ -40,12 +40,7 @@
                                     <div class="text">
                                         <i class="icon-local_pizza"></i>
                                         @foreach ($restaurant->cuisines as $cuisine)
-                                            <span style="margin-top: 10px; color: white;">
-                                                {{ $cuisine->name }}
-                                                @if (!$loop->last)
-                                                    ,
-                                                @endif
-                                            </span>
+                                            <span style="margin-top: 10px; color: white;">{{ $cuisine->name }}@if (!$loop->last), @endif</span>
                                         @endforeach
                                     </div>
                                 </div>
