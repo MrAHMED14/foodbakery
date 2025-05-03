@@ -129,6 +129,7 @@
         <div class="page-section">
             <div class="container">
                 <div class="row">
+                    {{-- Details Section --}}
                     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-24">
                         <div class="tabs-holder horizontal">
                             {{-- Navigation --}}
@@ -222,20 +223,6 @@
                                 {{-- Reviews --}}
                                 <div id="menu1" class="tab-pane fade">
                                     <div class="reviews-holder">
-                                        <div class="add-new-review-holder" style="display: none;">
-                                            <div class="row">
-                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                    <div class="elements-title">
-                                                        <h3>Rate and Write a Review</h3>
-                                                        <a href="#" class="close-post-new-reviews-btn">Close</a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
-                                                    style="text-align: center;">Please login
-                                                    in order to post review.
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="reviwes-restaurant-holder">
                                             {{-- Over all Rating --}}
                                             <div class="over-all-rating-holder">
@@ -269,7 +256,7 @@
                                                             <li>
                                                                 <div class="icon-holder"><i class="icon-smile"></i>
                                                                 </div>
-                                                                <p><span>100%</span> of diners recommend this
+                                                                <p><span>{{ $recommendedPercentage }}%</span> of diners recommend this
                                                                     restaurant
                                                                 </p>
                                                             </li>
@@ -279,7 +266,7 @@
                                             </div>
 
                                             {{-- Add Review --}}
-                                            @if (Auth::check() && !Auth::user()->isRestaurant())
+                                            @if (Auth::check() && !Auth::user()->isRestaurant() && !Auth::user()->isAdmin())
                                                 <div style="margin-bottom: 20px;">
                                                     <form action="{{ route('reviews.store') }}" method="POST">
                                                         @csrf
@@ -368,7 +355,7 @@
                                                         </li>
                                                     @endif
 
-                                                    @foreach ($restaurant->reviews as $review)
+                                                    @foreach ($restaurant->reviews->sortByDesc('created_at') as $review)
                                                         <li class="review-item col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                                             <div class="list-holder ">
                                                                 <div class="review-text">
@@ -401,14 +388,9 @@
                                                                 <div class="list-holder ">
                                                                     <div class="review-text">
                                                                         <div class="review-title">
-                                                                            <h6>
-                                                                                Restaurant Owner:
-                                                                                {{ $restaurant->user->name }} </h6>
-                                                                            <div class="rating-holder">
-                                                                            </div>
+                                                                            <h6>Restaurant Owner</h6>
                                                                         </div>
-                                                                        <span
-                                                                            style="color: #7d808d">{{ $review->response->created_at->diffForHumans() }}</span>
+                                                                        <span style="color: #7d808d">{{ $review->response->created_at->diffForHumans() }}</span>
                                                                         <p>
                                                                             {{ $review->response->reply }}
                                                                         </p>
@@ -581,19 +563,19 @@
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <div class="contact-info">
                                                     <h5>Contact details</h5>
-                                                    <p>{{ $restaurant->address }}, {{ $restaurant->wilaya }}</p>
+                                                    <p>{{ $restaurant->address }}, {{ $restaurant->commune }}, {{ $restaurant->wilaya }}</p>
                                                     <p>
-                                                        <span><strong>Manager email:</strong>
-                                                            {{ $restaurant->user->email }}</span>
+                                                        <span>
+                                                            <strong>Manager email:</strong>
+                                                            {{ $restaurant->user->email }}
+                                                        </span>
                                                     </p>
                                                     <ul>
                                                         <li class="cell"><i class="icon-phone"></i><a
-                                                                href="#">{{ $restaurant->phone }}</a></li>
-                                                        <li class="pizzaeast"><i class="icon-globe2"></i><a
-                                                                href="#">http://www.chimpgroup.com</a></li>
+                                                                href="tel:{{ $restaurant->phone }}">{{ $restaurant->phone }}</a></li>
                                                         <li class="email"><i class="icon-mail5"></i><a
                                                                 class="text-color"
-                                                                href="#">{{ $restaurant->email }}</a></li>
+                                                                href="mailto:{{ $restaurant->email }}" style="text-decoration: none;">{{ $restaurant->email }}</a></li>
                                                     </ul>
                                                 </div>
                                             </div>

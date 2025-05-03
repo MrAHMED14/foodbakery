@@ -138,7 +138,12 @@ class RestaurantController extends Controller
 
         $cart = $this->cartService->getCart();
         $totalPrice = $this->cartService->getTotalPrice();
-        return view('front.details', compact('restaurant', 'cart', 'totalPrice'));
+
+        $recommended = $restaurant->reviews()->where('rating', '>=', 3)->count();
+        $totalReviews = $restaurant->reviews()->count();
+        $recommendedPercentage = $totalReviews > 0 ? round(($recommended / $totalReviews) * 100) : 0;
+
+        return view('front.details', compact('restaurant', 'cart', 'totalPrice','recommendedPercentage'));
     }
 
     /*
