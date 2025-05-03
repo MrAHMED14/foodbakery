@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -60,7 +61,13 @@ class BuyerController extends Controller
 
     public function buyerDashboard()
     {
-        return view('front.buyer.index');
+        $suggestedRestaurants = Restaurant::where('is_verified', true)
+            ->where('is_featured', true)
+            ->orWhere('is_popular', true)
+            ->inRandomOrder()
+            ->take(8)
+            ->get();
+        return view('front.buyer.index', compact('suggestedRestaurants'));
     }
 
     public function bookings()
@@ -70,7 +77,17 @@ class BuyerController extends Controller
 
     public function reviews()
     {
-        return view('front.buyer.reviews');
+        $userId = Auth::user()->id;
+        $user = User::findOrFail($userId);
+
+        if (!$user) {
+            return back()->with('error', 'User not found.');
+        }
+
+        $reviews = $user->reviews()->latest()->paginate(5);
+        $reviewsCount = $user->reviews()->count();
+
+        return view('front.buyer.reviews', compact('reviews', 'reviewsCount'));
     }
 
     public function orders()

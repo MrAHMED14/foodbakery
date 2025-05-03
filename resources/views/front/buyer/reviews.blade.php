@@ -23,108 +23,91 @@
                                     <div class="element-title has-border reviews-header right-filters-row">
                                         <h5>
                                             <span>Reviews Given</span>
-                                            <span class="element-slogan">(2)</span>
-                                            (static)
+                                            <span class="element-slogan">({{ $reviewsCount }})</span>
                                         </h5>
-                                        <div class="right-filters row pull-right">
-                                            <div class="col-lg-6 col-md-6 col-xs-6">
-                                                <div class="sort-by">
-                                                    <ul class="reviews-sortby">
-                                                        <li>
-                                                            <small>Sort by:</small>
-                                                            <span><strong class="active-sort">Newest Reviews </strong></span>
-                                                            <div class="reviews-sort-dropdown">
-                                                                <form>
-                                                                    <div class="input-reviews">
-                                                                        <div class="radio-field">
-                                                                            <input name="review" id="check-1" type="radio" value="newest" checked="checked">
-                                                                            <label for="check-1">Newest Reviews</label>
-                                                                        </div>
-                                                                        <div class="radio-field">
-                                                                            <input name="review" id="check-2" type="radio" value="highest">
-                                                                            <label for="check-2">Highest Rating</label>
-                                                                        </div>
-                                                                        <div class="radio-field">
-                                                                            <input name="review" id="check-3" type="radio" value="lowest">
-                                                                            <label for="check-3">Lowest Rating</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-xs-6 pull-right">
-                                                <div class="input-field">
-                                                    <i class="icon-angle-down"></i>
-                                                    <input type="text" data-id="daterange223" id="daterange" value="" placeholder="Select Date Range">
-                                                    <script>
-                                                        $(function () {
-                                                            $('input[data-id="daterange223"]').daterangepicker({
-                                                                opens: 'left'
-                                                            }, function (start, end, label) {
-                                                                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-                                                            });
-                                                        });
-                                                    </script>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="user-reviews-list">
                                         <div class="review-listing">
-                                            <ul>
-                                                <li class="alert ">
-                                                    <div class="list-holder">
-                                                        <div class="review-text">
-                                                            <div class="review-title">
-                                                                <h6><a href="#"> Restaurant Demo: Awesome and Lovely Experience </a></h6>
-                                                                <div class="rating-holder">
-                                                                    <div class="rating-star">
-                                                                        <span class="rating-box" style="width: 100%;"></span>
+
+                                            {{-- Reviews --}}
+                                            <ul class="review-restaurant" id="review-list">
+                                                @if ($reviews->isEmpty())
+                                                    <li class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="reviews-alert">
+                                                            <div class="media-holder">
+                                                                <img src="https://foodbakery.chimpgroup.com/wp-content/plugins/wp-foodbakery/assets/frontend/images/icon-review.png"
+                                                                    alt="review not found">
+                                                            </div>
+                                                            <div class="text-holder">
+                                                                <strong><span
+                                                                        style="color: black; font-size: 15px; display: inline; text-align: left;">No
+                                                                        reviews yet.</span></strong>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                @endif
+
+                                                @foreach ($reviews as $review)
+                                                    <li class="review-item col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                                        <div class="list-holder ">
+                                                            <div class="review-text">
+                                                                <div class="review-title">
+                                                                    <h6><a href="{{ route('front.listing_details', $review->restaurant->id) }}">{{$review->restaurant->name}}</a></h6>
+                                                                    <div class="rating-holder">
+                                                                        <div style="font-size: 15px; color: #ddd;">
+                                                                            @for ($i = 1; $i <= 5; $i++)
+                                                                                @if ($i <= $review->rating)
+                                                                                    <i class="fa fa-star"
+                                                                                        data-value="{{ $i }}"
+                                                                                        style="color:#ffc107;"></i>
+                                                                                @else
+                                                                                    <i class="fa fa-star"
+                                                                                        data-value="{{ $i }}"></i>
+                                                                                @endif
+                                                                            @endfor
+                                                                        </div>
                                                                     </div>
                                                                 </div>
+                                                                <span
+                                                                    style="color: #7d808d">{{ $review->created_at->diffForHumans() }}</span>
+                                                                <p>{{ $review->comment }}</p>
                                                             </div>
-                                                            <em class="review-date">21 mins Ago </em>
-                                                            <p class="more">It has all the bells and whistles I you are looking for in a Foodbakery directory theme. </p>
                                                         </div>
-                                                        <a href="#" class="delete-this-user-review close"><i class="icon-close2"></i></a>
-                                                    </div>
-                                                </li>
-                                                <li class="alert ">
-                                                    <div class="list-holder">
-                                                        <div class="review-text">
-                                                            <div class="review-title">
-                                                                <h6><a href="# "> Restaurant Demo: Delicious and Wealthy </a></h6>
-                                                                <div class="rating-holder">
-                                                                    <div class="rating-star">
-                                                                        <span class="rating-box" style="width: 100%;"></span>
+                                                    </li>
+
+                                                    @if ($review->response)
+                                                        <li class="reply-item col-lg-12 col-md-12 col-sm-12 col-xs-12 review_reply">
+                                                            <div class="list-holder ">
+                                                                <div class="review-text">
+                                                                    <div class="review-title">
+                                                                        <h6>Restaurant Owner</h6>
                                                                     </div>
+                                                                    <span style="color: #7d808d">{{ $review->response->created_at->diffForHumans() }}</span>
+                                                                    <p>
+                                                                        {{ $review->response->reply }}
+                                                                    </p>
                                                                 </div>
                                                             </div>
-                                                            <em class="review-date">21 mins Ago </em>
-                                                            <p class="more">A+++ support from developers. Super system, all integrated very well documented and great support, this is great. </p>
-                                                        </div>
-                                                        <a href="#" class="delete-this-user-review close"><i class="icon-close2"></i></a>
-                                                    </div>
-                                                </li>
+                                                        </li>
+                                                    @endif
+                                                @endforeach
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <ul class="pagination">
-                                        <li class="active"><a>1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><span class="page-numbers dots">…</span></li>
-                                        <li><a href="#">24</a></li>
-                                        <li><a href="#">Next </a></li>
-                                    </ul>
-                                </div>
+
+                                {{-- Pagination --}}
+                                @if ($reviews->hasPages())
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="page-nation">
+                                                {{ $reviews->links('pagination::bootstrap-4') }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
