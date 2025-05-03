@@ -41,15 +41,17 @@ class RestaurantSeeder extends Seeder
                 ]);
             });
 
-            Review::factory(rand(3, 10))->create([
-                'restaurant_id' => $restaurant->id,
-            ])->each(function ($review) {
-                if (rand(0, 1)) {
-                    ReviewResponse::factory()->create([
-                        'review_id' => $review->id,
-                    ]);
-                }
-            });
+            if($restaurant->is_verified){
+                Review::factory(rand(3, 10))->create([
+                    'restaurant_id' => $restaurant->id,
+                ])->each(function ($review) {
+                    if (rand(0, 1)) {
+                        ReviewResponse::factory()->create([
+                            'review_id' => $review->id,
+                        ]);
+                    }
+                });
+            }
         });
     }
 }
