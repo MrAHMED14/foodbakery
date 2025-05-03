@@ -624,7 +624,8 @@ class RestaurantController extends Controller
 
     public function restaurantDashboard()
     {
-        return view('front.restaurant.index');
+        $orders = Auth::user()->restaurant->orders()->where('status', 'Processing')->latest()->paginate(10);
+        return view('front.restaurant.index', compact('orders'));
     }
 
     public function restaurant()

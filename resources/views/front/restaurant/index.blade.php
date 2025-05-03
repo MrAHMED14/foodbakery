@@ -37,37 +37,7 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="row">
                                         <div class="element-title has-border right-filters-row">
-                                            <h5>Recent Orders (static)</h5>
-                                            <div class="right-filters row pull-right">
-                                                <div class="col-lg-6 col-md-6 col-xs-6">
-                                                    <div class="input-field">
-                                                        <select class="chosen-select-no-single">
-                                                            <option selected="selected" value="">Select Orders Status
-                                                            </option>
-                                                            <option value="Processing">Processing</option>
-                                                            <option value="Cancelled">Cancelled</option>
-                                                            <option value="Completed">Completed</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-6 col-xs-6">
-                                                    <div class="input-field">
-                                                        <i class="icon-angle-down"></i>
-                                                        <input type="text" data-id="daterange223" id="daterange"
-                                                            value="" placeholder="Select Date Range">
-                                                        <script>
-                                                            $(function() {
-                                                                $('input[data-id="daterange223"]').daterangepicker({
-                                                                    opens: 'left'
-                                                                }, function(start, end, label) {
-                                                                    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end
-                                                                        .format('YYYY-MM-DD'));
-                                                                });
-                                                            });
-                                                        </script>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <h5>Recent Orders</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -79,373 +49,223 @@
                                                 <ul class="table-generic">
                                                     <li class="order-heading-titles">
                                                         <div>Order id</div>
+                                                        <div>Customer</div>
                                                         <div>Date</div>
                                                         <div>Total Price</div>
-                                                        <div>Charges</div>
-                                                        <div>Received</div>
                                                         <div>Status</div>
                                                         <div>Detail</div>
                                                     </li>
-                                                    <li class="order-heading-titles">
-                                                        <div>Nothing to show (static)</div>
-                                                    </li>
-                                                </ul>
-                                            </div>
 
-                                            <div class="print-order-detail menu-order-detail order-detail"
-                                                style="display: none;">
-                                                <div class="logo"><img
-                                                        src="{{ asset('front/extra-images/main-logo.png') }}"
-                                                        alt=""></div>
-                                                <h2>Order Detail</h2>
-                                                <div class="order-detail-inner">
-                                                    <div class="description-holder">
-                                                        <div class="row">
-                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                                <div class="list-detail-options has-checkbox">
-                                                                    <h3>Restaurant Demo </h3>
-                                                                    <ul class="order-detail-options">
-                                                                        <li class="order-number">
-                                                                            <strong>Order ID:</strong>
-                                                                            <span>22606</span>
-                                                                        </li>
-                                                                        <li class="req-delivery">
-                                                                            <strong>Delivery Time:</strong>
-                                                                            <span>10 Minutes </span>
-                                                                        </li>
-                                                                        <li class="created-date">
-                                                                            <strong>Delivery Date:</strong>
-                                                                            <span>Apr 9, 2020 06:38 AM </span>
-                                                                        </li>
-                                                                        <li class="order-type">
-                                                                            <strong>Type:</strong>
-                                                                            <span>order</span>
-                                                                        </li>
-                                                                        <li class="order-type">
-                                                                            <strong>Payment Status:</strong>
-                                                                            <span>Approved</span>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
+                                                    @foreach ($orders as $order)
+                                                        <li class="order-heading-titles">
+                                                            <div><a href="#" data-toggle="modal"
+                                                                    data-target={{ '#order_detail_' . $order->id }}>
+                                                                    #{{ $order->id }}</a>
                                                             </div>
-                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                                <div class="customer-detail-holder">
-                                                                    <h3>Customer Detail</h3>
-                                                                    <ul class="customer-detail">
-                                                                        <li>
-                                                                            <strong>Name :</strong>
-                                                                            <span>Buyer Demo</span>
-                                                                        </li>
-                                                                        <li>
-                                                                            <strong>Phone Number :</strong>
-                                                                            <span>0123456789</span>
-                                                                        </li>
-                                                                        <li>
-                                                                            <strong>Email :</strong>
-                                                                            <span>dum4@chimpgroup.com</span>
-                                                                        </li>
-                                                                        <li>
-                                                                            <strong>Address :</strong>
-                                                                            <span>London</span>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
+                                                            <div>{{ $order->user->name }}</div>
+                                                            <div>
+                                                                {{ \Carbon\Carbon::parse($order->order_date)->format('M j, Y h:i A') }}
                                                             </div>
-                                                            <div class="row">
-                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                    <div class="order-status-holder">
-                                                                        <h3> Order Status:</h3>
-                                                                        <div class="order-status-process order-status">
-                                                                            <p>Completed</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                            <div>@currency($order->total)</div>
+                                                            <div>
+                                                                @if ($order->status == 'Processing')
+                                                                    <span class="order-status"
+                                                                        style="background-color: #1e73be;">{{ $order->status }}</span>
+                                                                @elseif ($order->status == 'Cancelled')
+                                                                    <span class="order-status"
+                                                                        style="background-color: #dd3333;">{{ $order->status }}</span>
+                                                                @elseif ($order->status == 'Completed')
+                                                                    <span class="order-status"
+                                                                        style="background-color: #047a06;">{{ $order->status }}</span>
+                                                                @endif
                                                             </div>
-                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                <h2 class="heading">Food Menu</h2>
-                                                                <div class="responsive-table">
-                                                                    <ul class="categories-order table-generic">
-                                                                        <li class="order-heading-titles">
-                                                                            <div>Products</div>
-                                                                            <div>Price per</div>
-                                                                        </li>
-                                                                        <li class="order-heading-titles">
-                                                                            <div>
-                                                                                <h4>Pizzas</h4>
-                                                                                <h5>Foodbakery Special 9" Deep Pan</h5>
-                                                                            </div>
-                                                                            <div><span class="category-price">£4.80</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="order-heading-titles">
-                                                                            <div>
-                                                                                <h4>Pizzas</h4>
-                                                                                <h5>Foodbakery Special 9" Deep Pan</h5>
-                                                                            </div>
-                                                                            <div><span class="category-price">£4.80</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="order-heading-titles">
-                                                                            <div>
-                                                                                <h4>Pizzas</h4>
-                                                                                <h5>Foodbakery Special 12" Deep Pan</h5>
-                                                                            </div>
-                                                                            <div><span class="category-price">£3.90</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="order-heading-titles">
-                                                                            <div>
-                                                                                <h4>Garlic Bread</h4>
-                                                                                <h5>Garlic Bread 12" Deep</h5>
-                                                                            </div>
-                                                                            <div><span class="category-price">£3.50</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="order-heading-titles">
-                                                                            <div>
-                                                                                <h4>Kebabs</h4>
-                                                                                <h5>Kebabs With Naan</h5>
-                                                                            </div>
-                                                                            <div><span class="category-price">£4.50</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="order-heading-titles">
-                                                                            <div>
-                                                                                <h4>Burgers</h4>
-                                                                                <h5>Quarter Pounder</h5>
-                                                                            </div>
-                                                                            <div><span class="category-price">£3.00</span>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
+                                                            <div><a href="#" data-toggle="modal"
+                                                                    data-target={{ '#order_detail_' . $order->id }}><i
+                                                                        class="icon-plus2 text-color"></i></a>
                                                             </div>
-                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                <div class="row">
-                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                                        <h3>Order Total</h3>
-                                                                    </div>
-                                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                        <ul class="order-detail-options order-total">
-                                                                            <li class="created-date">
-                                                                                <strong>Subtotal:</strong>
-                                                                                <span>£24.50</span>
-                                                                            </li>
-                                                                            <li class="order-type">
-                                                                                <strong>
-                                                                                    Pick Up Fee: </strong>
-                                                                                <span>£10.00</span>
-                                                                            </li>
-                                                                            <li class="order-type">
-                                                                                <strong>VAT (13%)</strong>
-                                                                                <span>£4.48</span>
-                                                                            </li>
-                                                                            <li class="order-type total-price">
-                                                                                <strong>Total:</strong>
-                                                                                <span>£38.99</span>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal fade menu-order-detail order-detail" id="order-det-22606"
-                                                tabindex="-1" role="dialog" style="display: none;">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close"><span
-                                                                    aria-hidden="true">×</span></button>
-                                                            <h2>Order Detail</h2>
-                                                            <button class="btn-print"><i
-                                                                    class="icon-printer"></i><span>Receipt</span></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="order-detail-inner">
-                                                                <div class="description-holder">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                                            <div class="list-detail-options has-checkbox">
-                                                                                <h3>
-                                                                                    Restaurant Demo </h3>
-                                                                                <ul class="order-detail-options">
-                                                                                    <li class="order-number">
-                                                                                        <strong>Order ID:</strong>
-                                                                                        <span>22606</span>
-                                                                                    </li>
-                                                                                    <li class="req-delivery">
-                                                                                        <strong>Delivery Time:</strong>
-                                                                                        <span>10 Minutes </span>
-                                                                                    </li>
-                                                                                    <li class="created-date">
-                                                                                        <strong>Delivery Date:</strong>
-                                                                                        <span>
-                                                                                            Apr 9, 2020 06:38 AM </span>
-                                                                                    </li>
-                                                                                    <li class="order-type">
-                                                                                        <strong>Type:</strong>
-                                                                                        <span>order</span>
-                                                                                    </li>
-                                                                                    <li class="order-type">
-                                                                                        <strong>Payment Status:</strong>
-                                                                                        <span>Approved</span>
-                                                                                    </li>
+                                                        </li>
 
-                                                                                </ul>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                                            <div class="customer-detail-holder">
-                                                                                <h3>Customer Detail</h3>
-                                                                                <ul class="customer-detail">
-                                                                                    <li>
-                                                                                        <strong>Name :</strong>
-                                                                                        <span>Buyer Demo</span>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <strong>Phone Number :</strong>
-                                                                                        <span>0123456789</span>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <strong>Email :</strong>
-                                                                                        <span>dum4@chimpgroup.com</span>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <strong>Address :</strong>
-                                                                                        <span>London</span>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div
-                                                                            class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                            <div class="order-status-holder">
+                                                        <div class="modal fade menu-order-detail order-detail"
+                                                            id={{ 'order_detail_' . $order->id }} tabindex="-1"
+                                                            role="dialog" style="display: none; overflow: auto; -ms-overflow-style: none; scrollbar-width: none;" onwheel="this.style.scrollbarWidth='none'" onscroll="this.style.scrollbarWidth='none'">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close"
+                                                                            data-dismiss="modal"
+                                                                            aria-label="Close"><span
+                                                                                aria-hidden="true">×</span></button>
+                                                                        <h2>Order Detail</h2>
+                                                                        <a href="{{ route('orders.receipt', $order->id) }}"
+                                                                            target="_blank" class="btn-print">
+                                                                            <i class="icon-printer"></i>
+                                                                            <span>Receipt</span>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="order-detail-inner">
+                                                                            <div class="description-holder">
                                                                                 <div class="row">
                                                                                     <div
-                                                                                        class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                                                                                        <h3>Order Status </h3>
+                                                                                        class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                                        <div
+                                                                                            class="customer-detail-holder">
+                                                                                            <h3>Customer Detail
+                                                                                            </h3>
+                                                                                            <ul class="customer-detail">
+                                                                                                <li
+                                                                                                    class="order-number">
+                                                                                                    <strong>Order
+                                                                                                        ID:</strong>
+                                                                                                    <span>#{{ $order->id }}</span>
+                                                                                                </li>
+                                                                                                <li>
+                                                                                                    <strong>Name
+                                                                                                        :</strong>
+                                                                                                    <span>{{ $order->user->name }}</span>
+                                                                                                </li>
+                                                                                                <li>
+                                                                                                    <strong>Phone
+                                                                                                        :</strong>
+                                                                                                    <span>{{ $order->user->phone ?? 'NULL' }}</span>
+                                                                                                </li>
+                                                                                                <li>
+                                                                                                    <strong>Email
+                                                                                                        :</strong>
+                                                                                                    <span>{{ $order->user->email }}</span>
+                                                                                                </li>
+                                                                                                <li>
+                                                                                                    <strong>Wilaya
+                                                                                                        :</strong>
+                                                                                                    <span>{{ $order->wilaya }}</span>
+                                                                                                </li>
+                                                                                                <li>
+                                                                                                    <strong>Commune
+                                                                                                        :</strong>
+                                                                                                    <span>{{ $order->commune }}</span>
+                                                                                                </li>
+                                                                                                <li>
+                                                                                                    <strong>Address
+                                                                                                        :</strong>
+                                                                                                    <span>{{ $order->address }}</span>
+                                                                                                </li>
+                                                                                                <li
+                                                                                                    class="created-date">
+                                                                                                    <strong>Order
+                                                                                                        Date:</strong>
+                                                                                                    <span>
+                                                                                                        {{ \Carbon\Carbon::parse($order->order_date)->format('M j, Y h:i A') }}
+                                                                                                    </span>
+                                                                                                </li>
+                                                                                                <li class="order-type">
+                                                                                                    <strong>Type:</strong>
+                                                                                                    <span>{{ $order->order_type }}</span>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </div>
                                                                                     </div>
+
                                                                                     <div
-                                                                                        class="col-lg-9 col-md-8 col-sm-8 col-xs-12">
-                                                                                        <div class="input-field">
-                                                                                            <select
-                                                                                                class="chosen-select-no-single">
-                                                                                                <option value="Processing">
-                                                                                                    Processing</option>
-                                                                                                <option value="Cancelled">
-                                                                                                    Cancelled</option>
-                                                                                                <option selected="selected"
-                                                                                                    value="Completed">
-                                                                                                    Completed</option>
-                                                                                            </select>
+                                                                                        class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                        <div
+                                                                                            class="order-status-holder">
+                                                                                            <form
+                                                                                                action="{{ route('restaurant.orders.updateStatus', $order->id) }}"
+                                                                                                method="POST">
+                                                                                                @csrf
+                                                                                                @method('PUT')
+
+                                                                                                <div class="row">
+                                                                                                    <div
+                                                                                                        class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                                                                                        <h3>Order Status
+                                                                                                        </h3>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                        class="col-lg-9 col-md-8 col-sm-8 col-xs-12">
+                                                                                                        <div
+                                                                                                            class="input-field">
+                                                                                                            <select
+                                                                                                                name="status"
+                                                                                                                class="chosen-select-no-single"
+                                                                                                                onchange="this.form.submit()">
+                                                                                                                <option
+                                                                                                                    value="Processing"
+                                                                                                                    {{ $order->status == 'Processing' ? 'selected' : '' }}>
+                                                                                                                    Processing
+                                                                                                                </option>
+                                                                                                                <option
+                                                                                                                    value="Cancelled"
+                                                                                                                    {{ $order->status == 'Cancelled' ? 'selected' : '' }}>
+                                                                                                                    Cancelled
+                                                                                                                </option>
+                                                                                                                <option
+                                                                                                                    value="Completed"
+                                                                                                                    {{ $order->status == 'Completed' ? 'selected' : '' }}>
+                                                                                                                    Completed
+                                                                                                                </option>
+                                                                                                            </select>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </form>
+
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div
-                                                                            class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                            <h2 class="heading">Food Menu</h2>
-                                                                            <div class="responsive-table">
-                                                                                <ul class="categories-order table-generic">
-                                                                                    <li class="order-heading-titles">
-                                                                                        <div>Products</div>
-                                                                                        <div>Price per</div>
-                                                                                    </li>
-                                                                                    <li class="order-heading-titles">
-                                                                                        <div>
-                                                                                            <h4>Pizzas</h4>
-                                                                                            <h5>Foodbakery Special 9" Deep
-                                                                                                Pan</h5>
+
+                                                                                    <div
+                                                                                        class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                        <h2 class="heading">Food
+                                                                                            Menu</h2>
+                                                                                        <div class="responsive-table">
+                                                                                            <ul
+                                                                                                class="categories-order table-generic">
+                                                                                                <li
+                                                                                                    class="order-heading-titles">
+                                                                                                    <div>
+                                                                                                        Products
+                                                                                                    </div>
+                                                                                                    <div>Price
+                                                                                                    </div>
+                                                                                                </li>
+
+                                                                                                @foreach ($order->orderLines as $orderLine)
+                                                                                                    <li
+                                                                                                        class="order-heading-titles">
+                                                                                                        <div>
+                                                                                                            <h4>{{ $orderLine->dish->name }}
+                                                                                                            </h4>
+                                                                                                            <h5>{{ $orderLine->dish->description }}
+                                                                                                            </h5>
+                                                                                                        </div>
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="category-price"
+                                                                                                                style="display: inline-block;">@currency($orderLine->dish->price)
+                                                                                                                x{{ $orderLine->quantity }}</span>
+                                                                                                        </div>
+                                                                                                    </li>
+                                                                                                @endforeach
+                                                                                            </ul>
                                                                                         </div>
-                                                                                        <div><span
-                                                                                                class="category-price">£4.80</span>
+                                                                                    </div>
+
+                                                                                    <div
+                                                                                        class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                        <div class="row">
+                                                                                            <div
+                                                                                                class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                                                                <ul
+                                                                                                    class="order-detail-options order-total">
+                                                                                                    <li
+                                                                                                        class="order-type total-price">
+                                                                                                        <strong>Total:</strong>
+                                                                                                        <span>@currency($order->total)</span>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </div>
                                                                                         </div>
-                                                                                    </li>
-                                                                                    <li class="order-heading-titles">
-                                                                                        <div>
-                                                                                            <h4>Pizzas</h4>
-                                                                                            <h5>Foodbakery Special 9" Deep
-                                                                                                Pan</h5>
-                                                                                        </div>
-                                                                                        <div><span
-                                                                                                class="category-price">£4.80</span>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                    <li class="order-heading-titles">
-                                                                                        <div>
-                                                                                            <h4>Pizzas</h4>
-                                                                                            <h5>Foodbakery Special 12" Deep
-                                                                                                Pan</h5>
-                                                                                        </div>
-                                                                                        <div><span
-                                                                                                class="category-price">£3.90</span>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                    <li class="order-heading-titles">
-                                                                                        <div>
-                                                                                            <h4>Garlic Bread</h4>
-                                                                                            <h5>Garlic Bread 12" Deep</h5>
-                                                                                        </div>
-                                                                                        <div><span
-                                                                                                class="category-price">£3.50</span>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                    <li class="order-heading-titles">
-                                                                                        <div>
-                                                                                            <h4>Kebabs</h4>
-                                                                                            <h5>Kebabs With Naan</h5>
-                                                                                        </div>
-                                                                                        <div><span
-                                                                                                class="category-price">£4.50</span>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                    <li class="order-heading-titles">
-                                                                                        <div>
-                                                                                            <h4>Burgers</h4>
-                                                                                            <h5>Quarter Pounder</h5>
-                                                                                        </div>
-                                                                                        <div><span
-                                                                                                class="category-price">£3.00</span>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div
-                                                                            class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                            <div class="row">
-                                                                                <div
-                                                                                    class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                                                    <h3>Order Total</h3>
-                                                                                </div>
-                                                                                <div
-                                                                                    class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                                    <ul
-                                                                                        class="order-detail-options order-total">
-                                                                                        <li class="created-date">
-                                                                                            <strong>Subtotal:</strong>
-                                                                                            <span>£24.50</span>
-                                                                                        </li>
-                                                                                        <li class="order-type">
-                                                                                            <strong>
-                                                                                                Pick Up Fee: </strong>
-                                                                                            <span>£10.00</span>
-                                                                                        </li>
-                                                                                        <li class="order-type">
-                                                                                            <strong>VAT (13%)</strong>
-                                                                                            <span>£4.48</span>
-                                                                                        </li>
-                                                                                        <li class="order-type total-price">
-                                                                                            <strong>Total:</strong>
-                                                                                            <span>£38.99</span>
-                                                                                        </li>
-                                                                                    </ul>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -453,33 +273,26 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                    @endforeach
+                                                </ul>
 
-                                            <script>
-                                                (function($) {
-                                                    $(document).ready(function() {
-                                                        $(".order-detail .modal-dialog .modal-content").mCustomScrollbar({
-                                                            setHeight: 724,
-                                                            theme: "minimal-dark",
-                                                            mouseWheelPixels: 100
-                                                        });
-                                                    });
-                                                })(jQuery);
-                                            </script>
+                                                @if ($orders->isEmpty())
+                                                    <div style="width: 100%; text-align: center; margin-bottom: 20px;">Nothing to show</div>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                {{-- <ul class="pagination">
-                                <li class="active"><a>1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><span class="page-numbers dots">…</span></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">Next </a></li>
-                            </ul> --}}
+                                {{-- Pagination --}}
+                                @if ($orders->hasPages())
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="page-nation">
+                                                {{ $orders->links('pagination::bootstrap-4') }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
