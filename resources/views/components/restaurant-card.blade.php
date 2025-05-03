@@ -3,7 +3,7 @@
 <li>
     <div class="img-holder">
         <figure>
-            <a href="#">
+            <a href="{{ route('front.listing_details', $restaurant->id) }}">
                 <img src="{{ $restaurant->restaurant_logo ? asset('storage/' . $restaurant->restaurant_logo) : asset('front/extra-images/restaurant-placeholder.png') }}"
                     class="img-list wp-post-image" style="border-radius: 5px; aspect-ratio: 1 / 1; object-fit: cover; object-position: center;" alt="logo">
             </a>
