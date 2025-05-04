@@ -12,20 +12,20 @@
         <tbody>
             @forelse($users as $user)
                 <tr data-name="{{ strtolower($user->name) }}">
-                    <td>{{ $user->name }}</td>
+                    <td style="{{ $user->status === 'blocked' ? 'color: #c33333' : '' }}">{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->phone ?? 'NULL' }}</td>
                     <td>
                         @if ($user->role === \App\Models\User::ROLE_USER)
-                        <span class="badge py-1" style="text-transform: uppercase; background-color: #356e97;">
-                            <i class="fas fa-user"></i>
+                            <span class="badge py-1" style="text-transform: uppercase; background-color: #356e97;">
+                                <i class="fas fa-user"></i>
                                 {{ $user->role }}
                             </span>
                         @elseif ($user->role === \App\Models\User::ROLE_RESTAURANT)
-                        <span class="badge py-1" style="text-transform: uppercase; background-color: #a13133;">
-                            <i class="fas fa-id-card"></i>
-                            {{ $user->role }}
-                        </span>
+                            <span class="badge py-1" style="text-transform: uppercase; background-color: #a13133;">
+                                <i class="fas fa-id-card"></i>
+                                {{ $user->role }}
+                            </span>
                         @else
                             <span class="badge py-1" style="text-transform: uppercase; background-color: #343a40;">
                                 <i class="fas fa-user-shield"></i>
@@ -57,14 +57,42 @@
                                 <h3 style="margin-top: 2rem;">{{ $user->name }}</h3>
                                 <p><strong>Email:</strong> {{ $user->email }}</p>
                                 <p><strong>Phone:</strong> {{ $user->phone ?? 'NULL' }}</p>
-                                <p><strong>Status:</strong> {{ $user->status }}</p>
-                                <p><strong>Email verified:</strong> {{ $user->email_verified_at ? 'Yes - at ' . $user->email_verified_at : 'none' }}</p>
+                                <p><strong>Email verified:</strong>
+                                    {{ $user->email_verified_at ? 'Yes - at ' . $user->email_verified_at : 'none' }}
+                                </p>
                                 <p><strong>Created at:</strong> {{ $user->created_at }}</p>
-                                <p><strong>Role:</strong> <span style="text-transform: capitalize;">{{ $user->role }}</span></p>
+                                <p><strong>Role:</strong> <span
+                                        style="text-transform: capitalize;">{{ $user->role }}</span></p>
 
                                 @if ($user->role === \App\Models\User::ROLE_RESTAURANT)
-                                    <p style="margin: 0"><strong>Restaurant Name:</strong> {{ $user->restaurant->name }}</p>
-                                    <a style="margin-bottom: 1rem;" href="{{ route('admin.restaurants', ['search' => $user->restaurant->email]) }}">View restaurant profile card</a>
+                                    <p style="margin: 0"><strong>Restaurant Name:</strong>
+                                        {{ $user->restaurant->name }}</p>
+                                    <a style="margin-bottom: 1rem;"
+                                        href="{{ route('admin.restaurants', ['search' => $user->restaurant->email]) }}">View
+                                        restaurant profile card</a>
+                                @endif
+
+                                @if ($user->role !== \App\Models\User::ROLE_ADMIN)
+                                    <div class="modal-footer justify-content-start align-items-end p-0">
+                                        <form action="{{ route('admin.users.updateStatus', $user->id) }}"
+                                            onsubmit="return confirm('Are you certain you want to update this user\'s status?');"
+                                            method="POST" class="d-flex justify-content-start align-items-end gap-2">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="min-width: 250px;">
+                                                <label for="status">Status</label>
+                                                <select name="status" class="form-select">
+                                                    <option value="active"
+                                                        {{ $user->status === 'active' ? 'selected' : '' }}>Active
+                                                    </option>
+                                                    <option value="blocked"
+                                                        {{ $user->status === 'blocked' ? 'selected' : '' }}>Blocked
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <button type="submit" class="btn bg-info text-white">Update</button>
+                                        </form>
+                                    </div>
                                 @endif
                             </div>
                         </div>

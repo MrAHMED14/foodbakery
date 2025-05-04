@@ -19,6 +19,11 @@ class CheckRole
         if (!in_array(Auth::user()->role, $roles)) {
             abort(403, 'Unauthorized action.');
         }
+
+        if (Auth::user()->status === 'blocked') {
+            return redirect()->route('blocked');
+        }
+
         return $next($request);
     }
 }

@@ -22,6 +22,19 @@ class AdminController extends Controller
         return view('back.index', compact('totalRestaurants', 'totalUsers', 'restaurants'));
     }
 
+    public function updateStatus(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'status' => ['required', 'in:active,blocked'],
+        ]);
+
+        $user->status = $validated['status'];
+        $user->save();
+
+        return redirect()->back()->with('success', 'User status updated successfully.');
+    }
+
+
     public function restaurants(Request $request)
     {
         $query = $request->input('search');

@@ -11,6 +11,7 @@ use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SiteConfigurationController;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 //Front route
@@ -41,6 +42,14 @@ Route::group(['prefix' => '', 'as' => 'front.'], function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/blocked', function () {
+        if (Auth::user()->status !== 'blocked') {
+            abort(404, 'Not Found.');
+        }
+
+        return view('errors.blocked');
+    })->name('blocked');
+
     Route::get('/orders/{order}/receipt', [OrderController::class, 'receipt'])->name('orders.receipt');
 
     //Restaurant route
@@ -125,6 +134,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::patch('/restaurants/{restaurant}/toggle-popularity', [AdminController::class, 'toggleRestaurantPopularity'])->name('togglePopularity');
 
             Route::get('/users', [AdminController::class, 'users'])->name('users');
+            Route::put('/users/{user}/status', [AdminController::class, 'updateStatus'])->name('users.updateStatus');
 
             Route::get('/reviews', [AdminController::class, 'reviews'])->name('reviews');
             Route::delete('/reviews/{id}', [AdminController::class, 'destroyReview'])->name('reviews.destroy');
