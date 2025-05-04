@@ -221,6 +221,8 @@
     </script>
     <!-- dashboard init -->
     <script src="{{ asset('back/js/pages/dashboard.init.js') }}"></script>
+    <script src="{{ asset('back/libs/chart.js/chart.umd.js') }}"></script>
+    <script src="{{ asset('back/js/pages/chartjs.init.js') }}"></script>
     <script src="{{ asset('back/js/app.js') }}"></script>
 
 </body>
