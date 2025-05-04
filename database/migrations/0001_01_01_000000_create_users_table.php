@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('about_me')->nullable();
             $table->text('photo')->nullable();
             $table->enum('role', ['admin', 'restaurateur', 'client'])->default('client');
-            $table->enum('status', ['active', 'inactive', 'blocked'])->default('inactive');
+            $table->enum('status', ['active', 'blocked'])->default('active');
             $table->rememberToken();
             $table->timestamps();
         });
