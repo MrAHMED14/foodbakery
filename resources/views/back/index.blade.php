@@ -27,6 +27,25 @@
 
     {{-- Page content --}}
     <div class="row">
+        <div class="col-12">
+            @php
+                $hour = now()->timezone('+01:00')->format('H'); 
+                if ($hour >= 5 && $hour < 12) {
+                    $greeting = 'Good morning';
+                } elseif ($hour >= 12 && $hour < 17) {
+                    $greeting = 'Good afternoon';
+                } elseif ($hour >= 17 && $hour < 21) {
+                    $greeting = 'Good evening';
+                } else {
+                    $greeting = 'Good night';
+                }
+            @endphp
+            <div>
+                <h3 class="font-semibold">{{ $greeting }}, Mr. <span style="text-transform: capitalize;">{{ Auth::user()->name }}</span>!</h3>
+                <p>Here's a brief overview of {{ $siteConfig->site_name }}.</p>
+            </div>
+        </div>
+
         <div class="col-xl-3 col-md-6">
             <!-- card -->
             <div class="card card-h-100">
