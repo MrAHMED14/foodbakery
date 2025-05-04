@@ -3,6 +3,7 @@
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Wilaya</th>
                 <th>Commune</th>
                 <th>Phone</th>
                 <th>Status</th>
@@ -14,6 +15,7 @@
                 <tr data-name="{{ strtolower($restaurant->name) }}"
                     data-verified="{{ $restaurant->is_verified ? '1' : '0' }}">
                     <td>{{ $restaurant->name }}</td>
+                    <td>{{ $restaurant->wilaya }}</td>
                     <td>{{ $restaurant->commune }}</td>
                     <td>{{ $restaurant->phone }}</td>
                     <td>
