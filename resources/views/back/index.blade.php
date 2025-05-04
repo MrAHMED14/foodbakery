@@ -34,23 +34,19 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-6">
-                            <span class="text-muted mb-3 lh-1 d-block text-truncate">My Wallet</span>
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate"> Restaurants Registered</span>
                             <h4 class="mb-3">
-                                $<span class="counter-value" data-target="865.2">0</span>k
+                                <span class="counter-value" data-target="{{ $totalRestaurants }}">0</span>
                             </h4>
                         </div>
 
                         <div class="col-6">
-                            <div id="mini-chart1" data-colors='["#5156be"]' class="apex-charts mb-2"></div>
+                            <div id="mini-chart1" data-colors='["#003049"]' class="apex-charts mb-2"></div>
                         </div>
                     </div>
-                    <div class="text-nowrap">
-                        <span class="badge bg-success-subtle text-success">+$20.9k</span>
-                        <span class="ms-1 text-muted font-size-13">Since last week</span>
-                    </div>
-                </div><!-- end card body -->
-            </div><!-- end card -->
-        </div><!-- end col -->
+                </div>
+            </div>
+        </div>
 
         <div class="col-xl-3 col-md-6">
             <!-- card -->
@@ -59,18 +55,14 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-6">
-                            <span class="text-muted mb-3 lh-1 d-block text-truncate">Number of Trades</span>
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate"> Users Registered</span>
                             <h4 class="mb-3">
-                                <span class="counter-value" data-target="6258">0</span>
+                                <span class="counter-value" data-target="{{ $totalUsers }}">0</span>
                             </h4>
                         </div>
                         <div class="col-6">
-                            <div id="mini-chart2" data-colors='["#5156be"]' class="apex-charts mb-2"></div>
+                            <div id="mini-chart2" data-colors='["#003049"]' class="apex-charts mb-2"></div>
                         </div>
-                    </div>
-                    <div class="text-nowrap">
-                        <span class="badge bg-danger-subtle text-danger">-29 Trades</span>
-                        <span class="ms-1 text-muted font-size-13">Since last week</span>
                     </div>
                 </div><!-- end card body -->
             </div><!-- end card -->
@@ -83,18 +75,14 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-6">
-                            <span class="text-muted mb-3 lh-1 d-block text-truncate">Invested Amount</span>
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate">Profit Amount</span>
                             <h4 class="mb-3">
-                                $<span class="counter-value" data-target="4.32">0</span>M
+                                <span class="counter-value" data-target="45600">0</span> DA
                             </h4>
                         </div>
                         <div class="col-6">
-                            <div id="mini-chart3" data-colors='["#5156be"]' class="apex-charts mb-2"></div>
+                            <div id="mini-chart3" data-colors='["#2ab57d"]' class="apex-charts mb-2"></div>
                         </div>
-                    </div>
-                    <div class="text-nowrap">
-                        <span class="badge bg-success-subtle text-success">+ $2.8k</span>
-                        <span class="ms-1 text-muted font-size-13">Since last week</span>
                     </div>
                 </div><!-- end card body -->
             </div><!-- end card -->
@@ -109,18 +97,45 @@
                         <div class="col-6">
                             <span class="text-muted mb-3 lh-1 d-block text-truncate">Profit Ration</span>
                             <h4 class="mb-3">
-                                <span class="counter-value" data-target="12.57">0</span>%
+                                <span class="counter-value" data-target="45">0</span>%
                             </h4>
                         </div>
                         <div class="col-6">
-                            <div id="mini-chart4" data-colors='["#5156be"]' class="apex-charts mb-2"></div>
+                            <div id="mini-chart4" data-colors='["#c33333"]' class="apex-charts mb-2"></div>
                         </div>
                     </div>
-                    <div class="text-nowrap">
-                        <span class="badge bg-success-subtle text-success">+2.95%</span>
-                        <span class="ms-1 text-muted font-size-13">Since last week</span>
-                    </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="col-xl-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Line Chart</h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="lineChart" class="chartjs-chart" data-colors="[&quot;rgba(195, 51, 51, 0.2)&quot;, &quot;#c33333&quot;, &quot;rgba(235, 239, 242, 0.2)&quot;, &quot;#ebeff2&quot;]" width="500" height="500" style="display: block; box-sizing: border-box; height: 500px; width: 100%;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Radar Chart</h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="radar" class="chartjs-chart" data-colors="[&quot;rgba(42, 181, 125, 0.2)&quot;, &quot;#2ab57d&quot;, &quot;rgba(0, 48, 73, 0.2)&quot;, &quot;#003049&quot;]" width="499" height="320" style="display: block; box-sizing: border-box; height: 320px; width: 499px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card-header">
+                <h4 class="card-title mb-2">Recent Restaurants</h4>
+            </div>
+            <div class="card-body">
+                @include('back.body.restaurant-table')
             </div>
         </div>
     </div>

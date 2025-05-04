@@ -15,7 +15,11 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('back.index');
+        $totalRestaurants = Restaurant::count();
+        $totalUsers = User::count();
+
+        $restaurants = Restaurant::where('is_verified', 0)->latest()->paginate(10);
+        return view('back.index', compact('totalRestaurants', 'totalUsers', 'restaurants'));
     }
 
     public function restaurants(Request $request)
