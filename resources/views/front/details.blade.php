@@ -50,16 +50,12 @@
                                     <p>
                                         <span style="display: flex; align-items: center; justify-content: center;">
                                             <i class="icon-motorcycle"></i>
-                                            @if ($restaurant->delivery_fee)
-                                                Delivery fee: @currency($restaurant->delivery_fee)
+                                            @if ($restaurant->minimum_order || $restaurant->maximum_order)
+                                                Min order: {{ $restaurant->minimum_order ? $restaurant->minimum_order : '0' }} @if ($restaurant->maximum_order) Max order: {{ $restaurant->maximum_order }} @endif
                                             @else
-                                                Delivery fee: Free
+                                                Unlimited Orders
                                             @endif
                                         </span>
-                                        @if ($restaurant->minimum_order && $restaurant->maximum_order)
-                                            @currency($restaurant->minimum_order) Max Order :
-                                            @currency($restaurant->maximum_order)</span>
-                                        @endif
                                     </p>
                                 </div>
                                 <ul>
@@ -516,7 +512,12 @@
                                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                     <div class="field-holder has-icon field-textarea">
                                                                         <i class="icon icon-mode_edit"></i>
-                                                                        <textarea placeholder="Your Instructions" class="input-field"></textarea>
+                                                                        <textarea placeholder="Your Instructions" class="input-field" name="description"></textarea>
+                                                                        @error('description')
+                                                                            <div class="text-danger" style="font-size: 12px;">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
                                                                     </div>
                                                                 </div>
 

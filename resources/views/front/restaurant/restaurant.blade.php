@@ -332,15 +332,15 @@
                                                         </div>
                                                     </div>
 
-                                                    {{-- Delivery Fee --}}
+                                                    {{-- Session duration --}}
                                                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                         <div class="field-holder">
-                                                            <label>Delivery Fee</label>
-                                                            <input type="number" name="delivery_fee"
-                                                                value="{{ old('delivery_fee', $user->restaurant->delivery_fee) }}"
-                                                                placeholder="Enter delivery fee">
+                                                            <label>Session duration (min)</label>
+                                                            <input type="number" name="session_duration" min="10"
+                                                                value="{{ old('session_duration', $user->restaurant->session_duration) }}"
+                                                                placeholder="Enter booking session duration">
 
-                                                            @error('delivery_fee')
+                                                            @error('session_duration')
                                                                 <div class="text-danger" style="font-size: 12px;">
                                                                     {{ $message }}
                                                                 </div>
