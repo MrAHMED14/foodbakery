@@ -14,6 +14,24 @@
     <meta name="robots" content="index, follow">
     <meta name="description" content="{{ $siteConfig->meta_description }}">
     <meta name="keywords" content="{{ $siteConfig->meta_keywords }}">
+
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="FoodBakery - Discover exceptional dining experiences.">
+    <meta property="og:description" content="FoodBakery is a directory platform for multiple restaurants that provides online food ordering, table reservations, and options for delivery or pickup.">
+    <meta property="og:image" content="{{ asset('opengraph-image.png') }}">
+    <meta property="og:image:width" content="1280">
+    <meta property="og:image:height" content="640">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="FoodBakery">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:domain" content="{{ request()->getHost() }}">
+    <meta name="twitter:url" content="{{ url()->current() }}">
+    <meta name="twitter:title" content="FoodBakery - Discover exceptional dining experiences.">
+    <meta name="twitter:description" content="FoodBakery is a directory platform for multiple restaurants that provides online food ordering, table reservations, and options for delivery or pickup.">
+    <meta name="twitter:image" content="{{ asset('opengraph-image.png') }}">
+
     <meta name="google-site-verification" content="XvG5Rx8b8edoFGOMNPXyl4_uxRnxOBE61zbie70V_4Y" />
     <link rel="icon" type="image/png" href="{{ asset('/favicon-96x96.png') }}" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="{{ asset('/favicon.svg') }}" />
