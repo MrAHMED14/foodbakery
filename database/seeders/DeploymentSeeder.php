@@ -79,10 +79,10 @@ class DeploymentSeeder extends Seeder
                     }
                 }
 
-                Review::factory(rand(26, 48))->make([
+                Review::factory(rand(30, 50))->make([
                     'restaurant_id' => $restaurant->id,
                 ])->each(function ($review) {
-                    $review->rating = fake()->randomElement([4, 4, 5, 5, 5, 3, 2, 1]);
+                    $review->rating = fake()->randomElement([5, 5, 5, 4, 2]);
                     $review->save();
 
                     if (rand(0, 1)) {
