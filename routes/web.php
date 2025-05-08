@@ -116,8 +116,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::group(['prefix' => 'buyer', 'as' => 'buyer.'], function () {
             Route::get('/dashboard', [BuyerController::class, 'buyerDashboard'])->name('dashboard');
             Route::get('/bookings', [ReservationController::class, 'showUserReservations'])->name('bookings');
+            Route::put('/bookings/{reservation}/cancel', [ReservationController::class, 'cancelUserReservation'])->name('bookings.cancel');
             Route::get('/reviews', [BuyerController::class, 'reviews'])->name('reviews');
             Route::get('/orders', [OrderController::class, 'userOrders'])->name('orders');
+            Route::put('/orders/{order}/cancel', [OrderController::class, 'cancelUserOrder'])->name('orders.cancel');
             Route::get('/shortlists', [BuyerController::class, 'shortlists'])->name('shortlists');
             Route::get('/statement', [BuyerController::class, 'statement'])->name('statement');
             Route::get('/account-setting', [BuyerController::class, 'account_setting'])->name('account_setting');

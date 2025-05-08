@@ -9,7 +9,7 @@ use Exception;
 
 class ReservationService
 {
-    public function createReservation($user, $restaurantId, $reservationDate, $firstName, $lastName, $nbrTables, $sessionDuration = 90)
+    public function createReservation($user, $restaurantId, $reservationDate, $firstName, $lastName, $nbrTables, $description = null)
     {
         $restaurant = Restaurant::findOrFail($restaurantId);
 
@@ -20,6 +20,8 @@ class ReservationService
         if (!$restaurant->accepts_reservations) {
             throw new Exception('Restaurant is not accepting reservations at the moment.');
         }
+
+        $sessionDuration = $restaurant->session_duration ? $restaurant->session_duration : 90; // Default to 90 minutes
 
         $reservationDateTime = Carbon::parse($reservationDate);
         $startTime = $reservationDateTime->copy();
@@ -69,6 +71,7 @@ class ReservationService
             'first_name'       => $firstName,
             'last_name'        => $lastName,
             'nbr_table'        => $nbrTables,
+            'description'      => $description,
         ]);
     }
 }

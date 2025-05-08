@@ -143,6 +143,13 @@
                                                                                     <span>{{ $reservation->nbr_table }}
                                                                                         table{{ $reservation->nbr_table > 1 ? 's' : '' }}</span>
                                                                                 </li>
+                                                                                <li>
+                                                                                    <strong>Description:</strong>
+                                                                                    <span>{{ $reservation->description ?? 'NULL' }}</span>
+                                                                                </li>
+                                                                                <li>
+
+                                                                                </li>
                                                                             </ul>
                                                                             <div class="booking-status-holder">
                                                                                 <div
@@ -164,6 +171,15 @@
                                                                                         </p>
                                                                                     @endif
                                                                                 </div>
+                                                                            </div>
+                                                                            <div class="booking-status-holder">
+                                                                                @if ($reservation->status != 'Cancelled')
+                                                                                    <form action="{{ route('buyer.bookings.cancel', $reservation->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        @method('PUT')
+                                                                                        <button type="submit" class="btn btn-danger">Cancel Booking</button>
+                                                                                    </form>
+                                                                                @endif
                                                                             </div>
                                                                         </div>
                                                                     </div>

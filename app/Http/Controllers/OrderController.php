@@ -158,4 +158,16 @@ class OrderController extends Controller
 
         return back()->with('success', 'Order status updated successfully.');
     }
+
+    public function cancelUserOrder(Order $order)
+    {
+        if ($order->user_id !== Auth::user()->id) {
+            return back()->with('error', 'You are not authorized to cancel this order.');
+        }
+
+        $order->status = 'Cancelled';
+        $order->save();
+
+        return back()->with('success', 'Order cancelled successfully.');
+    }
 }

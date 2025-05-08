@@ -25,6 +25,7 @@ class ReservationController extends Controller
             'first_name'       => 'required|string',
             'last_name'        => 'required|string',
             'nbr_table'        => 'required|integer|min:1',
+            'description'      => 'nullable|string',
         ]);
 
         try {
@@ -34,7 +35,8 @@ class ReservationController extends Controller
                 $request->reservation_date,
                 $request->first_name,
                 $request->last_name,
-                $request->nbr_table
+                $request->nbr_table,
+                $request->description,
             );
 
             session()->flash('success', 'Reservation created successfully!');
@@ -102,5 +104,17 @@ class ReservationController extends Controller
         $reservations = $query->paginate(10);
 
         return view('front.restaurant.bookings', compact('reservations'));
+    }
+
+    public function cancelUserReservation(Reservation $reservation)
+    {
+        if ($reservation->user_id !== Auth::user()->id) {
+            return back()->with('error', 'You are not authorized to cancel this reservation.');
+        }
+
+        $reservation->status = 'Cancelled';
+        $reservation->save();
+
+        return back()->with('success', 'Reservation cancelled successfully.');
     }
 }

@@ -143,6 +143,10 @@
                                                                                 <span>{{ $reservation->nbr_table }}
                                                                                     table{{ $reservation->nbr_table > 1 ? 's' : '' }}</span>
                                                                             </li>
+                                                                            <li>
+                                                                                <strong>Description:</strong>
+                                                                                <span>{{ $reservation->description ?? 'NULL' }}</span>
+                                                                            </li>
                                                                         </ul>
                                                                         <h3>Booking Status </h3>
                                                                         <div class="booking-status-holder">
