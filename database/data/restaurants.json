@@ -6,6 +6,110 @@
             "password": "restaurant"
         },
         "restaurant": {
+            "name": "Celtics Food",
+            "address": "Cité Rousseau à coté du pont de radio",
+            "commune": "Tiaret",
+            "wilaya": "Tiaret",
+            "phone": "0558 15 27 75",
+            "latitude": "35.3699448",
+            "longitude": "1.3219931",
+            "description": "Préparez-vous à déguster de délicieux plats inspirés des légendaires Celtics de Boston, Notre restaurant rapide vous propose une grande variété de plats savoureux. Venez vous régaler !",
+            "cover_photo": "static/restaurant-0/covers/cover-1.png",
+            "restaurant_logo": "static/restaurant-0/logos/logo-1.png",
+            "is_verified": true,
+            "capacity": 5
+        },
+        "cuisines": [
+            1,
+            2,
+            3
+        ],
+        "menus": [
+            {
+                "name": "Plats pricipaux",
+                "dishes": [
+                    {
+                        "name": "Paela aux fruits de mer",
+                        "description": "Riz, fruits de mer (moules, crevettes, calamars), tomates, oignons, les épices",
+                        "dish_image": "static/restaurant-0/dishes/p-1.jpg",
+                        "price": 1250
+                    },
+                    {
+                        "name": "Poulet sauce moutarde et champignons",
+                        "description": "Poulet, champignons, moutarde, crème fraîche, beurre, sel et poivre",
+                        "dish_image": "static/restaurant-0/dishes/p-2.jpg",
+                        "price": 550
+                    },
+                    {
+                        "name": "Tacos",
+                        "description": "Viande hachée, kebab, formage blanc, sauce mexicaine, sauce fromage, frites",
+                        "dish_image": "static/restaurant-0/dishes/p-3.jpg",
+                        "price": 350
+                    },
+                    {
+                        "name": "Celtics (plat spécial)",
+                        "description": "Sauté de veau, viande hachée, merguez sauté, kebab, coradon bleu, cuisse de poulet, cocktail de salades, sauce fromage, frites",
+                        "dish_image": "static/restaurant-0/dishes/p-4.jpg",
+                        "price": 850
+                    }
+                ]
+            },
+            {
+                "name": "Entrées",
+                "dishes": [
+                    {
+                        "name": "Soupe de poisson",
+                        "description": "Filets de poisson, bouillon de poisson, carottes, oignons, huile d'olive, persil",
+                        "dish_image": "static/restaurant-0/dishes/e-1.jpg",
+                        "price": 650
+                    },
+                    {
+                        "name": "Soupe de légumes",
+                        "description": "Carottes, pommes de terre, courgettes, oignons, herbes, l'eau",
+                        "dish_image": "static/restaurant-0/dishes/e-2.jpg",
+                        "price": 450
+                    },
+                    {
+                        "name": "Salade césar",
+                        "description": "Salade verte, poulet grillé, maïs, tomates cerises, fromage, sauce",
+                        "dish_image": "static/restaurant-0/dishes/e-3.jpg",
+                        "price": 250
+                    }
+                ]
+            },
+            {
+                "name": "Desserts",
+                "dishes": [
+                    {
+                        "name": "Tiramisu",
+                        "description": "Mascarpone, café, biscuits à la cuillère, cacao",
+                        "dish_image": "static/restaurant-0/dishes/d-1.jpg",
+                        "price": 250
+                    },
+                    {
+                        "name": "Crêpe à la fraise",
+                        "description": "Pâte à crêpes, sucre, chocolat, fraises, crème chantilly",
+                        "dish_image": "static/restaurant-0/dishes/d-2.jpg",
+                        "price": 300
+                    },
+                    {
+                        "name": "Strawberry cheescake",
+                        "description": "Pâte sablée, fromage frais, crème, fraises",
+                        "dish_image": "static/restaurant-0/dishes/d-3.jpg",
+                        "price": 260
+                    }
+                ]
+            }
+        ],
+        "gallery_images": 17,
+        "gallery_path": "static/restaurant-0/gallery"
+    },
+    {
+        "user": {
+            "name": "Yacine Hafsi",
+            "password": "restaurant"
+        },
+        "restaurant": {
             "name": "Al Mardoma Restaurant and Grills | مطعم ومشاوي المردومة",
             "address": "135 Rue Didouche Mourad, Sidi M'Hamed 16000, Algeria",
             "commune": "Mahdia",
