@@ -21,14 +21,11 @@
                                 <li>
                                     <a href="#">Pages</a>
                                     <ul>
-                                        <li><a href="{{ route('front.price') }}">Price Plans</a></li>
-                                        <li><a href="{{ route('front.how') }}">How it works</a></li>
                                         <li><a href="{{ route('front.faq') }}">FAQ’s</a></li>
                                         <li><a href="{{ route('front.contact') }}">Contact</a></li>
                                     </ul>
                                     <!--End Sub Menu -->
                                 </li>
-                                <li><a href="{{ route('front.blog') }}">Blogs</a></li>
                             </ul>
                         </nav><!-- .main-navigation -->
                     </div>

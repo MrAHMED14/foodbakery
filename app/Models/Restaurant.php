@@ -86,11 +86,6 @@ class Restaurant extends Model
         return $this->hasMany(Menu::class);
     }
 
-    public function subscriptions()
-    {
-        return $this->hasMany(Subscription::class);
-    }
-
     public function reservations()
     {
         return $this->hasMany(Reservation::class);

@@ -17,12 +17,12 @@ use Illuminate\Support\Facades\Route;
 //Front route
 Route::group(['prefix' => '', 'as' => 'front.'], function () {
     Route::get('/', [FrontController::class, 'indexNew'])->name('index');
-    Route::get('/new', [FrontController::class, 'indexNew'])->name('indexNew');
+    // Route::get('/new', [FrontController::class, 'indexNew'])->name('indexNew');
     Route::get('/contact-us', [FrontController::class, 'contact'])->name('contact');
     Route::get('/faq', [FrontController::class, 'faq'])->name('faq');
-    Route::get('/how', [FrontController::class, 'how'])->name('how');
-    Route::get('/price', [FrontController::class, 'price'])->name('price');
-    Route::get('/result', [FrontController::class, 'result'])->name('result');
+    // Route::get('/how', [FrontController::class, 'how'])->name('how');
+    // Route::get('/price', [FrontController::class, 'price'])->name('price');
+    // Route::get('/result', [FrontController::class, 'result'])->name('result');
 
     Route::get('/listing', [RestaurantController::class, 'index'])->name('listings');
 
@@ -33,8 +33,8 @@ Route::group(['prefix' => '', 'as' => 'front.'], function () {
 
     Route::get('/listing-details/{restaurant}', [RestaurantController::class, 'show'])->name('listing_details');
 
-    Route::get('/blog', [FrontController::class, 'blog'])->name('blog');
-    Route::get('/blog-detail', [FrontController::class, 'blogDetail'])->name('blog_detail');
+    // Route::get('/blog', [FrontController::class, 'blog'])->name('blog');
+    // Route::get('/blog-detail', [FrontController::class, 'blogDetail'])->name('blog_detail');
 
     Route::get('/register-package', [RestaurantController::class, 'registerPackage'])->name('register_package');
     Route::get('/register-payment', [RestaurantController::class, 'registerPayment'])->name('register_payment');
@@ -90,11 +90,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::put('/bookings/{reservation}/update-payment', [ReservationController::class, 'updatePaymentStatus'])->name('bookings.update.payment');
 
             Route::get('/reviews', [RestaurantController::class, 'reviews'])->name('reviews');
-            Route::get('/memberships', [RestaurantController::class, 'memberships'])->name('memberships');
-            Route::get('/withdrawals', [RestaurantController::class, 'withdrawals'])->name('withdrawals');
-            Route::get('/earnings', [RestaurantController::class, 'earnings'])->name('earnings');
-            Route::get('/statement', [RestaurantController::class, 'statement'])->name('statement');
-            Route::get('/team-management', [RestaurantController::class, 'teamManagement'])->name('team_management');
+            //Route::get('/memberships', [RestaurantController::class, 'memberships'])->name('memberships');
+            //Route::get('/withdrawals', [RestaurantController::class, 'withdrawals'])->name('withdrawals');
+            //Route::get('/earnings', [RestaurantController::class, 'earnings'])->name('earnings');
+            //Route::get('/statement', [RestaurantController::class, 'statement'])->name('statement');
+            //Route::get('/team-management', [RestaurantController::class, 'teamManagement'])->name('team_management');
             Route::get('/change-password', [RestaurantController::class, 'changePassword'])->name('change_password');
         });
     });
@@ -122,8 +122,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/reviews', [BuyerController::class, 'reviews'])->name('reviews');
             Route::get('/orders', [OrderController::class, 'userOrders'])->name('orders');
             Route::put('/orders/{order}/cancel', [OrderController::class, 'cancelUserOrder'])->name('orders.cancel');
-            Route::get('/shortlists', [BuyerController::class, 'shortlists'])->name('shortlists');
-            Route::get('/statement', [BuyerController::class, 'statement'])->name('statement');
+            //Route::get('/shortlists', [BuyerController::class, 'shortlists'])->name('shortlists');
+            //Route::get('/statement', [BuyerController::class, 'statement'])->name('statement');
             Route::get('/account-setting', [BuyerController::class, 'account_setting'])->name('account_setting');
         });
     });
