@@ -20,18 +20,17 @@ return new class extends Migration {
             $table->decimal('longitude', 10, 7)->nullable();
             $table->text('description')->nullable();
             $table->integer('capacity')->default(0);
-            $table->text('services')->nullable();
             $table->text('payment_options')->nullable();
             $table->boolean('is_verified')->default(false);
             $table->boolean('is_popular')->default(false);
             $table->boolean('is_featured')->default(false);
             $table->boolean('accepts_reservations')->default(false);
             $table->boolean('accepts_orders')->default(false);
+            $table->integer('session_duration')->default(90); // 90 minutes
             $table->string('cover_photo')->nullable();
             $table->string('restaurant_logo')->nullable();
             $table->decimal('minimum_order', 8, 2)->default(0);
             $table->decimal('maximum_order', 8, 2)->default(0);
-            $table->decimal('delivery_fee', 8, 2)->default(0);
             $table->timestamps();
         });
     }

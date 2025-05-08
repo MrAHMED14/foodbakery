@@ -17,7 +17,6 @@ class DishFactory extends Factory
             'dish_image' => null,
             'price' => $this->faker->randomFloat(2, 5, 50),
             'menu_id' => null,
-            'categorie_id' => null,
         ];
     }
 }

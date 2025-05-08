@@ -24,7 +24,6 @@ class Restaurant extends Model
         //TODO: Change to name of capacity to nbr_tables_resvervation
         //TODO: Add Max person par table
         'capacity',
-        'services',
         'payment_option',
         'is_verified',
         'is_popular',
@@ -35,7 +34,6 @@ class Restaurant extends Model
         'cover_photo',
         'minimum_order',
         'maximum_order',
-        'delivery_fee',
         'user_id',
     ];
 

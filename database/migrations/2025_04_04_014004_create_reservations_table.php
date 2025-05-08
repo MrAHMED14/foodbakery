@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('restaurant_id')->constrained('restaurants')->onDelete('cascade');
             $table->dateTime('reservation_date');
+            $table->string('description')->nullable();
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->integer('session_duration')->default(90); // 90 minutes

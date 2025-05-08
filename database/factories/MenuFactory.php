@@ -13,7 +13,6 @@ class MenuFactory extends Factory
     {
         return [
             'name' => $this->faker->words(2, true),
-            'description' => $this->faker->sentence(),
             'restaurant_id' => null,
         ];
     }

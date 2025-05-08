@@ -22,6 +22,7 @@ class Reservation extends Model
         'last_name',
         'start_time',
         'end_time',
+        'description',
         'session_duration',
     ];
 
