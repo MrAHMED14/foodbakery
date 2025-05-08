@@ -51,7 +51,7 @@
                                         <span style="display: flex; align-items: center; justify-content: center;">
                                             <i class="icon-motorcycle"></i>
                                             @if ($restaurant->minimum_order || $restaurant->maximum_order)
-                                                Min order: {{ $restaurant->minimum_order ? $restaurant->minimum_order : '0' }} @if ($restaurant->maximum_order) Max order: {{ $restaurant->maximum_order }} @endif
+                                                Min order: @currency($restaurant->minimum_order ? $restaurant->minimum_order : 0) @if ($restaurant->maximum_order) Max: @currency($restaurant->maximum_order) @endif
                                             @else
                                                 Unlimited Orders
                                             @endif
