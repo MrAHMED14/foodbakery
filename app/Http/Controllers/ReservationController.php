@@ -63,6 +63,22 @@ class ReservationController extends Controller
         return back()->with('success', 'Booking status updated successfully.');
     }
 
+    public function updatePaymentStatus(Request $request, Reservation $reservation)
+    {
+        $request->validate([
+            'payment_status' => 'required|in:Pending,Completed,Failed,Refunded',
+        ]);
+
+        if ($reservation->restaurant->user_id !== Auth::user()->id) {
+            return back()->with('error', 'You are not authorized to update this order.');
+        }
+
+        $reservation->payment_status = $request->payment_status;
+        $reservation->save();
+
+        return back()->with('success', 'Payment status updated successfully.');
+    }
+
     public function showUserReservations(Request $request)
     {
         $user = Auth::id();

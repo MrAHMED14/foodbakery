@@ -114,8 +114,7 @@
                                                         <label for="payment_method">Payment Method *</label>
                                                         <select name="payment_method" id="payment_method" required>
                                                             <option value="credit_card">Credit Card</option>
-                                                            <option value="paypal">PayPal</option>
-                                                            <option value="cash_on_delivery">Cash on Delivery</option>
+                                                            <option value="cash">Cash on Delivery</option>
                                                         </select>
 
                                                         @error('payment_method')

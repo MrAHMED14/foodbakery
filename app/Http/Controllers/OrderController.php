@@ -31,7 +31,6 @@ class OrderController extends Controller
         return view('front.buyer.orders', compact('orders'));
     }
 
-
     public function restaurantOrders(Request $request)
     {
         $query = Auth::user()->restaurant->orders();
@@ -100,8 +99,8 @@ class OrderController extends Controller
                 'wilaya' => $request->wilaya,
                 'order_type' => $request->order_type,
                 'payment_method' => $request->payment_method,
-                'payment_status' => 'Pending',
-                'payment_date' => now(),
+                'payment_status' => $request->payment_method == 'credit_card' ? 'Completed': 'Pending',
+                'payment_date' => $request->payment_method == 'credit_card' ? now() : null,
             ]);
 
             $totalPrice = 0;
@@ -157,6 +156,28 @@ class OrderController extends Controller
         $order->save();
 
         return back()->with('success', 'Order status updated successfully.');
+    }
+
+    public function updatePaymentStatus(Request $request, Order $order)
+    {
+        $request->validate([
+            'payment_status' => 'required|in:Pending,Completed,Failed,Refunded',
+        ]);
+
+        if ($order->restaurant->user_id !== Auth::user()->id) {
+            return back()->with('error', 'You are not authorized to update this order.');
+        }
+
+        if ($request->payment_status == 'Completed') {
+            $order->payment_date = now();
+        } else {
+            $order->payment_date = null;
+        }
+
+        $order->payment_status = $request->payment_status;
+        $order->save();
+
+        return back()->with('success', 'Payment status updated successfully.');
     }
 
     public function cancelUserOrder(Order $order)

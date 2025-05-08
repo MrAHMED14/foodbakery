@@ -92,7 +92,7 @@
             {{ $order->user->phone ?? '-' }}<br>
             {{ $order->address }}, {{ $order->commune }}, {{ $order->wilaya }}
             <br>
-            <strong>Payment method:</strong> {{ $order->payment_method }}
+            <strong>Payment method:</strong> <span style="text-transform: capitalize;">{{ $order->payment_method }}</span>, <span style="text-transform: lowercase;">{{ $order->payment_status }}</span>
         </div>
 
         <div class="invoice-info">

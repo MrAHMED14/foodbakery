@@ -83,9 +83,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             Route::get('/orders', [OrderController::class, 'restaurantOrders'])->name('orders');
             Route::put('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+            Route::put('/orders/{order}/update-payment', [OrderController::class, 'updatePaymentStatus'])->name('orders.update.payment');
 
             Route::get('/bookings', [ReservationController::class, 'showRestaurantReservations'])->name('bookings');
             Route::put('/bookings/{reservation}/status', [ReservationController::class, 'updateStatus'])->name('bookings.updateStatus');
+            Route::put('/bookings/{reservation}/update-payment', [ReservationController::class, 'updatePaymentStatus'])->name('bookings.update.payment');
 
             Route::get('/reviews', [RestaurantController::class, 'reviews'])->name('reviews');
             Route::get('/memberships', [RestaurantController::class, 'memberships'])->name('memberships');

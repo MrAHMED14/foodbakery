@@ -77,7 +77,7 @@
                                                             </h6>
                                                         </div>
                                                         <div class="orders-date">
-                                                            <span>{{ $reservation->reservation_date->format('M j, Y \a\t h:i A') }}</span>
+                                                            <span>{{ $reservation->reservation_date->format('M j, Y \a\t h:i A') }} to {{ $reservation->end_time->format('h:i A') }}</span>
                                                         </div>
                                                         <div class="orders-status">
                                                             @if ($reservation->status == 'Processing')
@@ -121,7 +121,7 @@
                                                                             </li>
                                                                             <li>
                                                                                 <strong>Booking Date :</strong>
-                                                                                <span>{{ $reservation->reservation_date->format('M j, Y \a\t h:i A') }}</span>
+                                                                                <span>{{ $reservation->reservation_date->format('M j, Y \a\t h:i A') }} to {{ $reservation->end_time->format('h:i A') }}</span>
                                                                             </li>
                                                                         </ul>
                                                                         <h3>Customer Deatil</h3>
@@ -174,6 +174,51 @@
                                                                                                 <option value="Completed"
                                                                                                     {{ $reservation->status == 'Completed' ? 'selected' : '' }}>
                                                                                                     Completed
+                                                                                                </option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+
+                                                                        <h3>Payement Status</h3>
+                                                                        <div class="booking-status-holder">
+                                                                            <form
+                                                                                action="{{ route('restaurant.bookings.update.payment', $reservation->id) }}"
+                                                                                method="POST">
+                                                                                @csrf
+                                                                                @method('PUT')
+
+                                                                                <div class="row">
+                                                                                    <div
+                                                                                        class="col-lg-9 col-md-8 col-sm-8 col-xs-12">
+                                                                                        <div
+                                                                                            class="input-field">
+                                                                                            <select
+                                                                                                name="payment_status"
+                                                                                                class="chosen-select-no-single"
+                                                                                                onchange="this.form.submit()">
+
+                                                                                                <option
+                                                                                                    value="Pending"
+                                                                                                    {{ $reservation->payment_status == 'Pending' ? 'selected' : '' }}>
+                                                                                                    Pending
+                                                                                                </option>
+                                                                                                <option
+                                                                                                    value="Completed"
+                                                                                                    {{ $reservation->payment_status == 'Completed' ? 'selected' : '' }}>
+                                                                                                    Completed
+                                                                                                </option>
+                                                                                                <option
+                                                                                                    value="Failed"
+                                                                                                    {{ $reservation->payment_status == 'Failed' ? 'selected' : '' }}>
+                                                                                                    Failed
+                                                                                                </option>
+                                                                                                <option
+                                                                                                    value="Refunded"
+                                                                                                    {{ $reservation->payment_status == 'Refunded' ? 'selected' : '' }}>
+                                                                                                    Refunded
                                                                                                 </option>
                                                                                             </select>
                                                                                         </div>
