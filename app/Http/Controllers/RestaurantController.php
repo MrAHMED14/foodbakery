@@ -215,7 +215,6 @@ class RestaurantController extends Controller
                 'cover_photo' => $coverPhotoPath,
                 'minimum_order' => $validatedData['restaurant_minimum_order'] ?? 0,
                 'maximum_order' => $validatedData['restaurant_maximum_order'] ?? 0,
-                'delivery_fee' => $validatedData['restaurant_delivery_fee'] ?? 0,
                 'user_id' => $user->id,
 
                 //TODO: REMOVE THIS
@@ -260,7 +259,7 @@ class RestaurantController extends Controller
             'accepts_reservations' => 'required|boolean',
             'minimum_order' => 'nullable|numeric|min:0',
             'maximum_order' => 'nullable|numeric|min:0',
-            'delivery_fee' => 'nullable|numeric|min:0',
+            'session_duration' => 'nullable|numeric|min:10',
             'cuisine_types' => 'nullable|array',
             'cuisine_types.*' => 'exists:cuisine_types,id',
         ]);
@@ -284,7 +283,7 @@ class RestaurantController extends Controller
         $restaurant->accepts_reservations = $request->accepts_reservations;
         $restaurant->minimum_order = $request->minimum_order;
         $restaurant->maximum_order = $request->maximum_order;
-        $restaurant->delivery_fee = $request->delivery_fee;
+        $restaurant->session_duration = $request->session_duration;
 
         if (isset($request->cuisine_types)) {
             $restaurant->cuisines()->sync($request->cuisine_types);
