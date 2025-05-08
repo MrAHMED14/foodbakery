@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string('commune');
             $table->string('wilaya');
             $table->string('order_type');
-            $table->string('payment_method');
-            $table->string('payment_status');
-            $table->date('payment_date');
+            $table->enum('payment_method', ['cash', 'credit_card'])->default('cash');
+            $table->enum('payment_status', ['Pending', 'Completed', 'Failed', 'Refunded'])->default('Pending');
+            $table->date('payment_date')->nullable();
             $table->timestamps();
         });
 

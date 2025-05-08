@@ -20,8 +20,8 @@ return new class extends Migration {
             $table->integer('session_duration')->default(90); // 90 minutes
             $table->integer('nbr_table')->default(1);
             $table->enum('status', ['Processing', 'Cancelled', 'Completed'])->default('Processing');
-            $table->string('payment_method')->nullable();
-            $table->string('payment_status')->nullable();
+            $table->enum('payment_method', ['cash', 'credit_card'])->default('cash');
+            $table->enum('payment_status', ['Pending', 'Completed', 'Failed', 'Refunded'])->default('Pending');
             $table->dateTime('payment_date')->nullable();
             $table->timestamps();
         });
