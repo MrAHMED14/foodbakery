@@ -19,7 +19,7 @@ Route::group(['prefix' => '', 'as' => 'front.'], function () {
     Route::get('/', [FrontController::class, 'indexNew'])->name('index');
     // Route::get('/new', [FrontController::class, 'indexNew'])->name('indexNew');
     Route::get('/contact-us', [FrontController::class, 'contact'])->name('contact');
-    Route::get('/faq', [FrontController::class, 'faq'])->name('faq');
+    // Route::get('/faq', [FrontController::class, 'faq'])->name('faq');
     // Route::get('/how', [FrontController::class, 'how'])->name('how');
     // Route::get('/price', [FrontController::class, 'price'])->name('price');
     // Route::get('/result', [FrontController::class, 'result'])->name('result');
