@@ -18,14 +18,7 @@
                         <nav id="site-navigation" class="main-navigation">
                             <ul>
                                 <li><a href="{{ route('front.listings') }}">Restaurants</a></li>
-                                <li>
-                                    <a href="#">Pages</a>
-                                    <ul>
-                                        <li><a href="{{ route('front.faq') }}">FAQ’s</a></li>
-                                        <li><a href="{{ route('front.contact') }}">Contact</a></li>
-                                    </ul>
-                                    <!--End Sub Menu -->
-                                </li>
+                                <li><a href="{{ route('front.contact') }}">Contact us</a></li>
                             </ul>
                         </nav><!-- .main-navigation -->
                     </div>
@@ -46,79 +39,13 @@
                             <li class="location-has-children choose-location">
                                 <a href="#"><i class="icon-location-pin2"></i>Choose location</a>
                                 <ul>
-                                    <li class="select-location">
-                                        <div class="foodbakery-locations-fields-group">
-                                            <form action="#">
-                                                <span id="foodbakery_radius_location_open"
-                                                    class="foodbakery-radius-location"><i
-                                                        class="icon-target5"></i></span>
-                                                <span class="foodbakery-input-cross foodbakery-input-cross-header"
-                                                    style="display:none;">
-                                                    <i class="icon-cross"></i></span>
-                                                <input type="text" value="" name="location"
-                                                    placeholder="All Locations" autocomplete="off">
-
-                                                <span><span class="loc-icon-holder"><i
-                                                            class="icon-target3"></i></span></span>
-                                                <div class="select-location" id="foodbakery-radius-range622192"
-                                                    style="display: none;">
-                                                    <div class="select-popup popup-open">
-                                                        <a id="location_close_popup622192" href="javascript:0;"
-                                                            class="location-close-popup">
-                                                            <i class="icon-times"></i></a>
-                                                        <input type="hidden" class="foodbakery-radius"
-                                                            name="foodbakery_radius" value="10">
-                                                        <p>Show with in</p>
-                                                        <input id="ex16b313324" type="text" data-value="10"
-                                                            value="10" style="display: none;">
-                                                        <script>
-                                                            jQuery(document).ready(function() {
-                                                                var elem = jQuery("#ex16b313324");
-                                                                if (elem.length != "") {
-                                                                    elem.slider({
-                                                                        step: 1,
-                                                                        min: 0,
-                                                                        max: 500,
-                                                                        value: 10,
-                                                                    });
-                                                                    elem.on("slideStop", function() {
-                                                                        var rang_slider_val = elem.val();
-                                                                        jQuery("#ex16b313324CurrentSliderValLabel").html(rang_slider_val);
-                                                                        jQuery("#range-hidden-foodbakery-radius622192").val(rang_slider_val);
-                                                                        //foodbakery_restaurant_content("622192");
-                                                                    });
-                                                                    elem.on("slide", function() {
-                                                                        jQuery("#ex16b313324CurrentSliderValLabel").html(elem.val());
-                                                                    });
-                                                                }
-
-                                                                $("#foodbakery_radius_location_open").click(function() {
-                                                                    $("#foodbakery-radius-range622192").show();
-                                                                });
-                                                                $("#location_close_popup622192").click(function() {
-                                                                    $("#foodbakery-radius-range622192").hide();
-                                                                });
-                                                            });
-                                                        </script>
-                                                        <span>Miles: <span
-                                                                id="ex16b313324CurrentSliderValLabel">10</span></span><br>
-                                                        <p class="my-location">of <i
-                                                                class="cs-color icon-location-arrow"></i><a
-                                                                id="foodbakery-geo-location-all"
-                                                                class="cs-color foodbakery-geo-location313324"
-                                                                href="javascript:void(0)">My location</a></p>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </li>
                                     <li class="popular-location">Popular Locations</li>
                                     <li>
                                         <ul>
-                                            <li><a href="{{ route('front.listings') }}">Tiaret</a></li>
-                                            <li><a href="{{ route('front.listings') }}">Sougueur</a></li>
-                                            <li><a href="{{ route('front.listings') }}">Mahdia</a></li>
-                                            <li><a href="{{ route('front.listings') }}">Chalala</a></li>
+                                            <li><a href="{{ route('front.listings', ['location' => "tiaret"]) }}">Tiaret</a></li>
+                                            <li><a href="{{ route('front.listings', ['location' => "sougueur"]) }}">Sougueur</a></li>
+                                            <li><a href="{{ route('front.listings', ['location' => "mahdia"]) }}">Mahdia</a></li>
+                                            <li><a href="{{ route('front.listings', ['location' => "chalala"]) }}">Chalala</a></li>
                                         </ul>
                                     </li>
                                 </ul>
