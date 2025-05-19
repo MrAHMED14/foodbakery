@@ -155,8 +155,8 @@ class RestaurantController extends Controller
             // Restaurant Information
             'restaurant_name' => 'required|string|max:255',
             'restaurant_address' => 'required|string|max:255',
-            'restaurant_city' => 'required|string|max:255',
-            'restaurant_state' => 'required|string|max:255',
+            'restaurant_commune' => 'required|string|max:255',
+            'restaurant_wilaya' => 'required|string|max:255',
             'restaurant_phone' => 'required|string|max:20',
             'restaurant_email' => 'required|string|max:255|unique:restaurants,email',
             'restaurant_latitude' => 'nullable|numeric|between:-90,90',
@@ -200,8 +200,8 @@ class RestaurantController extends Controller
             $restaurant = Restaurant::create([
                 'name' => $validatedData['restaurant_name'],
                 'address' => $validatedData['restaurant_address'],
-                'commune' => $validatedData['restaurant_city'],
-                'wilaya' => $validatedData['restaurant_state'],
+                'commune' => $validatedData['restaurant_commune'],
+                'wilaya' => $validatedData['restaurant_wilaya'],
                 'phone' => $validatedData['restaurant_phone'],
                 'email' => $validatedData['restaurant_email'],
                 'latitude' => $validatedData['restaurant_latitude'],
@@ -216,9 +216,6 @@ class RestaurantController extends Controller
                 'minimum_order' => $validatedData['restaurant_minimum_order'] ?? 0,
                 'maximum_order' => $validatedData['restaurant_maximum_order'] ?? 0,
                 'user_id' => $user->id,
-
-                //TODO: REMOVE THIS
-                'is_verified' => 1,
             ]);
 
             if (isset($validatedData['cuisine_types'])) {
@@ -595,11 +592,6 @@ class RestaurantController extends Controller
         return redirect()->back()->with('success', 'Image deleted.');
     }
 
-    /*
-        !-----------------------------------------------------------------------!
-        !---------------------------* UNCHANGED CODE *--------------------------!
-        !-----------------------------------------------------------------------!
-    */
     public function registerRestaurant()
     {
         $cuisineTypes = CuisineType::all();
