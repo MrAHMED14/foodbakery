@@ -388,24 +388,6 @@
                                                                     </div>
                                                                 </div>
                                                             </li>
-                                                        @elseif (Auth::check() && Auth::user()->id === $restaurant->user_id)
-                                                            <li
-                                                                class="col-lg-12 col-md-12 col-sm-12 col-xs-12 review_reply">
-                                                                <div class="list-holder ">
-                                                                    <div class="review-title">
-                                                                        <h6>Your Reply</h6>
-                                                                    </div>
-                                                                    <form
-                                                                        action="{{ route('reviews.reply', $review->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        <textarea style="border-radius: 3px; background-color: #fbfcfd; color: #9fa1a9;" name="reply" rows="2"
-                                                                            placeholder="Write your reply here..." required></textarea>
-                                                                        <button type="submit"
-                                                                            class="btn-submit">Reply</button>
-                                                                    </form>
-                                                                </div>
-                                                            </li>
                                                         @endif
                                                     @endforeach
                                                 </ul>
