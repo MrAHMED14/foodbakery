@@ -42,7 +42,7 @@ class RestaurantController extends Controller
         if ($query) {
             $searchIds = Restaurant::search($query)->get()->pluck('id');
             $restaurantsQuery = Restaurant::where('is_verified', 1)
-                                          ->whereIn('id', $searchIds);
+                ->whereIn('id', $searchIds);
         }
 
         if ($cuisineTypesInput) {
@@ -92,8 +92,8 @@ class RestaurantController extends Controller
         if ($location) {
             $restaurantsQuery->where(function ($q) use ($location) {
                 $q->where('address', 'like', "%{$location}%")
-                  ->orWhere('commune', 'like', "%{$location}%")
-                  ->orWhere('wilaya', 'like', "%{$location}%");
+                    ->orWhere('commune', 'like', "%{$location}%")
+                    ->orWhere('wilaya', 'like', "%{$location}%");
             });
         }
 
@@ -143,7 +143,7 @@ class RestaurantController extends Controller
         $totalReviews = $restaurant->reviews()->count();
         $recommendedPercentage = $totalReviews > 0 ? round(($recommended / $totalReviews) * 100) : 0;
 
-        return view('front.details', compact('restaurant', 'cart', 'totalPrice','recommendedPercentage'));
+        return view('front.details', compact('restaurant', 'cart', 'totalPrice', 'recommendedPercentage'));
     }
 
     /*
@@ -651,10 +651,38 @@ class RestaurantController extends Controller
         return view('front.restaurant.bookings');
     }
 
-    public function reviews()
+    public function reviews(Request $request)
     {
-        return view('front.restaurant.reviews');
+        $restaurant = Auth::user()->restaurant;
+
+        if (!$restaurant) {
+            return redirect()->back()->with('error', 'Restaurant not found.');
+        }
+
+        $query = $restaurant->reviews()->with('user');
+
+        switch ($request->get('sort')) {
+            case 'high-rating':
+                $query->orderByDesc('rating');
+                break;
+            case 'lowest-rating':
+                $query->orderBy('rating');
+                break;
+            case 'oldest':
+                $query->orderBy('created_at');
+                break;
+            case 'latest':
+            default:
+                $query->orderByDesc('created_at');
+                break;
+        }
+
+        $reviews = $query->paginate(10);
+        $totalReviews = $restaurant->reviewsCount();
+
+        return view('front.restaurant.reviews', compact('reviews', 'totalReviews'));
     }
+
 
     public function memberships()
     {

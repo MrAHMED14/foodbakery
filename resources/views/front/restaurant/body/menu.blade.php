@@ -20,6 +20,9 @@
                 <li class="{{ request()->routeIs('restaurant.bookings') ? 'active' : '' }}">
                     <a href="{{ route('restaurant.bookings') }}"><i class="icon-file-text2"></i>Bookings</a>
                 </li>
+                <li class="{{ request()->routeIs('restaurant.reviews') ? 'active' : '' }}">
+                    <a href="{{ route('restaurant.reviews') }}"><i class="icon-comment2"></i>Reviews</a>
+                </li>
                 <li class="{{ request()->routeIs('restaurant.change_password') ? 'active' : '' }}">
                     <a href="{{ route('restaurant.change_password') }}"><i class="icon-unlock-alt"></i>Change Password</a>
                 </li>
