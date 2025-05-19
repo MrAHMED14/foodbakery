@@ -1,21 +1,19 @@
 @extends('front.master')
 
 @section('title')
-    Restaurant || Contact US
+    Contact Us
 @endsection
 
 @section('content')
 <div class="sub-header align-center">
-    <div class="subheader-holder" style=" background:url({{asset('front/extra-images/subheader-img2-1.jpg')}})  no-repeat ; background-size: cover; padding-top: 60px; padding-bottom: 30px; margin-top: 0px; margin-bottom: 0px; min-height: 186px !important;">
+    <div class="subheader-holder" style=" background:url({{asset('front/extra-images/listing-cover.png')}})  no-repeat ; background-size: cover; padding-top: 80px; padding-bottom: 30px; margin-top: 0px; margin-bottom: 0px; min-height: 186px !important;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="text-holder">
-                        <div class="page-title ">
-                            <h1 style="color:#ffffff !important;">Contact</h1>
+                        <div class="page-title">
+                            <h1 style="color:#ffffff !important;">Contact us</h1>
                         </div>
-                        <p style="color:#ffffff !important;">A great restaurant website</p>
-
                     </div>
                 </div>
             </div>
@@ -287,28 +285,9 @@
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                            <div class="contact-info">
-                                <div class="element-title ">
-                                    <h3>Contact the food bakery</h3>
-                                </div>
-                                <ul>
-                                    <li>
-                                        <div class="text-holder"><span class="title">Text
-                                                us:</span><strong>25456</strong>
-                                        </div>
-                                        <div class="text-holder"><span class="title">Call Food
-                                                Bakery</span><strong>+63-38132146479</strong></div>
-                                    </li>
-                                    <li>
-                                        <div class="text-holder"><span class="title">Address</span><strong>121,
-                                                King street
-                                                , Melbourne, Victoria 3000 Australia</strong></div>
-                                    </li>
-                                </ul>
-                            </div>
                             <div class="contact-form">
                                 <div class="element-title">
-                                    <h4>Get In touch</h4>
+                                    <h2>Get In touch</h2>
                                 </div>
                                 <div class="form-holder row" id="ul_frm5005">
                                     <form name="frm5005" id="frm5005" action="javascript:foodbakery_var_contact_frm_submit(5005)">
