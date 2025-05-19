@@ -241,7 +241,7 @@
                                                         </span>
                                                     @endforeach
                                                 </p>
-                                                <div class="min-order">Min Order <span class="price">@currency(550)</span></div>
+                                                <div class="min-order">Min Order <span class="price">@if ($popularRestaurant->minimum_order)@currency($popularRestaurant->minimum_order)@endif</span></div>
                                             </div>
                                             <div class="listing-footer">
                                                 <div class="listing-inner clearfix" style="background-color: #ffffff;">
