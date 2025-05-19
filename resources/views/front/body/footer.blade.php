@@ -43,9 +43,9 @@
                                     <h5 style="color: #ffffff !important;">Menu</h5>
                                 </div>
                                 <ul>
-                                    <li><a href="#"> Home</a></li>
-                                    <li><a href="#"> Blog Large</a></li>
-                                    <li><a href="#"> Contact</a></li>
+                                    <li><a href="{{ route('front.index') }}"> Home</a></li>
+                                    <li><a href="{{ route('front.listings') }}"> Restaurants</a></li>
+                                    <li><a href="{{ route('front.contact') }}"> Contact</a></li>
                                     <li><a href="#"> FAQ’s</a></li>
                                     <li><a href="#"> How it works</a></li>
                                 </ul>
